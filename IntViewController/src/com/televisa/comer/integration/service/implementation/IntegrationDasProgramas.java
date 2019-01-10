@@ -1,4 +1,3 @@
-// A continuacion se realiza un cambio para el branch branch-Targets
 /**
 * Project: Integraton Paradigm - EveTV
 *
