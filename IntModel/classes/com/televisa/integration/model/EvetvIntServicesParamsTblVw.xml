@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="EvetvIntServicesParamsTblVw"
+  Version="12.1.3.10.8"
+  InheritPersonalization="merge"
+  DBObjectType="table"
+  DBObjectName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+  AliasName="EvetvIntServicesParamsTblVw"
+  BindingStyle="JDBC">
+  <Attribute
+    Name="IdService"
+    ColumnName="ID_SERVICE"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="NomService"
+    Precision="150"
+    ColumnName="NOM_SERVICE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="IndParameter"
+    Precision="50"
+    ColumnName="IND_PARAMETER"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="IndValParameter"
+    Precision="150"
+    ColumnName="IND_VAL_PARAMETER"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="IndEstatus"
+    Precision="1"
+    ColumnName="IND_ESTATUS"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="AttributeCategory"
+    Precision="150"
+    ColumnName="ATTRIBUTE_CATEGORY"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute1"
+    Precision="150"
+    ColumnName="ATTRIBUTE1"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute2"
+    Precision="150"
+    ColumnName="ATTRIBUTE2"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute3"
+    Precision="150"
+    ColumnName="ATTRIBUTE3"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute4"
+    Precision="150"
+    ColumnName="ATTRIBUTE4"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute5"
+    Precision="150"
+    ColumnName="ATTRIBUTE5"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute6"
+    Precision="150"
+    ColumnName="ATTRIBUTE6"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute7"
+    Precision="150"
+    ColumnName="ATTRIBUTE7"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute8"
+    Precision="150"
+    ColumnName="ATTRIBUTE8"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute9"
+    Precision="150"
+    ColumnName="ATTRIBUTE9"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute10"
+    Precision="150"
+    ColumnName="ATTRIBUTE10"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute11"
+    Precision="150"
+    ColumnName="ATTRIBUTE11"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute12"
+    Precision="150"
+    ColumnName="ATTRIBUTE12"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute13"
+    Precision="150"
+    ColumnName="ATTRIBUTE13"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute14"
+    Precision="150"
+    ColumnName="ATTRIBUTE14"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute15"
+    Precision="150"
+    ColumnName="ATTRIBUTE15"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="FecCreationDate"
+    IsNotNull="true"
+    ColumnName="FEC_CREATION_DATE"
+    SQLType="TIMESTAMP"
+    Type="java.sql.Timestamp"
+    ColumnType="TIMESTAMP"
+    TableName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="NumCreatedBy"
+    IsNotNull="true"
+    ColumnName="NUM_CREATED_BY"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="FecLastUpdateDate"
+    IsNotNull="true"
+    ColumnName="FEC_LAST_UPDATE_DATE"
+    SQLType="TIMESTAMP"
+    Type="java.sql.Timestamp"
+    ColumnType="TIMESTAMP"
+    TableName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="NumLastUpdatedBy"
+    IsNotNull="true"
+    ColumnName="NUM_LAST_UPDATED_BY"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="NumLastUpdateLogin"
+    ColumnName="NUM_LAST_UPDATE_LOGIN"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_SERVICES_PARAMS_TBL_VW"
+    PrimaryKey="true"/>
+  <Key
+    Name="EvetvintservicesparamstblvwPrimaryKey"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="EVETVINTSERVICESPARAMSTBLVW_PR"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="com.televisa.integration.model.EvetvIntServicesParamsTblVw.IdService"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesParamsTblVw.NomService"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesParamsTblVw.IndParameter"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesParamsTblVw.IndValParameter"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesParamsTblVw.IndEstatus"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesParamsTblVw.AttributeCategory"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesParamsTblVw.Attribute1"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesParamsTblVw.Attribute2"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesParamsTblVw.Attribute3"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesParamsTblVw.Attribute4"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesParamsTblVw.Attribute5"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesParamsTblVw.Attribute6"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesParamsTblVw.Attribute7"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesParamsTblVw.Attribute8"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesParamsTblVw.Attribute9"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesParamsTblVw.Attribute10"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesParamsTblVw.Attribute11"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesParamsTblVw.Attribute12"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesParamsTblVw.Attribute13"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesParamsTblVw.Attribute14"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesParamsTblVw.Attribute15"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesParamsTblVw.FecCreationDate"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesParamsTblVw.NumCreatedBy"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesParamsTblVw.FecLastUpdateDate"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesParamsTblVw.NumLastUpdatedBy"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesParamsTblVw.NumLastUpdateLogin"/>
+    </AttrArray>
+  </Key>
+</Entity>

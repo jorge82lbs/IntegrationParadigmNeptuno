@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="EvetvIntXmlFilesTabView"
+  Version="12.1.3.10.8"
+  InheritPersonalization="merge"
+  SelectListFlags="1"
+  FromListFlags="1"
+  WhereFlags="1"
+  BindingStyle="JDBC"
+  CustomQuery="false"
+  SelectAllAttributes="false"
+  PageIterMode="Full"
+  RowClass="com.televisa.integration.model.EvetvIntXmlFilesTabViewRowImpl"
+  ComponentClass="com.televisa.integration.model.EvetvIntXmlFilesTabViewImpl">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <EntityUsage
+    Name="EvetvIntXmlFilesTab"
+    Entity="com.televisa.integration.model.EvetvIntXmlFilesTab"/>
+  <ViewAttribute
+    Name="IdFileXml"
+    PrecisionRule="true"
+    EntityAttrName="IdFileXml"
+    EntityUsage="EvetvIntXmlFilesTab"
+    AliasName="ID_FILE_XML"/>
+  <ViewAttribute
+    Name="IdRequest"
+    PrecisionRule="true"
+    EntityAttrName="IdRequest"
+    EntityUsage="EvetvIntXmlFilesTab"
+    AliasName="ID_REQUEST"/>
+  <ViewAttribute
+    Name="IdService"
+    PrecisionRule="true"
+    EntityAttrName="IdService"
+    EntityUsage="EvetvIntXmlFilesTab"
+    AliasName="ID_SERVICE"/>
+  <ViewAttribute
+    Name="NomFile"
+    PrecisionRule="true"
+    EntityAttrName="NomFile"
+    EntityUsage="EvetvIntXmlFilesTab"
+    AliasName="NOM_FILE"/>
+  <ViewAttribute
+    Name="IndFileType"
+    PrecisionRule="true"
+    EntityAttrName="IndFileType"
+    EntityUsage="EvetvIntXmlFilesTab"
+    AliasName="IND_FILE_TYPE"/>
+  <ViewAttribute
+    Name="IndServiceType"
+    PrecisionRule="true"
+    EntityAttrName="IndServiceType"
+    EntityUsage="EvetvIntXmlFilesTab"
+    AliasName="IND_SERVICE_TYPE"/>
+  <ViewAttribute
+    Name="IndFileStream"
+    IsQueriable="false"
+    PrecisionRule="true"
+    EntityAttrName="IndFileStream"
+    EntityUsage="EvetvIntXmlFilesTab"
+    AliasName="IND_FILE_STREAM"/>
+  <ViewAttribute
+    Name="IndEstatus"
+    PrecisionRule="true"
+    EntityAttrName="IndEstatus"
+    EntityUsage="EvetvIntXmlFilesTab"
+    AliasName="IND_ESTATUS"/>
+  <ViewAttribute
+    Name="FecCreationDate"
+    PrecisionRule="true"
+    EntityAttrName="FecCreationDate"
+    EntityUsage="EvetvIntXmlFilesTab"
+    AliasName="FEC_CREATION_DATE"/>
+  <ViewAttribute
+    Name="NomUserName"
+    PrecisionRule="true"
+    EntityAttrName="NomUserName"
+    EntityUsage="EvetvIntXmlFilesTab"
+    AliasName="NOM_USER_NAME"/>
+</ViewObject>

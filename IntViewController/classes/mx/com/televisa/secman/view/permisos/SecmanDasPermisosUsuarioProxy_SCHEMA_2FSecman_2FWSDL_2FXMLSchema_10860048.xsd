@@ -1,0 +1,237 @@
+<xs:schema elementFormDefault="qualified" version="1.0" targetNamespace="http://xmlns.soin.tvsa.com/Secman/Servicios/UsuarioPermisos"
+     xmlns:tns="http://xmlns.soin.tvsa.com/Secman/Servicios/UsuarioPermisos" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:complexType name="PermisosUsuarioInputParameters">
+        <xs:sequence>
+            <xs:element name="UserName" type="xs:string"/>
+            <xs:element name="nomAplicacion" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PermisoOutputCollection">
+        <xs:sequence>
+            <xs:element name="Usuario" type="tns:Usuario"/>
+            <xs:element name="Aplicacion" type="tns:Aplicacion"/>
+            <xs:element name="Error" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Usuario">
+        <xs:sequence>
+            <xs:element name="IdUsuario" type="tns:UsuarioId"/>
+            <xs:element name="NomUsuario" type="tns:NomUsuario"/>
+            <xs:element name="UserName" type="tns:UserName"/>
+            <xs:element name="DescUsuario" type="tns:DescUsuario"/>
+            <xs:element name="NomMostrar" type="tns:NomMostrar"/>
+            <xs:element name="MailUsuario" type="tns:MailUsuario"/>
+            <xs:element name="NomOrganizacion" type="tns:NomOrganizacion"/>
+            <xs:element name="IdOrganizacion" type="tns:IdOrganizacion"/>
+            <xs:element name="NumEmpleadoCrm" type="tns:NumEmpleadoCrm"/>
+            <xs:element name="Interno" type="tns:Interno"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="UsuarioId">
+        <xs:sequence>
+            <xs:element name="IdUsuario" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute ref="tns:DescriptionId"/>
+    </xs:complexType>
+    <xs:complexType name="NomUsuario">
+        <xs:sequence>
+            <xs:element name="NomUsuario" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute ref="tns:DescriptionName"/>
+    </xs:complexType>
+    <xs:complexType name="UserName">
+        <xs:sequence>
+            <xs:element name="UserName" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute ref="tns:DescriptionName"/>
+    </xs:complexType>
+    <xs:complexType name="DescUsuario">
+        <xs:sequence>
+            <xs:element name="DescUsuario" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute ref="tns:DescriptionName"/>
+    </xs:complexType>
+    <xs:complexType name="NomMostrar">
+        <xs:sequence>
+            <xs:element name="NomMostrar" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute ref="tns:DescriptionName"/>
+    </xs:complexType>
+    <xs:complexType name="MailUsuario">
+        <xs:sequence>
+            <xs:element name="MailUsuario" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute ref="tns:DescriptionName"/>
+    </xs:complexType>
+    <xs:complexType name="NomOrganizacion">
+        <xs:sequence>
+            <xs:element name="NomOrganizacion" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute ref="tns:DescriptionName"/>
+    </xs:complexType>
+    <xs:complexType name="IdOrganizacion">
+        <xs:sequence>
+            <xs:element name="IdOrganizacion" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute ref="tns:DescriptionId"/>
+    </xs:complexType>
+    <xs:complexType name="NumEmpleadoCrm">
+        <xs:sequence>
+            <xs:element name="NumEmpleadoCrm" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute ref="tns:DescriptionName"/>
+    </xs:complexType>
+    <xs:complexType name="Interno">
+        <xs:sequence>
+            <xs:element name="Interno" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute ref="tns:DescriptionName"/>
+    </xs:complexType>
+    <xs:complexType name="Aplicacion">
+        <xs:sequence>
+            <xs:element name="IdAplicacion" type="tns:IdAplicacion"/>
+            <xs:element name="NomAplicacion" type="tns:NomAplicacion"/>
+            <xs:element name="DescAplicacion" type="tns:DescAplicacion"/>
+            <xs:element name="UrlAplicacion" type="tns:UrlAplicacion"/>
+            <xs:element name="EstatusAplicacion" type="tns:EstatusAplicacion"/>
+            <xs:element name="Permisos" type="tns:Permiso" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="IdAplicacion">
+        <xs:sequence>
+            <xs:element name="IdAplicacion" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute ref="tns:DescriptionId"/>
+    </xs:complexType>
+    <xs:complexType name="NomAplicacion">
+        <xs:sequence>
+            <xs:element name="NomAplicacion" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute ref="tns:DescriptionName"/>
+    </xs:complexType>
+    <xs:complexType name="DescAplicacion">
+        <xs:sequence>
+            <xs:element name="DescAplicacion" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute ref="tns:DescriptionName"/>
+    </xs:complexType>
+    <xs:complexType name="UrlAplicacion">
+        <xs:sequence>
+            <xs:element name="UrlAplicacion" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute ref="tns:DescriptionName"/>
+    </xs:complexType>
+    <xs:complexType name="EstatusAplicacion">
+        <xs:sequence>
+            <xs:element name="EstatusAplicacion" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute ref="tns:DescriptionName"/>
+    </xs:complexType>
+    <xs:complexType name="Permiso">
+        <xs:sequence>
+            <xs:element name="nomPermiso" type="xs:string"/>
+            <xs:element name="descPermiso" type="xs:string" minOccurs="0"/>
+            <xs:element name="fuentePermiso" type="xs:string" minOccurs="0"/>
+            <xs:element name="RolesCollection" type="tns:RolesCollection"/>
+            <xs:element name="TareasCollection" type="tns:TareasCollection"/>
+            <xs:element name="OperacionesCollection" type="tns:OperacionesCollection"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RolesCollection">
+        <xs:sequence>
+            <xs:element name="Rol" type="tns:Rol" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Rol">
+        <xs:sequence>
+            <xs:element name="RolId" type="tns:RolId"/>
+            <xs:element name="RolName" type="tns:RolName"/>
+            <xs:element name="Property" type="tns:ItemProperty" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="TareasCollection" type="tns:TareasCollection"/>
+            <xs:element name="OperacionesCollection" type="tns:OperacionesCollection"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RolId">
+        <xs:sequence>
+            <xs:element name="RolId" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute ref="tns:DescriptionId"/>
+    </xs:complexType>
+    <xs:complexType name="RolName">
+        <xs:sequence>
+            <xs:element name="RolName" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute ref="tns:DescriptionName"/>
+    </xs:complexType>
+    <xs:complexType name="ItemProperty">
+        <xs:sequence>
+            <xs:element name="ItemProperty" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute ref="tns:ValueProperty"/>
+    </xs:complexType>
+    <xs:complexType name="TareasCollection">
+        <xs:sequence>
+            <xs:element name="Tarea" type="tns:Tarea" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Tarea">
+        <xs:sequence>
+            <xs:element name="TareaId" type="tns:TareaId"/>
+            <xs:element name="TareaName" type="tns:TareaName"/>
+            <xs:element name="Property" type="tns:ItemProperty" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="OperacionesCollection" type="tns:OperacionesCollection"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TareaId">
+        <xs:sequence>
+            <xs:element name="TareaId" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute ref="tns:DescriptionId"/>
+    </xs:complexType>
+    <xs:complexType name="TareaName">
+        <xs:sequence>
+            <xs:element name="TareaName" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute ref="tns:DescriptionName"/>
+    </xs:complexType>
+    <xs:complexType name="OperacionesCollection">
+        <xs:sequence>
+            <xs:element name="Operacion" type="tns:Operacion" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Operacion">
+        <xs:sequence>
+            <xs:element name="OperacionId" type="tns:OperacionId"/>
+            <xs:element name="OperacionName" type="tns:OperacionName"/>
+            <xs:element name="OperacionDesc" type="tns:OperacionDesc"/>
+            <xs:element name="OperacionNum" type="tns:OperacionNum"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="OperacionId">
+        <xs:sequence>
+            <xs:element name="OperacionId" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute ref="tns:DescriptionId"/>
+    </xs:complexType>
+    <xs:complexType name="OperacionName">
+        <xs:sequence>
+            <xs:element name="OperacionName" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute ref="tns:DescriptionName"/>
+    </xs:complexType>
+    <xs:complexType name="OperacionDesc">
+        <xs:sequence>
+            <xs:element name="OperacionDesc" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute ref="tns:DescriptionName"/>
+    </xs:complexType>
+    <xs:complexType name="OperacionNum">
+        <xs:sequence>
+            <xs:element name="OperacionNum" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute ref="tns:DescriptionName"/>
+    </xs:complexType>
+    <xs:attribute name="DescriptionId" type="xs:string"/>
+    <xs:attribute name="DescriptionName" type="xs:string"/>
+    <xs:attribute name="ValueProperty" type="xs:string"/>
+</xs:schema>

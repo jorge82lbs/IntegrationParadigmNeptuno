@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:tns="http://xmlns.soin.tvsa.com/Secman/Servicios/UsuarioGrupos" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://xmlns.soin.tvsa.com/Secman/Servicios/UsuarioGrupos">
+  <xs:complexType name="UsuariosGrupoInputParameters">
+    <xs:sequence>
+      <xs:element name="nomGrupo" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UsuariosCollection">
+    <xs:sequence>
+      <xs:element name="Usuarios" type="tns:GrupoUsuarios" maxOccurs="unbounded"/>
+      <xs:element name="Error" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GrupoUsuarios">
+    <xs:sequence>
+      <xs:element name="idGrupo" type="xs:string"/>
+      <xs:element name="nomGrupo" type="xs:string"/>
+      <xs:element name="grupoPadre" type="xs:string"/>
+      <xs:element name="nomGrupoPadre" type="xs:string"/>
+      <xs:element name="idUsuario" type="xs:string"/>
+      <xs:element name="nomUsuario" type="xs:string"/>
+      <xs:element name="apPaterno" type="xs:string"/>
+      <xs:element name="apMaterno" type="xs:string"/>
+      <xs:element name="userName" type="xs:string"/>
+      <xs:element name="numEmpleadoCrm" type="xs:string"/>
+      <xs:element name="idOrganizacion" type="xs:string"/>
+      <xs:element name="nomOrganizacion" type="xs:string"/>
+      <xs:element name="descUsuario" type="xs:string"/>
+      <xs:element name="nomMostrar" type="xs:string"/>
+      <xs:element name="mailUsuario" type="xs:string"/>
+      <xs:element name="interno" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

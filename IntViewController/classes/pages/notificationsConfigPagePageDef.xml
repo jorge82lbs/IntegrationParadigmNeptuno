@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.10.8" id="notificationsConfigPagePageDef"
+                Package="pages">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="EvetvIntNotificationsTblVwView1" RangeSize="25" DataControl="AppModuleIntergrationDataControl"
+              id="EvetvIntNotificationsTblVwView1Iterator"/>
+    <searchRegion Binds="EvetvIntNotificationsTblVwView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="EvetvIntNotificationsTblVwView1Query"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="EvetvIntNotificationsTblVwView1Iterator" id="EvetvIntNotificationsTblVwView1">
+      <nodeDefinition DefName="com.televisa.integration.model.EvetvIntNotificationsTblVwView"
+                      Name="EvetvIntNotificationsTblVwView10">
+        <AttrNames>
+          <Item Value="IdNotification"/>
+          <Item Value="IdService"/>
+          <Item Value="NomService"/>
+          <Item Value="IndProcess"/>
+          <Item Value="IndProcessNom"/>
+          <Item Value="IndUsersGroup"/>
+          <Item Value="DesUsersGroup"/>
+          <Item Value="IndSubject"/>
+          <Item Value="IndMessage"/>
+          <Item Value="IndEstatus"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

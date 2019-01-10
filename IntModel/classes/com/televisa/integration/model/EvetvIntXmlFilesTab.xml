@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="EvetvIntXmlFilesTab"
+  Version="12.1.3.10.8"
+  InheritPersonalization="merge"
+  DBObjectType="table"
+  DBObjectName="EVENTAS.EVETV_INT_XML_FILES_TAB"
+  AliasName="EvetvIntXmlFilesTab"
+  BindingStyle="JDBC">
+  <Attribute
+    Name="IdFileXml"
+    ColumnName="ID_FILE_XML"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_XML_FILES_TAB"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="IdRequest"
+    ColumnName="ID_REQUEST"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_XML_FILES_TAB"/>
+  <Attribute
+    Name="IdService"
+    ColumnName="ID_SERVICE"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_XML_FILES_TAB"/>
+  <Attribute
+    Name="NomFile"
+    Precision="150"
+    ColumnName="NOM_FILE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_XML_FILES_TAB">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="IndFileType"
+    Precision="50"
+    ColumnName="IND_FILE_TYPE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_XML_FILES_TAB">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="IndServiceType"
+    Precision="50"
+    ColumnName="IND_SERVICE_TYPE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_XML_FILES_TAB">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="IndFileStream"
+    IsQueriable="false"
+    ColumnName="IND_FILE_STREAM"
+    SQLType="BLOB"
+    Type="java.sql.Blob"
+    ColumnType="BLOB"
+    TableName="EVENTAS.EVETV_INT_XML_FILES_TAB"/>
+  <Attribute
+    Name="IndEstatus"
+    Precision="1"
+    ColumnName="IND_ESTATUS"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_XML_FILES_TAB">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="FecCreationDate"
+    Precision="150"
+    ColumnName="FEC_CREATION_DATE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_XML_FILES_TAB">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="NomUserName"
+    Precision="150"
+    ColumnName="NOM_USER_NAME"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_XML_FILES_TAB">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Key
+    Name="QEventasEvetv00026IdFi0000100001"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="Q_EVENTAS_EVETV00026_ID_FI00001_00001"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="com.televisa.integration.model.EvetvIntXmlFilesTab.IdFileXml"/>
+    </AttrArray>
+  </Key>
+</Entity>

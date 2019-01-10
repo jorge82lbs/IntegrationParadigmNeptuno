@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:tns="http://tempuri.org/" xmlns:ns2="http://xmlns.soin.tvsa.com/Secman/Servicios/SecmanDasComerAutenticar" xmlns:ns1="http://xmlns.soin.tvsa.com/Secman/Servicios/SecmanInfSendMail" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://tempuri.org/">
+  <xs:import namespace="http://xmlns.soin.tvsa.com/Secman/Servicios/SecmanInfSendMail" schemaLocation="SecmanDasEnviarCorreoSoap12HttpPort1.xsd"/>
+  <xs:import namespace="http://xmlns.soin.tvsa.com/Secman/Servicios/SecmanDasComerAutenticar" schemaLocation="SecmanDasEnviarCorreoSoap12HttpPort2.xsd"/>
+  <xs:element name="EnviarCorreo" type="tns:EnviarCorreo"/>
+  <xs:element name="EnviarCorreoResponse" type="tns:EnviarCorreoResponse"/>
+  <xs:complexType name="EnviarCorreo">
+    <xs:sequence>
+      <xs:element name="mail" type="ns1:Mail" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EnviarCorreoResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns2:ProcessResponse" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://xmlns.soin.tvsa.com/Secman/Servicios/SecmanDasComerAutenticar">
+  <xs:complexType name="UserLogin">
+    <xs:sequence>
+      <xs:element name="UserName" type="xs:string"/>
+      <xs:element name="NomAplicacion" type="xs:string"/>
+      <xs:element name="Accion" type="xs:string"/>
+      <xs:element name="UserPassword" type="xs:string"/>
+      <xs:element name="Token" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProcessResponse">
+    <xs:sequence>
+      <xs:element name="Result" type="xs:string"/>
+      <xs:element name="Error" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

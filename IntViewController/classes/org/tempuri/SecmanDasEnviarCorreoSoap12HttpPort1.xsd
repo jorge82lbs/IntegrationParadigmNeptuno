@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:tns="http://xmlns.soin.tvsa.com/Secman/Servicios/SecmanInfSendMail" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://xmlns.soin.tvsa.com/Secman/Servicios/SecmanInfSendMail">
+  <xs:complexType name="Mail">
+    <xs:sequence>
+      <xs:element name="MailHeader" type="tns:MailHeader"/>
+      <xs:element name="MailBody" type="tns:MailBody"/>
+      <xs:element name="MailAttachments" type="tns:AttachmentCollection" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MailHeader">
+    <xs:sequence>
+      <xs:element name="AddressFrom" type="tns:MailAddress"/>
+      <xs:element name="ReplyTo" type="tns:MailAddress" minOccurs="0"/>
+      <xs:element name="To" type="tns:MailAddressCollection"/>
+      <xs:element name="CC" type="tns:MailAddressCollection" minOccurs="0"/>
+      <xs:element name="CCO" type="tns:MailAddressCollection" minOccurs="0"/>
+      <xs:element name="Subject" type="xs:string"/>
+      <xs:element name="Priority" type="xs:string" minOccurs="0"/>
+      <xs:element name="DeliveryReceipt" type="xs:string" minOccurs="0"/>
+      <xs:element name="ReadReceipt" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MailAddress">
+    <xs:sequence>
+      <xs:element name="UserNameAdress" type="xs:string"/>
+      <xs:element name="Address" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MailAddressCollection">
+    <xs:sequence>
+      <xs:element name="MailAddress" type="tns:MailAddress" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MailBody">
+    <xs:sequence>
+      <xs:element name="BodyType" type="xs:string"/>
+      <xs:element name="Message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AttachmentCollection">
+    <xs:sequence>
+      <xs:element name="Attachment" type="tns:Attachment" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Attachment">
+    <xs:sequence>
+      <xs:element name="AttachmentName" type="xs:string"/>
+      <xs:element name="Attachment" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

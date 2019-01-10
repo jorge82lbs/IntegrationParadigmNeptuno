@@ -1,0 +1,137 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<jdevws:WebServiceProxy xmlns:jdevws="http://xmlns.oracle.com/jdeveloper/10130/webserviceproxy">
+   <list n="CHILD_NODES">
+      <url path="SecmanDasUsuariosGrupoService.xml"/>
+      <url path="SecmanDasUsuariosGrupoService.wsdl"/>
+      <url path="SecmanDasUsuariosGrupoPort1.xsd"/>
+      <url path="SecmanDasUsuariosGrupoPort2.xsd"/>
+      <url path="../../../../../../com/tvsa/soin/xmlns/secman/servicios/usuariogrupos/GrupoUsuarios.java"/>
+      <url path="../../../../../../com/tvsa/soin/xmlns/secman/servicios/usuariogrupos/ObjectFactory.java"/>
+      <url path="SecmanDasUsuariosGrupoPortClient.java"/>
+      <url path="../../../../../../com/tvsa/soin/xmlns/secman/servicios/usuariogrupos/package-info.java"/>
+      <url path="ObjectFactory.java"/>
+      <url path="ObtenerUsuariosGrupo.java"/>
+      <url path="SecmanDasUsuariosGrupo.java"/>
+      <url path="../../../../../../com/tvsa/soin/xmlns/secman/servicios/usuariogrupos/UsuariosCollection.java"/>
+      <url path="../../../../../../com/tvsa/soin/xmlns/secman/servicios/usuariogrupos/UsuariosGrupoInputParameters.java"/>
+      <url path="ObtenerUsuariosGrupoResponse.java"/>
+      <url path="package-info.java"/>
+      <url path="SecmanDasUsuariosGrupoService.java"/>
+   </list>
+   <hash n="DATA_MODEL">
+      <value n="ATTACHMENT_ENCODING" v="MIME"/>
+      <list n="LOCAL_FILES"/>
+      <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.WebServiceProxy"/>
+      <url n="ORACLE_WEBSERVICES_XML" path="SecmanDasUsuariosGrupoService.xml"/>
+      <hash n="PROPERTY_GROUPS">
+         <hash n="WSDL_TO_JAVA_PROPERTIES">
+            <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.java.WSDLToJavaProperties"/>
+         </hash>
+      </hash>
+      <value n="PROXY_ASYNC_METHODS" v="FOR_NONE"/>
+      <list n="PROXY_CLIENTS">
+         <url path="SecmanDasUsuariosGrupoPortClient.java"/>
+      </list>
+      <value n="PROXY_MAPPING_URL"/>
+      <url n="PROXY_ORIGINAL_WSDL_URL" protocol="http" host="tvmiddev1.televisa.net" port="10106" path="/SecmanWebServices/SecmanDasUsuariosGrupoPort" query="wsdl"/>
+      <hash n="PROXY_PORTS">
+         <hash n="SecmanDasUsuariosGrupoPort">
+            <value n="ACCESSES_DOC_WRAPPPED" v="true"/>
+            <value n="ACCESSES_RPC_ENCODED" v="false"/>
+            <value n="CLASS_NAME" v="mx.com.televisa.secman.view.webservices.SecmanDasUsuariosGrupo"/>
+            <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyPort"/>
+            <value n="NAME" v="SecmanDasUsuariosGrupoPort"/>
+            <hash n="OPERATIONS">
+               <hash n="obtenerUsuariosGrupo">
+                  <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyOperation"/>
+                  <hash n="PROPERTY_GROUPS"/>
+               </hash>
+            </hash>
+            <hash n="PROPERTY_GROUPS">
+               <hash n="WS_POLICY">
+                  <value n="addressing"/>
+                  <hash n="GLOBAL_CONFIG_PROPERTIES"/>
+                  <list n="management"/>
+                  <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.policy.PolicyClientModel"/>
+                  <value n="mtom"/>
+                  <hash n="POLICY_OVERRIDE_PROPERTIES"/>
+                  <list n="security"/>
+                  <list n="wsconfig"/>
+                  <value n="wsrm"/>
+               </hash>
+            </hash>
+            <url n="PROXY_ORIGINAL_PORT_ENDPOINT" protocol="http" host="tvmiddev1.televisa.net" port="10106" path="/SecmanWebServices/SecmanDasUsuariosGrupoPort"/>
+         </hash>
+      </hash>
+      <value n="PROXY_SERVICE_NAME" v="SecmanDasUsuariosGrupoService"/>
+      <value n="PROXY_SERVICE_NAMESPACE" v="http://webServices.view.secman.televisa.com.mx/"/>
+      <url n="PROXY_TARGET_PROJECT" path="../../../../../../../IntViewController.jpr"/>
+      <list n="PROXY_WSDL_IMPORT_LIST">
+         <url path="SecmanDasUsuariosGrupoPort1.xsd"/>
+         <url path="SecmanDasUsuariosGrupoPort2.xsd"/>
+      </list>
+      <url n="PROXY_WSDL_URL" path="SecmanDasUsuariosGrupoService.wsdl"/>
+      <hash n="REFERENCED_WEBSERVICE">
+         <list n="BD_">
+            <hash>
+               <value n="BOUND_PORT_TYPE" v="{http://webServices.view.secman.televisa.com.mx/}SecmanDasUsuariosGrupo"/>
+               <value n="DEFAULT_NAME" v="false"/>
+               <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.SOAPBinding"/>
+               <value n="NAME" v="{http://webServices.view.secman.televisa.com.mx/}SecmanDasUsuariosGrupoPortBinding"/>
+               <list n="OP_BINDINGS">
+                  <hash>
+                     <value n="BOUND_OPERATION" v="com.tvsa.soin.xmlns.secman.servicios.usuariogrupos.UsuariosCollection.obtenerUsuariosGrupo.com.tvsa.soin.xmlns.secman.servicios.usuariogrupos.UsuariosGrupoInputParameters"/>
+                     <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.SOAPOperationBinding"/>
+                     <hash n="PROPERTY_GROUPS"/>
+                  </hash>
+               </list>
+               <hash n="PROPERTY_GROUPS"/>
+            </hash>
+         </list>
+         <list n="BINDING_FILES"/>
+         <value n="GUID" v="3c5f7d91-015f-1000-8005-c0a8a901ef39"/>
+         <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.WebServiceProxy$ProxyJavaWebService"/>
+         <list n="PO_">
+            <hash>
+               <value n="DEFAULT_NAME" v="false"/>
+               <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.SOAPPort"/>
+               <value n="NAME" v="SecmanDasUsuariosGrupoPort"/>
+               <value n="PORT_BINDING_NAME" v="{http://webServices.view.secman.televisa.com.mx/}SecmanDasUsuariosGrupoPortBinding"/>
+               <list n="PORT_OPS">
+                  <hash>
+                     <value n="EXPOSED_BD_OPERATION" v="com.tvsa.soin.xmlns.secman.servicios.usuariogrupos.UsuariosCollection.obtenerUsuariosGrupo.com.tvsa.soin.xmlns.secman.servicios.usuariogrupos.UsuariosGrupoInputParameters"/>
+                     <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.PortOperation"/>
+                     <hash n="PROPERTY_GROUPS"/>
+                  </hash>
+               </list>
+               <hash n="PROPERTY_GROUPS"/>
+               <url n="URL" protocol="http" host="tvmiddev1.televisa.net" port="10106" path="/SecmanWebServices/SecmanDasUsuariosGrupoPort"/>
+            </hash>
+         </list>
+         <hash n="PROPERTY_GROUPS">
+            <hash n="WSDL_TO_JAVA_PROPERTIES">
+               <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.java.WSDLToJavaProperties"/>
+            </hash>
+         </hash>
+         <list n="PT_">
+            <hash>
+               <value n="AUTO_SERVICE_INTERFACE"/>
+               <value n="DEFAULT_NAME" v="false"/>
+               <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.java.JavaPortType"/>
+               <value n="NAME" v="{http://webServices.view.secman.televisa.com.mx/}SecmanDasUsuariosGrupo"/>
+               <hash n="PROPERTY_GROUPS"/>
+               <value n="PT_CLASS" v="mx.com.televisa.secman.view.webservices.SecmanDasUsuariosGrupoImpl"/>
+               <value n="PT_SERVICE_INTERFACE" v="mx.com.televisa.secman.view.webservices.SecmanDasUsuariosGrupo"/>
+               <value n="PT_TOP_DOWN_GENERATED_SEI_NAME" v="mx.com.televisa.secman.view.webservices.SecmanDasUsuariosGrupo"/>
+            </hash>
+         </list>
+         <url n="TARGET_PROJECT" path="../../../../../../../IntViewController.jpr"/>
+         <value n="WS_ORIG_GEN_DIRECTION" v="TOP_DOWN"/>
+         <value n="WS_TARGET_NAMESPACE" v="http://webServices.view.secman.televisa.com.mx/"/>
+         <value n="WS_URI" v="SecmanDasUsuariosGrupoService"/>
+         <url n="WS_WSDL_FILE" path="SecmanDasUsuariosGrupoService.wsdl"/>
+      </hash>
+      <value n="SERVICE_ASYNC" v="false"/>
+      <value n="USE_WSDL_LOCATION" v="true"/>
+   </hash>
+</jdevws:WebServiceProxy>

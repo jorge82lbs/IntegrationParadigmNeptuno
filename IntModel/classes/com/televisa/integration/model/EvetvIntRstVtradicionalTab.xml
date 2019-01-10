@@ -1,0 +1,784 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="EvetvIntRstVtradicionalTab"
+  Version="12.1.3.10.8"
+  InheritPersonalization="merge"
+  DBObjectType="table"
+  DBObjectName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+  AliasName="EvetvIntRstVtradicionalTab"
+  BindingStyle="JDBC">
+  <Attribute
+    Name="IdRequest"
+    ColumnName="ID_REQUEST"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="IdService"
+    ColumnName="ID_SERVICE"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="Ordid"
+    Precision="150"
+    ColumnName="ORDID"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Agyid"
+    Precision="150"
+    ColumnName="AGYID"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Advid"
+    Precision="150"
+    ColumnName="ADVID"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Strdt"
+    Precision="150"
+    ColumnName="STRDT"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Edt"
+    Precision="150"
+    ColumnName="EDT"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Mcontid"
+    Precision="150"
+    ColumnName="MCONTID"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Rtcrd"
+    Precision="150"
+    ColumnName="RTCRD"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Idtarget"
+    Precision="150"
+    ColumnName="IDTARGET"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Stnid"
+    Precision="150"
+    ColumnName="STNID"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Sptmstid"
+    Precision="150"
+    ColumnName="SPTMSTID"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Bcstdt"
+    Precision="150"
+    ColumnName="BCSTDT"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Buyuntid"
+    Precision="150"
+    ColumnName="BUYUNTID"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Brkdtid"
+    Precision="150"
+    ColumnName="BRKDTID"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Acttim"
+    Precision="150"
+    ColumnName="ACTTIM"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Sptlen"
+    Precision="150"
+    ColumnName="SPTLEN"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="StnidSpot"
+    Precision="150"
+    ColumnName="STNID_SPOT"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Titleid"
+    Precision="150"
+    ColumnName="TITLEID"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Episodenameid"
+    Precision="150"
+    ColumnName="EPISODENAMEID"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Tipopublicidadid"
+    Precision="150"
+    ColumnName="TIPOPUBLICIDADID"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Spotformatid"
+    Precision="150"
+    ColumnName="SPOTFORMATID"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Spotcomments"
+    Precision="150"
+    ColumnName="SPOTCOMMENTS"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Autoid"
+    Precision="150"
+    ColumnName="AUTOID"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Extcpynum"
+    Precision="150"
+    ColumnName="EXTCPYNUM"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Brnd"
+    Precision="150"
+    ColumnName="BRND"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Sptrt"
+    Precision="150"
+    ColumnName="SPTRT"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Spotprice20"
+    Precision="150"
+    ColumnName="SPOTPRICE20"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Spotpriceproduction"
+    Precision="150"
+    ColumnName="SPOTPRICEPRODUCTION"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Revsts"
+    Precision="150"
+    ColumnName="REVSTS"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Status"
+    Precision="150"
+    ColumnName="STATUS"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Ploexcrea"
+    Precision="150"
+    ColumnName="PLOEXCREA"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Excfl"
+    Precision="150"
+    ColumnName="EXCFL"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="IndEstatus"
+    Precision="1"
+    ColumnName="IND_ESTATUS"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="IndDescNeptuno"
+    Precision="250"
+    ColumnName="IND_DESC_NEPTUNO"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="250"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="IdProcessNeptuno"
+    ColumnName="ID_PROCESS_NEPTUNO"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="AttributeCategory"
+    Precision="150"
+    ColumnName="ATTRIBUTE_CATEGORY"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute1"
+    Precision="150"
+    ColumnName="ATTRIBUTE1"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute2"
+    Precision="150"
+    ColumnName="ATTRIBUTE2"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute3"
+    Precision="150"
+    ColumnName="ATTRIBUTE3"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute4"
+    Precision="150"
+    ColumnName="ATTRIBUTE4"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute5"
+    Precision="150"
+    ColumnName="ATTRIBUTE5"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute6"
+    Precision="150"
+    ColumnName="ATTRIBUTE6"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute7"
+    Precision="150"
+    ColumnName="ATTRIBUTE7"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute8"
+    Precision="150"
+    ColumnName="ATTRIBUTE8"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute9"
+    Precision="150"
+    ColumnName="ATTRIBUTE9"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute10"
+    Precision="150"
+    ColumnName="ATTRIBUTE10"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute11"
+    Precision="150"
+    ColumnName="ATTRIBUTE11"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute12"
+    Precision="150"
+    ColumnName="ATTRIBUTE12"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute13"
+    Precision="150"
+    ColumnName="ATTRIBUTE13"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute14"
+    Precision="150"
+    ColumnName="ATTRIBUTE14"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute15"
+    Precision="150"
+    ColumnName="ATTRIBUTE15"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="FecCreationDate"
+    IsNotNull="true"
+    ColumnName="FEC_CREATION_DATE"
+    SQLType="TIMESTAMP"
+    Type="java.sql.Timestamp"
+    ColumnType="TIMESTAMP"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="NumCreatedBy"
+    IsNotNull="true"
+    ColumnName="NUM_CREATED_BY"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="FecLastUpdateDate"
+    IsNotNull="true"
+    ColumnName="FEC_LAST_UPDATE_DATE"
+    SQLType="TIMESTAMP"
+    Type="java.sql.Timestamp"
+    ColumnType="TIMESTAMP"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="NumLastUpdatedBy"
+    IsNotNull="true"
+    ColumnName="NUM_LAST_UPDATED_BY"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="NumLastUpdateLogin"
+    ColumnName="NUM_LAST_UPDATE_LOGIN"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_RST_VTRADICIONAL_TAB"
+    PrimaryKey="true"/>
+  <Key
+    Name="EvetvintrstvtradicionaltabPrimaryKey"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="EVETVINTRSTVTRADICIONALTAB_PRI"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.IdRequest"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.IdService"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Ordid"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Agyid"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Advid"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Strdt"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Edt"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Mcontid"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Rtcrd"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Idtarget"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Stnid"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Sptmstid"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Bcstdt"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Buyuntid"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Brkdtid"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Acttim"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Sptlen"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.StnidSpot"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Titleid"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Episodenameid"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Tipopublicidadid"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Spotformatid"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Spotcomments"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Autoid"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Extcpynum"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Brnd"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Sptrt"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Spotprice20"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Spotpriceproduction"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Revsts"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Status"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Ploexcrea"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Excfl"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.IndEstatus"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.IndDescNeptuno"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.IdProcessNeptuno"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.AttributeCategory"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Attribute1"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Attribute2"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Attribute3"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Attribute4"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Attribute5"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Attribute6"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Attribute7"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Attribute8"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Attribute9"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Attribute10"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Attribute11"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Attribute12"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Attribute13"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Attribute14"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.Attribute15"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.FecCreationDate"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.NumCreatedBy"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.FecLastUpdateDate"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.NumLastUpdatedBy"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstVtradicionalTab.NumLastUpdateLogin"/>
+    </AttrArray>
+  </Key>
+</Entity>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://xmlns.oracle.com/adfm/application" version="12.1.3.10.8" id="DataBindings"
+             SeparateXMLFiles="false" Package="com.televisa.integration.view" ClientType="Generic">
+  <pageMap>
+    <page path="/pages/generalConfigPage.jspx" usageId="com_televisa_integration_view_generalConfigPagePageDef"/>
+    <page path="/pages/notificationsConfigPage.jspx"
+          usageId="com_televisa_integration_view_notificationsConfigPagePageDef"/>
+    <page path="/pages/monitorPage.jspx" usageId="com_televisa_integration_view_monitorPagePageDef"/>
+    <page path="/pages/servicesConfigPage.jspx" usageId="com_televisa_integration_view_servicesConfigPagePageDef"/>
+    <page path="/pages/parametersConfigPage.jspx" usageId="com_televisa_integration_view_parametersConfigPagePageDef"/>
+    <page path="/pages/bitacoraPage.jspx" usageId="com_televisa_integration_view_bitacoraPagePageDef"/>
+  </pageMap>
+  <pageDefinitionUsages>    
+    <page id="com_televisa_integration_view_generalConfigPagePageDef" path="pages.generalConfigPagePageDef"/>
+    <page id="com_televisa_integration_view_notificationsConfigPagePageDef"
+          path="pages.notificationsConfigPagePageDef"/>
+    <page id="com_televisa_integration_view_monitorPagePageDef" path="pages.monitorPagePageDef"/>
+    <page id="com_televisa_integration_view_servicesConfigPagePageDef" path="pages.servicesConfigPagePageDef"/>
+    <page id="com_televisa_integration_view_parametersConfigPagePageDef" path="pages.parametersConfigPagePageDef"/>
+    <page id="com_televisa_integration_view_bitacoraPagePageDef" path="pages.bitacoraPagePageDef"/>
+  </pageDefinitionUsages>
+  <dataControlUsages>
+    <BC4JDataControl id="AppModuleIntergrationDataControl" Package="com.televisa.integration.model"
+                     FactoryClass="oracle.adf.model.bc4j.DataControlFactoryImpl" SupportsTransactions="true"
+                     SupportsFindMode="true" SupportsRangesize="true" SupportsResetState="true"
+                     SupportsSortCollection="true" Configuration="AppModuleIntergrationLocal" syncMode="Immediate"
+                     xmlns="http://xmlns.oracle.com/adfm/datacontrol"/>
+  </dataControlUsages>
+</Application>

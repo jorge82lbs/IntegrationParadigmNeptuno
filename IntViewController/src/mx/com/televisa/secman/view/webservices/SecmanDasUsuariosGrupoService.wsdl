@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://webServices.view.secman.televisa.com.mx/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://webServices.view.secman.televisa.com.mx/" name="SecmanDasUsuariosGrupoService">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://xmlns.soin.tvsa.com/Secman/Servicios/UsuarioGrupos" schemaLocation="SecmanDasUsuariosGrupoPort1.xsd"/>
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import namespace="http://webServices.view.secman.televisa.com.mx/" schemaLocation="SecmanDasUsuariosGrupoPort2.xsd"/>
+    </xsd:schema>
+  </types>
+  <message name="obtenerUsuariosGrupo">
+    <part name="parameters" element="tns:obtenerUsuariosGrupo"/>
+  </message>
+  <message name="obtenerUsuariosGrupoResponse">
+    <part name="parameters" element="tns:obtenerUsuariosGrupoResponse"/>
+  </message>
+  <portType name="SecmanDasUsuariosGrupo">
+    <operation name="obtenerUsuariosGrupo">
+      <input message="tns:obtenerUsuariosGrupo"/>
+      <output message="tns:obtenerUsuariosGrupoResponse"/>
+    </operation>
+  </portType>
+  <binding name="SecmanDasUsuariosGrupoPortBinding" type="tns:SecmanDasUsuariosGrupo">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <operation name="obtenerUsuariosGrupo">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="SecmanDasUsuariosGrupoService">
+    <port name="SecmanDasUsuariosGrupoPort" binding="tns:SecmanDasUsuariosGrupoPortBinding">
+      <soap:address location="http://tvmiddev1.televisa.net:10106/SecmanWebServices/SecmanDasUsuariosGrupoPort"/>
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,257 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <f:view>
+        <af:document title="Configuración de Tareas" id="d1" smallIconSource="/images/icon_get_world.gif">
+            <af:messages id="m1"/>
+            <af:form id="f1">
+            <af:resource type="javascript">
+                    function enforcePreventUserInput(evt) {                    
+                        var popup = AdfPage.PAGE.findComponentByAbsoluteId('p1oadLogin');
+                        if (popup != null) {
+                            AdfPage.PAGE.addBusyStateListener(popup, handleBusyState);
+                            evt.preventUserInput();
+                        }
+                    }
+                
+                    function handleBusyState(evt) {
+                        var popup = AdfPage.PAGE.findComponentByAbsoluteId('p1oadLogin');
+                        if (popup != null) {
+                            if (evt.isBusy()) {
+                                popup.show();
+                            }
+                            else {
+                                popup.hide();
+                                AdfPage.PAGE.removeBusyStateListener(popup, handleBusyState);
+                            }
+                        }
+                    }        
+                </af:resource>
+                <af:pageTemplate viewId="/templates/integrationTemplate.jspx" id="pt1">
+                    <f:facet name="content">
+                    <af:panelGroupLayout layout="scroll" id="PnlContServ"
+                                             inlineStyle="border-style:none;">
+                        <af:panelHeader text="Configuración de Tareas" id="PnlHeadServ"
+                                type="default"
+                                messageType="none"
+                                shortDesc="Configuración de Tareas"
+                                inlineStyle="border-style:none;">
+                            <f:facet name="toolbar">
+                                <af:statusIndicator id="StiIndicator" shortDesc="Status Indicator"/>
+                            </f:facet>
+                            </af:panelHeader>                            
+                            <af:separator id="sepTitle"/>
+                            <af:spacer id="SpcAx" width="10" height="5"/>
+                            <af:selectOneChoice unselectedLabel="-- Seleccione --"
+                                                label="Servicio"
+                                                id="soc1"
+                                                binding="#{TaskConfigBean.poFilterNomServiceSel}">
+                                <f:selectItems value="#{TaskConfigBean.listWebServices}" id="sid1"/>
+                            </af:selectOneChoice>
+                            <af:inputText label="idTabSel"                                                  
+                                          id="TxtidTabSel"
+                                          visible="false"
+                                          partialTriggers="soc1 sdim sdih"
+                                          binding="#{TaskConfigBean.poIdTabSelected}"/>
+                            <af:spacer id="SpcAx2" width="10" height="5"/>
+                            <af:panelGroupLayout layout="horizontal" id="PnslTbl"
+                                                 valign="top" halign="left">
+                            <af:button text="Guardar Configuración" id="b1Save" icon="/images/action_save.gif"
+                                       action="#{TaskConfigBean.saveConfigurationAction}"/>
+                            <af:spacer id="SpcAxAc" width="15" height="5"/>
+                            <af:button text="Eliminar" id="b1Delete" icon="/images/cancelar.gif"/>
+                            </af:panelGroupLayout>
+                            <af:spacer id="SpcAxpa2" width="10" height="10"/>
+                            <af:panelGroupLayout layout="horizontal" id="PnlTbl" styleClass="AFStretchWidth"
+                                                 valign="top" halign="left" inlineStyle="border-style:none; height:415px;">
+                                
+                                <af:panelTabbed id="PnlAuto" styleClass="AFStretchWidth" dimensionsFrom="auto"
+                                                binding="#{TaskConfigBean.poPanelTabbed}">
+                                    <!-- MINUTOS -->
+                                    <af:showDetailItem text="Minutos" id="sdim" binding="#{TaskConfigBean.poTabMinutos}"
+                                                       disclosureListener="#{TaskConfigBean.disMinutos}">
+                                        <af:panelGridLayout id="pgl2">
+                                            <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr1">
+                                                <af:gridCell marginStart="5px" width="20%" id="gc1">
+                                                <af:panelGroupLayout id="pgl1" layout="horizontal">
+                                                    <af:inputNumberSpinbox label="Cada" id="ins1" columns="5" binding="#{TaskConfigBean.poCadaMinutos}"/>
+                                                    <af:spacer id="SpcAxm" width="5" height="5"/>
+                                                    <af:outputText value="Minutos" id="otn24"/>
+                                                </af:panelGroupLayout>
+                                                </af:gridCell>
+                                                <af:gridCell marginStart="5px" width="80%" marginEnd="5px" id="gc2">
+                                                <af:panelGroupLayout id="pgl1e" layout="vertical">
+                                                    <af:outputText value="Excepto" id="otn242" inlineStyle="font-weight:bold;"/>
+                                                    <af:selectBooleanCheckbox text="Lunes" label="" id="sbcLun" binding="#{TaskConfigBean.poLunMinutos}"/>
+                                                    <af:selectBooleanCheckbox text="Martes" label="" id="sbcMar" binding="#{TaskConfigBean.poMarMinutos}"/>
+                                                    <af:selectBooleanCheckbox text="Miércoles" label="" id="sbcMie" binding="#{TaskConfigBean.poMieMinutos}"/>
+                                                    <af:selectBooleanCheckbox text="Jueves" label="" id="sbcJue" binding="#{TaskConfigBean.poJueMinutos}"/>
+                                                    <af:selectBooleanCheckbox text="Viernes" label="" id="sbcVie" binding="#{TaskConfigBean.poVieMinutos}"/>
+                                                    <af:selectBooleanCheckbox text="Sábado" label="" id="sbcSab" binding="#{TaskConfigBean.poSabMinutos}"/>
+                                                    <af:selectBooleanCheckbox text="Domingo" label="" id="sbcDom" binding="#{TaskConfigBean.poDomMinutos}"/>
+                                                </af:panelGroupLayout>
+                                                </af:gridCell>
+                                            </af:gridRow>
+                                        </af:panelGridLayout>
+                                    </af:showDetailItem>
+                                    <!-- HORAS -->
+                                    <af:showDetailItem text="Horas" id="sdih" binding="#{TaskConfigBean.poTabHoras}"
+                                     disclosureListener="#{TaskConfigBean.disHoras}">
+                                    <af:panelGridLayout id="pgl2h">
+                                            <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr1h">
+                                                <af:gridCell marginStart="5px" width="20%" id="gc1h">
+                                                <af:panelGroupLayout id="pgl1hv" layout="vertical">
+                                                    <af:panelGroupLayout id="pgl1h" layout="horizontal">
+                                                        <af:inputNumberSpinbox label="Cada" id="ins1h" columns="5" binding="#{TaskConfigBean.poCadaHoras}"/>
+                                                        <af:spacer id="SpcAxmh" width="5" height="5"/>
+                                                        <af:outputText value="Horas" id="otn24h"/>
+                                                    </af:panelGroupLayout>
+                                                </af:panelGroupLayout>
+                                                <af:panelGroupLayout id="pgl1hi" layout="horizontal">
+                                                        <af:inputNumberSpinbox label="Hora Inicio" id="ins1hi" columns="5" binding="#{TaskConfigBean.poBeginHoras}"/>
+                                                    </af:panelGroupLayout>
+                                                </af:gridCell>
+                                                <af:gridCell marginStart="5px" width="80%" marginEnd="5px" id="gc2h">
+                                                <af:panelGroupLayout id="pgl1eh" layout="vertical">
+                                                    <af:outputText value="Excepto" id="otn242h" inlineStyle="font-weight:bold;"/>
+                                                    <af:selectBooleanCheckbox text="Lunes" label="" id="sbchLun" binding="#{TaskConfigBean.poLunHoras}"/>
+                                                    <af:selectBooleanCheckbox text="Martes" label="" id="sbchMar" binding="#{TaskConfigBean.poMarHoras}"/>
+                                                    <af:selectBooleanCheckbox text="Miércoles" label="" id="sbchMie" binding="#{TaskConfigBean.poMieHoras}"/>
+                                                    <af:selectBooleanCheckbox text="Jueves" label="" id="sbchJue" binding="#{TaskConfigBean.poJueHoras}"/>
+                                                    <af:selectBooleanCheckbox text="Viernes" label="" id="sbchVie" binding="#{TaskConfigBean.poVieHoras}"/>
+                                                    <af:selectBooleanCheckbox text="Sábado" label="" id="sbchSab" binding="#{TaskConfigBean.poSabHoras}"/>
+                                                    <af:selectBooleanCheckbox text="Domingo" label="" id="sbchDom" binding="#{TaskConfigBean.poDomHoras}"/>
+                                                </af:panelGroupLayout>
+                                                </af:gridCell>
+                                            </af:gridRow>
+                                        </af:panelGridLayout>
+                                    </af:showDetailItem>
+                                    <!-- DIARIO -->
+                                    <af:showDetailItem text="Diario" id="sdid" disclosureListener="#{TaskConfigBean.disDias}">
+                                    <af:panelGridLayout id="pgl2d">
+                                            <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr1d">
+                                                <af:gridCell marginStart="5px" width="20%" id="gc1d">
+                                                <af:panelGroupLayout id="pgl1dv" layout="vertical">                                                        
+                                                    <af:panelGroupLayout id="pgl1d" layout="horizontal">
+                                                        <af:selectBooleanRadio text=" " label=" " id="sbr1"/>
+                                                        <af:inputNumberSpinbox label="Cada" id="ins1d" columns="5"/>
+                                                        <af:spacer id="SpcAxmd" width="5" height="5"/>
+                                                        <af:outputText value="Días" id="otn24d"/>
+                                                    </af:panelGroupLayout>
+                                                </af:panelGroupLayout>
+                                                <af:panelGroupLayout id="pgl1di" layout="horizontal">
+                                                    <af:selectBooleanRadio text=" " label=" " id="sbr31"/>
+                                                    <af:inputNumberSpinbox label="Hora Inicio" id="ins1di" columns="5"/>
+                                                </af:panelGroupLayout>
+                                                </af:gridCell>
+                                                <af:gridCell marginStart="5px" width="80%" marginEnd="5px" id="gc2d">
+                                                <af:panelGroupLayout id="pgl1ed" layout="vertical">
+                                                    <af:outputText value="Excepto" id="otn242d" inlineStyle="font-weight:bold;"/>
+                                                    <af:selectBooleanCheckbox text="Lunes" label="" id="sbcdLun"/>
+                                                    <af:selectBooleanCheckbox text="Martes" label="" id="sbcdMar"/>
+                                                    <af:selectBooleanCheckbox text="Miércoles" label="" id="sbcdMie"/>
+                                                    <af:selectBooleanCheckbox text="Jueves" label="" id="sbcdJue"/>
+                                                    <af:selectBooleanCheckbox text="Viernes" label="" id="sbcdVie"/>
+                                                    <af:selectBooleanCheckbox text="Sábado" label="" id="sbcdSab"/>
+                                                    <af:selectBooleanCheckbox text="Domingo" label="" id="sbcdDom"/>
+                                                </af:panelGroupLayout>
+                                                </af:gridCell>
+                                            </af:gridRow>
+                                        </af:panelGridLayout>
+                                    </af:showDetailItem>
+                                    <!-- SEMANAL -->
+                                    <af:showDetailItem text="Semanal" id="sdis" disclosureListener="#{TaskConfigBean.disSemanas}">
+                                    <af:panelGridLayout id="pgls">
+                                            <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="grs">
+                                                <af:gridCell marginStart="5px" width="20%" id="gcs">
+                                                <af:panelGroupLayout id="pgss" layout="horizontal">
+                                                    <af:inputNumberSpinbox label="Hora Inicio" id="inss" columns="5"/>                                                    
+                                                </af:panelGroupLayout>
+                                                </af:gridCell>
+                                                <af:gridCell marginStart="5px" width="80%" marginEnd="5px" id="gs2">
+                                                <af:panelGroupLayout id="pglse" layout="vertical">
+                                                    <af:outputText value="Excepto" id="otn24s" inlineStyle="font-weight:bold;"/>
+                                                    <af:selectBooleanCheckbox text="Lunes" label="" id="sbcsLun"/>
+                                                    <af:selectBooleanCheckbox text="Martes" label="" id="sbcsMar"/>
+                                                    <af:selectBooleanCheckbox text="Miércoles" label="" id="sbcsMie"/>
+                                                    <af:selectBooleanCheckbox text="Jueves" label="" id="sbcsJue"/>
+                                                    <af:selectBooleanCheckbox text="Viernes" label="" id="sbcsVie"/>
+                                                    <af:selectBooleanCheckbox text="Sábado" label="" id="sbcsSab"/>
+                                                    <af:selectBooleanCheckbox text="Domingo" label="" id="sbcsDom"/>
+                                                </af:panelGroupLayout>
+                                                </af:gridCell>
+                                            </af:gridRow>
+                                        </af:panelGridLayout>
+                                    </af:showDetailItem>
+                                    <!-- MENSUAL -->
+                                    <af:showDetailItem text="Mensual" id="sdihMs" disclosureListener="#{TaskConfigBean.disMeses}">
+                                        <af:panelGridLayout id="pgl3">
+                                            <af:gridRow marginTop="5px" height="auto" id="gr2">
+                                                <af:gridCell marginStart="5px" width="50%" id="gc3">
+                                                    <af:panelGroupLayout id="pgl1ms" layout="horizontal">
+                                                        <af:selectBooleanRadio text=" " label=" " id="sbrms"/>
+                                                        <af:spacer id="SpcAxmdms" width="5" height="5"/>
+                                                        <af:inputNumberSpinbox label="El Día" id="ins1ms" columns="5"/>
+                                                        <af:spacer id="Spcmdms4" width="88" height="5"/>
+                                                        <af:inputNumberSpinbox label="Cada" id="inds1ms" columns="5"/>
+                                                        <af:spacer id="Spcmdms" width="5" height="5"/>
+                                                        <af:outputText value="Mes(es)" id="otn24ms"/>
+                                                    </af:panelGroupLayout>
+                                                    <af:separator id="sepMes2"/>
+                                                </af:gridCell>
+                                                <af:gridCell marginStart="5px" width="50%" marginEnd="5px" id="gc4">
+                                                    
+                                                </af:gridCell>
+                                            </af:gridRow>
+                                            <af:gridRow marginTop="5px" height="auto" id="gr3">
+                                                <af:gridCell marginStart="5px" width="50%" id="gc5">
+                                                <af:panelGroupLayout id="pgl1ms2" layout="horizontal">
+                                                        <af:selectBooleanRadio text=" " label=" " id="sbrms2"/>
+                                                        <af:spacer id="SpcAxmdmsm" width="5" height="5"/>
+                                                        <af:selectOneChoice label="El" id="soc2">
+                                                            <af:selectItem label="Primer" value="Primer" id="si1"/>
+                                                            <af:selectItem label="Segundo" value="Segundo" id="si2"/>
+                                                            <af:selectItem label="Tercer" value="Tercer" id="si3"/>
+                                                            <af:selectItem label="Cuarto" value="Cuarto" id="si4"/>
+                                                        </af:selectOneChoice>
+                                                        <af:spacer id="Spcmdms4m" width="10" height="5"/>
+                                                        <af:selectOneChoice label=" " id="soc22">
+                                                            <af:selectItem label="Lunes" value="Primer" id="si1m"/>
+                                                            <af:selectItem label="Martes" value="Segundo" id="si2m"/>
+                                                            <af:selectItem label="Miércoles" value="Tercer" id="si3m"/>
+                                                            <af:selectItem label="Jueves" value="Cuarto" id="si4m"/>
+                                                            <af:selectItem label="Viernes" value="Cuarto" id="si5m"/>
+                                                            <af:selectItem label="Sábado" value="Cuarto" id="si6m"/>
+                                                            <af:selectItem label="Domingo" value="Cuarto" id="si7m"/>
+                                                        </af:selectOneChoice>
+                                                        <af:spacer id="Spcmdmsm" width="15" height="5"/>
+                                                        <af:inputNumberSpinbox label="Cada" id="inds1vms" columns="5"/>
+                                                        <af:spacer id="Spcmdvfms" width="5" height="5"/>
+                                                        <af:outputText value="Mes(es)" id="otn24mes"/>                                                        
+                                                    </af:panelGroupLayout>
+                                                    <af:separator id="sepMes1"/>
+                                                </af:gridCell>
+                                                <af:gridCell marginStart="5px" width="50%" marginEnd="5px" id="gc6"/>
+                                            </af:gridRow>
+                                            <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr4">
+                                                <af:gridCell marginStart="5px" width="50%" id="gc7">
+                                                <af:panelGroupLayout id="pgl13ms" layout="horizontal">
+                                                        <af:spacer id="SpcAxm3dms" width="5" height="5"/>
+                                                        <af:inputNumberSpinbox label="Hora Inicio" id="ins13ms" columns="5"/>
+                                                        </af:panelGroupLayout>
+                                                </af:gridCell>
+                                                <af:gridCell marginStart="5px" width="50%" marginEnd="5px" id="gc8"/>
+                                            </af:gridRow>
+                                        </af:panelGridLayout>
+                                    </af:showDetailItem>
+
+                                </af:panelTabbed>
+                            </af:panelGroupLayout>
+                        </af:panelGroupLayout>
+                    </f:facet>
+                </af:pageTemplate>
+            </af:form>
+        </af:document>
+    </f:view>
+</jsp:root>

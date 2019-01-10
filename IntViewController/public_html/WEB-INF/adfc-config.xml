@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <view id="homePage">
+    <page>/pages/homePage.jspx</page>
+  </view>
+  <view id="monitorPage">
+    <page>/pages/monitorPage.jspx</page>
+  </view>
+  <view id="generalConfigPage">
+    <page>/pages/generalConfigPage.jspx</page>
+  </view>
+  <view id="notificationsConfigPage">
+    <page>/pages/notificationsConfigPage.jspx</page>
+  </view>
+  <view id="indexPage">
+    <page>/indexPage.jspx</page>
+  </view>
+  <view id="servicesConfigPage">
+    <page>/pages/servicesConfigPage.jspx</page>
+  </view>
+  <view id="parametersConfigPage">
+    <page>/pages/parametersConfigPage.jspx</page>
+  </view>
+  <view id="taskConfigPage">
+    <page>/pages/taskConfigPage.jspx</page>
+  </view>
+  <view id="bitacoraPage">
+    <page>/pages/bitacoraPage.jspx</page>
+  </view>
+  <control-flow-rule id="__7">
+    <from-activity-id>*</from-activity-id>
+    <control-flow-case id="__8">
+      <from-outcome>homePage</from-outcome>
+      <to-activity-id>homePage</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__9">
+      <from-outcome>monitorPage</from-outcome>
+      <to-activity-id>monitorPage</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__10">
+      <from-outcome>generalConfigPage</from-outcome>
+      <to-activity-id>generalConfigPage</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__12">
+      <from-outcome>notificationsConfigPage</from-outcome>
+      <to-activity-id>notificationsConfigPage</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__15">
+      <from-outcome>servicesConfigPage</from-outcome>
+      <to-activity-id>servicesConfigPage</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__16">
+      <from-outcome>parametersConfigPage</from-outcome>
+      <to-activity-id>parametersConfigPage</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__17">
+      <from-outcome>taskConfigPage</from-outcome>
+      <to-activity-id>taskConfigPage</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__20">
+      <from-outcome>bitacoraPage</from-outcome>
+      <to-activity-id>bitacoraPage</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <managed-bean id="__1">
+    <managed-bean-name>Test</managed-bean-name>
+    <managed-bean-class>com.televisa.integration.view.bean.Test</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__2">
+    <managed-bean-name>LoginBean</managed-bean-name>
+    <managed-bean-class>com.televisa.integration.view.front.beans.LoginBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  
+  <managed-bean id="__5">
+    <managed-bean-name>UserInfoBean</managed-bean-name>
+    <managed-bean-class>com.televisa.integration.view.users.UserInfoBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__6">
+    <managed-bean-name>UserMenuBean</managed-bean-name>
+    <managed-bean-class>com.televisa.integration.view.users.UserMenuBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__3">
+    <managed-bean-name>MonitorBean</managed-bean-name>
+    <managed-bean-class>com.televisa.integration.view.front.beans.MonitorBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__4">
+    <managed-bean-name>GeneralConfigBean</managed-bean-name>
+    <managed-bean-class>com.televisa.integration.view.front.beans.GeneralConfigBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__11">
+    <managed-bean-name>NotificationsConfigBean</managed-bean-name>
+    <managed-bean-class>com.televisa.integration.view.front.beans.NotificationsConfigBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__13">
+    <managed-bean-name>ServicesConfigBean</managed-bean-name>
+    <managed-bean-class>com.televisa.integration.view.front.beans.ServicesConfigBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__14">
+    <managed-bean-name>ParametersConfigBean</managed-bean-name>
+    <managed-bean-class>com.televisa.integration.view.front.beans.ParametersConfigBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__18">
+    <managed-bean-name>TaskConfigBean</managed-bean-name>
+    <managed-bean-class>com.televisa.integration.view.front.beans.TaskConfigBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__19">
+    <managed-bean-name>BitacoraBean</managed-bean-name>
+    <managed-bean-class>com.televisa.integration.view.front.beans.BitacoraBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+</adfc-config>

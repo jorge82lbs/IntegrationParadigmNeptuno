@@ -1,0 +1,499 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <f:view>
+        <af:document title="Configuración de Notificaciones" id="d1" smallIconSource="/images/icon_get_world.gif">
+            <af:messages id="m1"/>            
+            <af:resource type="javascript">
+                    function enforcePreventUserInput(evt) {                    
+                        var popup = AdfPage.PAGE.findComponentByAbsoluteId('p1oadLogin');
+                        if (popup != null) {
+                            AdfPage.PAGE.addBusyStateListener(popup, handleBusyState);
+                            evt.preventUserInput();
+                        }
+                    }
+                
+                    function handleBusyState(evt) {
+                        var popup = AdfPage.PAGE.findComponentByAbsoluteId('p1oadLogin');
+                        if (popup != null) {
+                            if (evt.isBusy()) {
+                                popup.show();
+                            }
+                            else {
+                                popup.hide();
+                                AdfPage.PAGE.removeBusyStateListener(popup, handleBusyState);
+                            }
+                        }
+                    }        
+                </af:resource>
+            <af:form id="f1">
+                <af:pageTemplate viewId="/templates/integrationTemplate.jspx" id="pt1">
+                    <f:facet name="content">
+                    <af:panelGroupLayout layout="scroll" id="PnlCont"
+                                             inlineStyle="border-style:none;">
+                            <af:panelHeader text="Configuración de Notificaciones" id="PnlHead"
+                                type="default"
+                                messageType="none"
+                                shortDesc="Configuración de Notificaciones"
+                                inlineStyle="border-style:none;">
+                            <f:facet name="toolbar">
+                                <af:statusIndicator id="StiIndicator" shortDesc="Status Indicator"/>
+                            </f:facet>
+                            </af:panelHeader>
+                            <af:separator id="sepTitle"/>
+                            <af:panelGroupLayout layout="horizontal" id="PnlGpTbl" styleClass="AFStretchWidth"
+                                                 valign="top" halign="left" inlineStyle="border-style:none; height:415px;">
+                            <af:panelSplitter id="PnlSpliMain" splitterPosition="302"
+                                      inlineStyle="width:1350px; "
+                                      collapsed="false"
+                                      firstBorder="skin">
+                                <f:facet name="first">
+                                    <af:panelGroupLayout layout="scroll"
+                                                         xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                                                         id="PnlGpAln">
+                                          <af:outputFormatted value="Buscar Configuración" id="LblBsc"
+                                                            inlineStyle="color:Olive; font-weight:bold; font-size:small; text-align:left;"/>
+                                        <af:separator id="sdedew"/>
+                                        <af:panelGroupLayout layout="horizontal" id="PnlUtil" halign="right"
+                                                            inlineStyle="border-style:none;">
+                                            <af:link text=" " id="BtnReset" 
+                                                                icon="/images/action_refresh_blue.gif" partialSubmit="true"
+                                                                shortDesc="Reiniciar valores de búsqueda"
+                                                     actionListener="#{NotificationsConfigBean.resetFilterValues}">
+                                            </af:link>
+                                            <af:spacer id="SpcAx" width="10" height="5"/>
+                                            
+                                            <af:link icon="/images/excel.gif"
+                                                               id="LnkExel"
+                                                               inlineStyle="text-align:center;"                                                   
+                                                               shortDesc="Exportar a Excel">
+                                                <af:exportCollectionActionListener exportedId="tblNot"
+                                                                           type="excelHTML"
+                                                                           filename="NotifXLS.xls"/>
+                                            </af:link>
+                                            <af:spacer id="SpcAxTbl" width="10" height="5"/>
+                                            <af:link text=" " id="BtnResetTbl"
+                                                            icon="/images/restaurar.gif" 
+                                                            shortDesc="Reiniciar tabla"
+                                                     action="#{NotificationsConfigBean.refreshMainTable}">
+                                            </af:link>
+                                        </af:panelGroupLayout>
+                                        <af:panelFormLayout id="PnlSearch" rows="14"
+                                                          maxColumns="1">
+                                            <af:selectOneChoice unselectedLabel="-- Seleccione --"
+                                                                label="Servicio Web"
+                                                                 binding="#{NotificationsConfigBean.poFilterServiceSel}"
+                                                                shortDesc="Servicio Web"
+                                                                partialTriggers="BtnReset"
+                                                                id="soc1">
+                                                <f:selectItems value="#{NotificationsConfigBean.listWebServices}" id="sid1"/>
+                                            </af:selectOneChoice>
+                                            <af:inputText label="idServiceFilter"                                                  
+                                                  id="TxtFilterIdService"
+                                                  visible="false"
+                                                  partialTriggers="BtnReset"
+                                                  binding="#{NotificationsConfigBean.poFilterIdService}"/>
+                                                                                                                                        
+                                        <af:selectOneChoice unselectedLabel="-- Seleccione --"
+                                                            label="Proceso"
+                                                            shortDesc="Proceso"
+                                                            id="soc4"
+                                                            binding="#{NotificationsConfigBean.poFilterProcessSel}" 
+                                                            partialTriggers="BtnReset">
+                                            <f:selectItems value="#{NotificationsConfigBean.listProcess}" id="sid1s"/>
+                                        </af:selectOneChoice>
+                                        
+                                        
+                                        <af:selectOneChoice unselectedLabel="-- Seleccione --"
+                                                            label="Grupo de Usuarios"                                                                    
+                                                            shortDesc="Grupo de Usuarios"
+                                                            partialTriggers="BtnReset"
+                                                            binding="#{NotificationsConfigBean.poFilterUserGroupSel}"
+                                                            id="soc2">
+                                            <f:selectItems value="#{NotificationsConfigBean.listUsersGroup}" id="sid1su"/>
+                                        </af:selectOneChoice>
+                                        
+                                        <af:inputText label="idUserGroup"                                                  
+                                          id="TxtFilterIdUserGroup"
+                                          visible="false"
+                                          partialTriggers="BtnReset"
+                                          binding="#{NotificationsConfigBean.poFilterIdUserGroup}"/>
+                                         
+                                        <af:inputText id="TxtFilterSubject" label="Asunto"
+                                                      columns="20" 
+                                                      partialTriggers="BtnReset" 
+                                                      binding="#{NotificationsConfigBean.poFilterSubject}">
+                                        </af:inputText>       
+                                        <af:inputText id="TxtFilterMessage" label="Mensaje"
+                                                      columns="20" 
+                                                      partialTriggers="BtnReset" 
+                                                      binding="#{NotificationsConfigBean.poFilterMessage}">
+                                        </af:inputText>  
+                                         
+                                         <af:selectOneChoice label="Estatus" id="selStatFil" unselectedLabel="-- Seleccione --"
+                                                            binding="#{NotificationsConfigBean.poFilterStatusSel}" partialTriggers="BtnReset">
+                                            <af:selectItem label="Activo" value="1" id="si1StatFil"/>
+                                            <af:selectItem label="Inactivo" value="0" id="si2StatFil"/>
+                                        </af:selectOneChoice> 
+                                        
+                                        <af:spacer width="10" height="10" id="s33"/>
+                                        <af:button text="Buscar por Filtros"
+                                                  id="BtnSearch"
+                                                  icon="/images/ver_orden.gif"
+                                                  shortDesc="Buscar Elementos"
+                                                  action="#{NotificationsConfigBean.searchFilterNotificationsAction}"/>
+                                      </af:panelFormLayout>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                  <f:facet name="second">
+                                  <!-- ################################### TABLA PRINCIPAL ##################################################### !-->
+                                         <af:table value="#{bindings.EvetvIntNotificationsTblVwView1.collectionModel}"
+                                                  var="row" rows="#{bindings.EvetvIntNotificationsTblVwView1.rangeSize}"
+                                                  emptyText="#{bindings.EvetvIntNotificationsTblVwView1.viewable ? 'Sin información para mostrar.' : 'Access Denied.'}"
+                                                  rowBandingInterval="0"
+                                                  selectedRowKeys="#{bindings.EvetvIntNotificationsTblVwView1.collectionModel.selectedRow}"
+                                                  selectionListener="#{bindings.EvetvIntNotificationsTblVwView1.collectionModel.makeCurrent}"
+                                                  rowSelection="single"
+                                                  fetchSize="#{bindings.EvetvIntNotificationsTblVwView1.rangeSize}"
+                                                  filterModel="#{bindings.EvetvIntNotificationsTblVwView1Query.queryDescriptor}"
+                                                  queryListener="#{bindings.EvetvIntNotificationsTblVwView1Query.processQuery}"
+                                                  filterVisible="true" varStatus="vs"
+                                                  columnStretching="column:cStat"
+                                                  id="tblNot"
+                                                  styleClass="AFStretchWidth"
+                                                  autoHeightRows="20"
+                                            binding="#{NotificationsConfigBean.poTblNotifications}">
+                                            <af:column align="center" id="colCrudNot" frozen="true" sortable="true"
+                                                       width="85" 
+                                                       visible="#{UserMenuBean.lsOprCrud}"
+                                                       filterable="false">
+                                                <f:facet name="header">
+                                                    <af:group id="g2">
+                                                        <af:link icon="/images/newIcon_int.png" id="LnkAlta"
+                                                                 text="Nuevo" inlineStyle="text-align:center;"
+                                                                 shortDesc="Alta de Notificaciones"
+                                                                 actionListener="#{NotificationsConfigBean.showSavePopupNotifications}"/>
+                                                    </af:group>
+                                                </f:facet>
+                                                <af:panelGroupLayout layout="horizontal" id="PnlOpc" valign="top"
+                                                                     halign="left">
+                                                    <af:link icon="/images/editIcon_int.png" id="LnkEditSweb"
+                                                             inlineStyle="text-align:center;" partialSubmit="true"
+                                                             actionListener="#{NotificationsConfigBean.showEditPopupNotifications}"
+                                                             shortDesc="Editar Notificaciones"/>
+                                                    <af:spacer width="10" id="s8r911w" height="5"/>
+                                                    <af:link icon="/images/deleteIcon_int.png" id="LnkDelSweb"
+                                                             inlineStyle="text-align:center;" partialSubmit="true"
+                                                             actionListener="#{NotificationsConfigBean.showDeletePopupNotifications}"
+                                                             shortDesc="Eliminar Notificaci&#243;n"/>
+                                                    <af:spacer width="10" id="spacer1" height="5"/>
+                                                </af:panelGroupLayout>
+                                            </af:column>
+                                            <af:column sortProperty="#{bindings.EvetvIntNotificationsTblVwView1.hints.IdNotification.name}"
+                                                       filterable="false" sortable="true"
+                                                       visible="false"
+                                                       headerText="#{bindings.EvetvIntNotificationsTblVwView1.hints.IdNotification.label}"
+                                                       id="c24">
+                                                <af:outputText value="#{row.IdNotification}"
+                                                               shortDesc="#{bindings.EvetvIntNotificationsTblVwView1.hints.IdNotification.tooltip}"
+                                                               id="ot24">
+                                                    <af:convertNumber groupingUsed="false"
+                                                                      pattern="#{bindings.EvetvIntNotificationsTblVwView1.hints.IdNotification.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column sortProperty="#{bindings.EvetvIntNotificationsTblVwView1.hints.IdService.name}"
+                                                       filterable="false" sortable="true"
+                                                       visible="false"
+                                                       headerText="#{bindings.EvetvIntNotificationsTblVwView1.hints.IdService.label}"
+                                                       id="c26">
+                                                <af:outputText value="#{row.IdService}"
+                                                               shortDesc="#{bindings.EvetvIntNotificationsTblVwView1.hints.IdService.tooltip}"
+                                                               id="ot26">
+                                                    <af:convertNumber groupingUsed="false"
+                                                                      pattern="#{bindings.EvetvIntNotificationsTblVwView1.hints.IdService.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column sortProperty="#{bindings.EvetvIntNotificationsTblVwView1.hints.NomService.name}"
+                                                       filterable="false" sortable="true"
+                                                       headerText="Servicio" align="center"
+                                                       id="c29">
+                                                <af:outputText value="#{row.NomService}"
+                                                               shortDesc="#{bindings.EvetvIntNotificationsTblVwView1.hints.NomService.tooltip}"
+                                                               id="ot29"/>
+                                            </af:column>
+                                            <af:column sortProperty="#{bindings.EvetvIntNotificationsTblVwView1.hints.IndProcess.name}"
+                                                       filterable="false" sortable="true"
+                                                       visible="false"
+                                                       headerText="#{bindings.EvetvIntNotificationsTblVwView1.hints.IndProcess.label}"
+                                                       id="c30">
+                                                <af:outputText value="#{row.IndProcess}"
+                                                               shortDesc="#{bindings.EvetvIntNotificationsTblVwView1.hints.IndProcess.tooltip}"
+                                                               id="ot30">
+                                                    <af:convertNumber groupingUsed="false"
+                                                                      pattern="#{bindings.EvetvIntNotificationsTblVwView1.hints.IndProcess.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column sortProperty="#{bindings.EvetvIntNotificationsTblVwView1.hints.IndProcessNom.name}"
+                                                       filterable="false" sortable="true"
+                                                       headerText="Proceso" align="center"
+                                                       id="c31">
+                                                <af:outputText value="#{row.IndProcessNom}"
+                                                               shortDesc="#{bindings.EvetvIntNotificationsTblVwView1.hints.IndProcessNom.tooltip}"
+                                                               id="ot31"/>
+                                            </af:column>
+                                            <af:column sortProperty="#{bindings.EvetvIntNotificationsTblVwView1.hints.IndUsersGroup.name}"
+                                                       filterable="false" sortable="true"
+                                                       visible="false"
+                                                       headerText="#{bindings.EvetvIntNotificationsTblVwView1.hints.IndUsersGroup.label}"
+                                                       id="c32">
+                                                <af:outputText value="#{row.IndUsersGroup}"
+                                                               shortDesc="#{bindings.EvetvIntNotificationsTblVwView1.hints.IndUsersGroup.tooltip}"
+                                                               id="ot32"/>
+                                            </af:column>
+                                            <af:column sortProperty="#{bindings.EvetvIntNotificationsTblVwView1.hints.DesUsersGroup.name}"
+                                                       filterable="false" sortable="true"
+                                                       headerText="Grupo de Usuarios" align="center"
+                                                       id="c33">
+                                                <af:outputText value="#{row.DesUsersGroup}"
+                                                               shortDesc="#{bindings.EvetvIntNotificationsTblVwView1.hints.DesUsersGroup.tooltip}"
+                                                               id="ot33"/>
+                                            </af:column>
+                                            <af:column sortProperty="#{bindings.EvetvIntNotificationsTblVwView1.hints.IndSubject.name}"
+                                                       filterable="false" sortable="true"
+                                                       headerText="Asunto" align="center"
+                                                       id="c34">
+                                                <af:outputText value="#{row.IndSubject}"
+                                                               shortDesc="#{bindings.EvetvIntNotificationsTblVwView1.hints.IndSubject.tooltip}"
+                                                               id="ot34"/>
+                                            </af:column>
+                                            <af:column sortProperty="#{bindings.EvetvIntNotificationsTblVwView1.hints.IndMessage.name}"
+                                                       filterable="false" sortable="true"
+                                                       headerText="Mensaje" align="center"
+                                                       id="c35">
+                                                <af:outputText value="#{row.IndMessage}"
+                                                               shortDesc="#{bindings.EvetvIntNotificationsTblVwView1.hints.IndMessage.tooltip}"
+                                                               id="ot35"/>
+                                            </af:column>
+                                            <af:column sortProperty="#{bindings.EvetvIntNotificationsTblVwView1.hints.IndEstatus.name}"
+                                                       filterable="false" sortable="true"
+                                                       headerText="Estatus" align="center"
+                                                       id="cStat">
+                                                <af:selectBooleanCheckbox text="" label=" "
+                                                                          id="sbcEst"
+                                                                          disabled="true"
+                                                                          value="#{row.IndEstatus == '1'}"
+                                                                          />
+                                            </af:column>
+                                        </af:table>
+                                    </f:facet>
+                            </af:panelSplitter>
+                            </af:panelGroupLayout>
+                        </af:panelGroupLayout>                    
+                    </f:facet>
+                </af:pageTemplate>
+                <!-- ################################### POPUP ALTA ##################################################### !-->
+                <af:popup id="popupSaveNot" contentDelivery="lazyUncached"
+                          binding="#{NotificationsConfigBean.poPopupSaveNotification}">
+                    <af:panelWindow id="PnlSaveNot" modal="true" closeIconVisible="false"
+                                    title="Alta Notificaciones" titleIconSource="/images/note_new.gif" styleClass="AFStretchWidth">
+                        <af:panelGroupLayout layout="vertical" id="PnlGrpAlta" valign="middle" halign="center" styleClass="AFStretchWidth">
+                            <af:panelFormLayout id="PnlFrmAlta" rows="14" maxColumns="1" inlineStyle="width:400px;">     
+                                
+                                <af:selectOneChoice unselectedLabel="-- Seleccione --"
+                                                    label="Servicio Web"
+                                                    binding="#{NotificationsConfigBean.poSaveServiceSel}"
+                                                    shortDesc="Servicio Web"
+                                                    id="soc3">
+                                        <f:selectItems value="#{NotificationsConfigBean.listWebServices}" id="siupdws"/>
+                                    </af:selectOneChoice>
+                                    
+                                    <af:inputText label="idServiceSave"                                                  
+                                          id="TxtFilterIdServiceppa"
+                                          visible="false"
+                                          binding="#{NotificationsConfigBean.poSaveIdService}"/>
+                              
+                                <af:selectOneChoice unselectedLabel="-- Seleccione --"
+                                                    label="Proceso"
+                                                    shortDesc="Proceso"
+                                                    id="soc5"
+                                                    binding="#{NotificationsConfigBean.poSaveProcessSel}">
+                                    <f:selectItems value="#{NotificationsConfigBean.listProcess}" id="siupdpr"/>
+                                </af:selectOneChoice>
+                                <af:inputText label="idProcessSave"                                                  
+                                          id="TxtFilterIdProcessppa"
+                                          visible="false"
+                                          binding="#{NotificationsConfigBean.poSaveIdProcess}"/>
+                                
+                                <af:selectOneChoice unselectedLabel="-- Seleccione --"
+                                                    label="Grupo de Usuarios"                                                                    
+                                                    shortDesc="Grupo de Usuarios"
+                                                    binding="#{NotificationsConfigBean.poSaveUserGroupSel}"
+                                                    id="soc3ppa">
+                                    <f:selectItems value="#{NotificationsConfigBean.listUsersGroup}" id="siupdus"/>
+                                </af:selectOneChoice>
+                                <af:inputText label="idUserGroup"                                                  
+                                  id="TxtFilterIdUserGroupppa"
+                                  visible="false"
+                                  binding="#{NotificationsConfigBean.poSaveIdUserGroup}"/>
+                                 
+                                <af:inputText id="TxtFilterSubjectppa" label="Asunto"
+                                              columns="20" 
+                                              binding="#{NotificationsConfigBean.poSaveSubject}">
+                                </af:inputText>       
+                                <af:inputText id="TxtFilterMessageppa" label="Mensaje"
+                                              columns="20" 
+                                              binding="#{NotificationsConfigBean.poSaveMessage}">
+                                </af:inputText>  
+                                 
+                                <af:selectBooleanCheckbox text="" label="Estatus" id="sbcSta"
+                                                          binding="#{NotificationsConfigBean.poSaveStatus}"/>                                    
+                                              
+                                <af:spacer width="10" height="10" id="spacer158"/>
+                                <af:spacer width="10" height="10" id="spacer3"/>
+                            </af:panelFormLayout>
+                            <af:panelGroupLayout id="PnlFrmBtnsPg">
+                                <af:button text="Aceptar" id="BtnAceptAltWs" icon="/images/aceptar.gif"
+                                            shortDesc="Guardar Notificaciones"
+                                           action="#{NotificationsConfigBean.saveNotificationAction}"/>
+                                <af:spacer width="10" height="10" id="SpcLoadOrder_111"/>
+                                <af:button text="Cancelar" id="BtnCancelAlt" icon="/images/cancelar.gif" shortDesc="Cierra el Popup." immediate="true"
+                                           action="#{NotificationsConfigBean.cancelSaveNotificationAction}"/>
+                            </af:panelGroupLayout>
+                        </af:panelGroupLayout>
+                    </af:panelWindow>
+                </af:popup>
+                
+                <!-- ################################### POPUP ELIMINAR ##################################################### !-->
+                <af:popup id="popupDelete" contentDelivery="lazyUncached"                          
+                          binding="#{NotificationsConfigBean.poPopupDeleteNotification}">
+                  <af:panelWindow id="PnlDelete" 
+                               inlineStyle="border-style:none;"
+                               modal="true" 
+                               closeIconVisible="false"
+                               title="Eliminar Notificación" 
+                               titleIconSource="/images/page_user_light.gif">
+                    <af:panelGroupLayout layout="vertical" 
+                                      id="PnlDeleteWsMsg" 
+                                      inlineStyle="border-style:none;" 
+                                      valign="middle" 
+                                      halign="center">
+                      <af:spacer width="10" height="10" id="SpcLogin_41aDel"/>
+                      <af:panelLabelAndMessage id="PnlLblMsg"
+                                               inlineStyle="border-style:none; color:Olive;"
+                                               binding="#{NotificationsConfigBean.poDeleteMsgLbl}"/>
+                         <af:spacer width="50" height="25" id="SpcLoadOrder_10"/>
+                            <af:outputText id="TxtIdBindingsDelete" 
+                            visible="false"
+                            binding="#{NotificationsConfigBean.poDeleteIdBinding}" />
+                            <af:panelGroupLayout layout="horizontal" id="PnlEliminarBtns" inlineStyle="border-style:none;" valign="middle" halign="center">
+                           <af:button text="Aceptar" id="BtnEliminarAceptar"
+                                             icon="/images/aceptar.gif"
+                                             action="#{NotificationsConfigBean.deleteNotificationAction}">
+                                <af:clientListener method="enforcePreventUserInput" type="action"/>
+                            </af:button>
+                           <af:spacer width="10" height="25" id="SpcLoadOrder_11"/>
+                           <af:button text="Cancelar" id="BtnEliminarCancelar"
+                                             icon="/images/cancelar.gif"
+                                             action="#{NotificationsConfigBean.cancelDeleteNotification}"/>
+                       </af:panelGroupLayout> 
+                    </af:panelGroupLayout>
+                  </af:panelWindow>
+                </af:popup>
+                
+                <!-- ################################### POPUP EDITAR ##################################################### !-->
+                <af:popup id="popupUdate" contentDelivery="lazyUncached"
+                          binding="#{NotificationsConfigBean.poPopupUpdateNotification}" partialTriggers="pt1:tblNot:LnkEditSweb">
+                    <af:panelWindow id="PnlUpdService" modal="true" closeIconVisible="false"
+                                    title="Editar Notificaciones" 
+                                    partialTriggers="pt1:tblNot:LnkEditSweb"
+                                    titleIconSource="/images/note_new.gif" styleClass="AFStretchWidth">
+                        <af:panelGroupLayout layout="vertical" id="PnlGrpUpdWs" 
+                        partialTriggers="pt1:tblNot:LnkEditSweb"
+                        valign="middle" halign="center" styleClass="AFStretchWidth">
+                            <af:panelFormLayout id="PnlFrmUpd" 
+                            partialTriggers="pt1:tblNot:LnkEditSweb"
+                            rows="14" maxColumns="1" inlineStyle="width:400px;">                                 
+                                 
+                                <af:inputText label="idNotificationFilter"                                                  
+                                          id="TxtFilterNotification"
+                                          visible="false"
+                                          binding="#{NotificationsConfigBean.poUpdateNotification}"/>
+                                          
+                                
+                                <af:inputText label="Servicio"
+                                      id="TxtFilterIdServicepud"
+                                      readOnly="true"
+                                      binding="#{NotificationsConfigBean.poUpdateService}"/>
+                                      
+                                <af:inputText label="idServiceUpdate"                                                  
+                                          id="TxtFilterServicepup"
+                                          visible="false"
+                                          binding="#{NotificationsConfigBean.poUpdateIdService}"/>
+                                          
+                                <af:selectOneChoice unselectedLabel="-- Seleccione --"
+                                                    label="Proceso"
+                                                    shortDesc="Proceso"
+                                                    id="soc6"                                                    
+                                                    binding="#{NotificationsConfigBean.poUpdateProcessSel}">
+                                    <f:selectItems value="#{NotificationsConfigBean.listProcess}" id="siupdupr"/>
+                                </af:selectOneChoice>
+                                 <af:inputText label="IdProceso"                                                  
+                                      id="TxtSaveIdProcesspud"
+                                      visible="false"
+                                      binding="#{NotificationsConfigBean.poUpdateIdProcess}"/>
+                                
+                                <af:selectOneChoice unselectedLabel="-- Seleccione --"
+                                                    label="Grupo de Usuarios"                                                                    
+                                                    shortDesc="Grupo de Usuarios"                                                    
+                                                    binding="#{NotificationsConfigBean.poUpdateUserGroupSel}"
+                                                    id="soc3pup">
+                                    <f:selectItems value="#{NotificationsConfigBean.listUsersGroup}" id="siupduus"/>
+                                </af:selectOneChoice>
+                                <af:inputText label="idUserGroup"                                                  
+                                  id="TxtUpdateIdUserGrouppup"
+                                  visible="false"
+                                  binding="#{NotificationsConfigBean.poUpdateIdUserGroup}"/>
+                                 
+                                <af:inputText id="TxtUpdateSubjectpup" label="Asunto"
+                                              columns="20" 
+                                              binding="#{NotificationsConfigBean.poUpdateSubject}">
+                                </af:inputText>       
+                                <af:inputText id="TxtUpdateMessagepup" label="Mensaje"
+                                              columns="20" 
+                                              binding="#{NotificationsConfigBean.poUpdateMessage}">
+                                </af:inputText>  
+                                 
+                                  <af:selectBooleanCheckbox text="" label="Estatus" id="sbcStaup"
+                                                          binding="#{NotificationsConfigBean.poUpdateStatus}"/>           
+                                
+                                <af:spacer width="10" height="10" id="spacer158Upd"/>
+                                <af:spacer width="10" height="10" id="spacer3Upd"/>
+                            </af:panelFormLayout>
+                            <af:panelGroupLayout id="PnlFrmBtnsPgUpd">
+                                <af:button text="Aceptar" id="BtnAceptUpd" icon="/images/aceptar.gif"
+                                            shortDesc="Guardar"
+                                           action="#{NotificationsConfigBean.updateNotificationAction}"/>
+                                <af:spacer width="10" height="10" id="SpcUpd111"/>
+                                <af:button text="Cancelar" id="BtnCancelAltUpd" icon="/images/cancelar.gif" shortDesc="Cierra el Popup." immediate="true"
+                                           action="#{NotificationsConfigBean.cancelUpdateNotificationAction}"/>
+                            </af:panelGroupLayout>
+                        </af:panelGroupLayout>
+                    </af:panelWindow>
+                </af:popup>
+                
+                <!-- ################################### POPUP LOADING .... ##################################### !-->
+                <af:popup id="p1oadLogin" contentDelivery="immediate">
+                  <af:dialog id="dLogin" type="none" title="Procesando Información" closeIconVisible="false">
+                    <af:panelGroupLayout id="Pnlpgl1Login" layout="vertical" halign="center">
+                      <af:image source="/images/loading_blue.gif" id="ImgIdxLoad" shortDesc="Cargando..."/>
+                      <af:outputText value="... por favor espere." id="LblIdxLoad1Login"/>
+                    </af:panelGroupLayout>
+                  </af:dialog>
+                </af:popup>
+                 
+                
+            </af:form>
+        </af:document>
+    </f:view>
+</jsp:root>

@@ -1,0 +1,22 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<oracle-webservice-clients xmlns:ns1="http://java.sun.com/xml/ns/javaee">
+   <webservice-client>
+      <service-qname namespaceURI="http://evendor.com.es/" localpart="WSNeptuno"/>
+      <port-info>
+         <wsdl-port namespaceURI="http://evendor.com.es/" localpart="WSNeptunoSoap"/>
+         <runtime/>
+         <operations>
+            <operation name="recibirDatosExternos"/>
+            <operation name="consultarEstadoProceso"/>
+         </operations>
+      </port-info>
+      <port-info>
+         <wsdl-port namespaceURI="http://evendor.com.es/" localpart="WSNeptunoSoap12"/>
+         <runtime/>
+         <operations>
+            <operation name="recibirDatosExternos"/>
+            <operation name="consultarEstadoProceso"/>
+         </operations>
+      </port-info>
+   </webservice-client>
+</oracle-webservice-clients>

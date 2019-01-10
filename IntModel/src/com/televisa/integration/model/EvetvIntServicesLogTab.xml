@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="EvetvIntServicesLogTab"
+  Version="12.1.3.10.8"
+  InheritPersonalization="merge"
+  DBObjectType="table"
+  DBObjectName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB"
+  AliasName="EvetvIntServicesLogTab"
+  BindingStyle="JDBC">
+  <Attribute
+    Name="IdLogServices"
+    IsNotNull="true"
+    ColumnName="ID_LOG_SERVICES"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="IdService"
+    ColumnName="ID_SERVICE"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB"
+    IsNotNull="true"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="IndProcess"
+    ColumnName="IND_PROCESS"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB"/>
+  <Attribute
+    Name="IndResponse"
+    Precision="1"
+    ColumnName="IND_RESPONSE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="NumUser"
+    ColumnName="NUM_USER"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB"/>
+  <Attribute
+    Name="FecResponse"
+    ColumnName="FEC_RESPONSE"
+    SQLType="TIMESTAMP"
+    Type="java.sql.Timestamp"
+    ColumnType="TIMESTAMP"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB"/>
+  <Attribute
+    Name="FecRequest"
+    ColumnName="FEC_REQUEST"
+    SQLType="TIMESTAMP"
+    Type="java.sql.Timestamp"
+    ColumnType="TIMESTAMP"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB"/>
+  <Attribute
+    Name="NumEvtbProcessId"
+    ColumnName="NUM_EVTB_PROCESS_ID"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB"/>
+  <Attribute
+    Name="NumPgmProcessId"
+    ColumnName="NUM_PGM_PROCESS_ID"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB"/>
+  <Attribute
+    Name="IndEstatus"
+    Precision="1"
+    ColumnName="IND_ESTATUS"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="AttributeCategory"
+    Precision="150"
+    ColumnName="ATTRIBUTE_CATEGORY"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute1"
+    Precision="150"
+    ColumnName="ATTRIBUTE1"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute2"
+    Precision="150"
+    ColumnName="ATTRIBUTE2"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute3"
+    Precision="150"
+    ColumnName="ATTRIBUTE3"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute4"
+    Precision="150"
+    ColumnName="ATTRIBUTE4"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute5"
+    Precision="150"
+    ColumnName="ATTRIBUTE5"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute6"
+    Precision="150"
+    ColumnName="ATTRIBUTE6"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute7"
+    Precision="150"
+    ColumnName="ATTRIBUTE7"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute8"
+    Precision="150"
+    ColumnName="ATTRIBUTE8"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute9"
+    Precision="150"
+    ColumnName="ATTRIBUTE9"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute10"
+    Precision="150"
+    ColumnName="ATTRIBUTE10"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute11"
+    Precision="150"
+    ColumnName="ATTRIBUTE11"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute12"
+    Precision="150"
+    ColumnName="ATTRIBUTE12"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute13"
+    Precision="150"
+    ColumnName="ATTRIBUTE13"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute14"
+    Precision="150"
+    ColumnName="ATTRIBUTE14"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute15"
+    Precision="150"
+    ColumnName="ATTRIBUTE15"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="FecCreationDate"
+    IsNotNull="true"
+    ColumnName="FEC_CREATION_DATE"
+    SQLType="TIMESTAMP"
+    Type="java.sql.Timestamp"
+    ColumnType="TIMESTAMP"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="NumCreatedBy"
+    IsNotNull="true"
+    ColumnName="NUM_CREATED_BY"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB"/>
+  <Attribute
+    Name="FecLastUpdateDate"
+    IsNotNull="true"
+    ColumnName="FEC_LAST_UPDATE_DATE"
+    SQLType="TIMESTAMP"
+    Type="java.sql.Timestamp"
+    ColumnType="TIMESTAMP"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB"/>
+  <Attribute
+    Name="NumLastUpdatedBy"
+    IsNotNull="true"
+    ColumnName="NUM_LAST_UPDATED_BY"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB"/>
+  <Attribute
+    Name="NumLastUpdateLogin"
+    ColumnName="NUM_LAST_UPDATE_LOGIN"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_SERVICES_LOG_TAB"/>
+  <Key
+    Name="EventasEvetvIntServicesLogTabIdServiceCheck">
+    <DesignTime>
+      <Attr Name="_isNotNull" Value="true"/>
+      <Attr Name="_DBObjectName" Value="EVENTAS_EVETV_INT_SERVICES_LOG"/>
+      <Attr Name="_checkCondition" Value='"ID_SERVICE" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="com.televisa.integration.model.EvetvIntServicesLogTab.IdService"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="QEventasEvetv00009IdLo0000100001"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="Q_EVENTAS_EVETV00009_ID_LO00001_00001"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="com.televisa.integration.model.EvetvIntServicesLogTab.IdLogServices"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesLogTab.IdService"/>
+      <Item Value="com.televisa.integration.model.EvetvIntServicesLogTab.FecCreationDate"/>
+    </AttrArray>
+  </Key>
+</Entity>

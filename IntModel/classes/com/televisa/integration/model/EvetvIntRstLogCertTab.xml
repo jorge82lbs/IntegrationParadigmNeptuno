@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="EvetvIntRstLogCertTab"
+  Version="12.1.3.10.8"
+  InheritPersonalization="merge"
+  DBObjectType="table"
+  DBObjectName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+  AliasName="EvetvIntRstLogCertTab"
+  BindingStyle="JDBC">
+  <Attribute
+    Name="IdRequest"
+    ColumnName="ID_REQUEST"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="IdService"
+    ColumnName="ID_SERVICE"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="Bcsttim"
+    Precision="150"
+    ColumnName="BCSTTIM"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Channelid"
+    Precision="150"
+    ColumnName="CHANNELID"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Date"
+    Precision="150"
+    ColumnName="DATE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Orderid"
+    Precision="150"
+    ColumnName="ORDERID"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Spotid"
+    Precision="150"
+    ColumnName="SPOTID"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Buyuntid"
+    Precision="150"
+    ColumnName="BUYUNTID"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Breakid"
+    Precision="150"
+    ColumnName="BREAKID"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Hour"
+    Precision="150"
+    ColumnName='"HOUR"'
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Duration"
+    Precision="150"
+    ColumnName="DURATION"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Spotformatid"
+    Precision="150"
+    ColumnName="SPOTFORMATID"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Mediaid"
+    Precision="150"
+    ColumnName="MEDIAID"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Productid"
+    Precision="150"
+    ColumnName="PRODUCTID"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Spotprice"
+    Precision="150"
+    ColumnName="SPOTPRICE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="IndEstatus"
+    Precision="1"
+    ColumnName="IND_ESTATUS"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="IndDescNeptuno"
+    Precision="250"
+    ColumnName="IND_DESC_NEPTUNO"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="250"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="IdProcessNeptuno"
+    ColumnName="ID_PROCESS_NEPTUNO"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="AttributeCategory"
+    Precision="150"
+    ColumnName="ATTRIBUTE_CATEGORY"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute1"
+    Precision="150"
+    ColumnName="ATTRIBUTE1"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute2"
+    Precision="150"
+    ColumnName="ATTRIBUTE2"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute3"
+    Precision="150"
+    ColumnName="ATTRIBUTE3"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute4"
+    Precision="150"
+    ColumnName="ATTRIBUTE4"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute5"
+    Precision="150"
+    ColumnName="ATTRIBUTE5"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute6"
+    Precision="150"
+    ColumnName="ATTRIBUTE6"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute7"
+    Precision="150"
+    ColumnName="ATTRIBUTE7"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute8"
+    Precision="150"
+    ColumnName="ATTRIBUTE8"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute9"
+    Precision="150"
+    ColumnName="ATTRIBUTE9"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute10"
+    Precision="150"
+    ColumnName="ATTRIBUTE10"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute11"
+    Precision="150"
+    ColumnName="ATTRIBUTE11"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute12"
+    Precision="150"
+    ColumnName="ATTRIBUTE12"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute13"
+    Precision="150"
+    ColumnName="ATTRIBUTE13"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute14"
+    Precision="150"
+    ColumnName="ATTRIBUTE14"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Attribute15"
+    Precision="150"
+    ColumnName="ATTRIBUTE15"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="FecCreationDate"
+    IsNotNull="true"
+    ColumnName="FEC_CREATION_DATE"
+    SQLType="TIMESTAMP"
+    Type="java.sql.Timestamp"
+    ColumnType="TIMESTAMP"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="NumCreatedBy"
+    IsNotNull="true"
+    ColumnName="NUM_CREATED_BY"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="FecLastUpdateDate"
+    IsNotNull="true"
+    ColumnName="FEC_LAST_UPDATE_DATE"
+    SQLType="TIMESTAMP"
+    Type="java.sql.Timestamp"
+    ColumnType="TIMESTAMP"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="NumLastUpdatedBy"
+    IsNotNull="true"
+    ColumnName="NUM_LAST_UPDATED_BY"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="NumLastUpdateLogin"
+    ColumnName="NUM_LAST_UPDATE_LOGIN"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_RST_LOG_CERT_TAB"
+    PrimaryKey="true"/>
+  <Key
+    Name="EvetvintrstlogcerttabPrimaryKey"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="EVETVINTRSTLOGCERTTAB_PRIMARY_"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.IdRequest"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.IdService"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Bcsttim"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Channelid"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Date"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Orderid"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Spotid"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Buyuntid"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Breakid"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Hour"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Duration"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Spotformatid"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Mediaid"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Productid"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Spotprice"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.IndEstatus"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.IndDescNeptuno"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.IdProcessNeptuno"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.AttributeCategory"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Attribute1"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Attribute2"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Attribute3"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Attribute4"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Attribute5"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Attribute6"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Attribute7"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Attribute8"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Attribute9"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Attribute10"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Attribute11"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Attribute12"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Attribute13"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Attribute14"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.Attribute15"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.FecCreationDate"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.NumCreatedBy"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.FecLastUpdateDate"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.NumLastUpdatedBy"/>
+      <Item Value="com.televisa.integration.model.EvetvIntRstLogCertTab.NumLastUpdateLogin"/>
+    </AttrArray>
+  </Key>
+</Entity>

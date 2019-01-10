@@ -1,0 +1,47 @@
+<WL5G3N0:definitions
+     name="SecmanDasUsuarioPermisosService"
+     targetNamespace="http://webServices.view.secman.televisa.com.mx/"
+     xmlns:WL5G3N2="http://schemas.xmlsoap.org/wsdl/soap/"
+     xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:WL5G3N1="http://webServices.view.secman.televisa.com.mx/"
+    >
+    <WL5G3N0:types>
+        <xsd:schema xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://webServices.view.secman.televisa.com.mx/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://xmlns.soin.tvsa.com/Secman/Servicios/UsuarioPermisos" schemaLocation="SecmanDasPermisosUsuarioProxy_SCHEMA_2FSecman_2FWSDL_2FXMLSchema_10860048.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://webServices.view.secman.televisa.com.mx/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://webServices.view.secman.televisa.com.mx/" schemaLocation="SecmanDasPermisosUsuarioProxy_SCHEMA_2FSecman_2FWSDL_2FXMLSchema_1786091311.xsd"/>
+        </xsd:schema>
+    </WL5G3N0:types>
+    <WL5G3N0:message name="obtenerRolTareaPermisos">
+        <WL5G3N0:part name="parameters" element="WL5G3N1:obtenerRolTareaPermisos"/>
+    </WL5G3N0:message>
+    <WL5G3N0:message name="obtenerRolTareaPermisosResponse">
+        <WL5G3N0:part name="parameters" element="WL5G3N1:obtenerRolTareaPermisosResponse"/>
+    </WL5G3N0:message>
+    <WL5G3N0:portType name="SecmanDasUsuarioPermisos">
+        <WL5G3N0:operation name="obtenerRolTareaPermisos">
+            <WL5G3N0:input message="WL5G3N1:obtenerRolTareaPermisos"/>
+            <WL5G3N0:output message="WL5G3N1:obtenerRolTareaPermisosResponse"/>
+        </WL5G3N0:operation>
+    </WL5G3N0:portType>
+    <WL5G3N0:binding name="SecmanDasUsuarioPermisosPortBinding" type="WL5G3N1:SecmanDasUsuarioPermisos">
+        <WL5G3N2:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <WL5G3N0:operation name="obtenerRolTareaPermisos">
+            <WL5G3N2:operation/>
+            <WL5G3N0:input>
+                <WL5G3N2:body use="literal"/>
+            </WL5G3N0:input>
+            <WL5G3N0:output>
+                <WL5G3N2:body use="literal"/>
+            </WL5G3N0:output>
+        </WL5G3N0:operation>
+    </WL5G3N0:binding>
+    <WL5G3N0:service name="SecmanDasUsuarioPermisosService">
+        <WL5G3N0:port name="SecmanDasUsuarioPermisosPort" binding="WL5G3N1:SecmanDasUsuarioPermisosPortBinding">
+            <WL5G3N2:address location="http://tvmiddev1.televisa.net:10106/SecmanWebServicesPi/SecmanDasUsuarioPermisosPort?WSDL"/>
+        </WL5G3N0:port>
+    </WL5G3N0:service>
+</WL5G3N0:definitions>

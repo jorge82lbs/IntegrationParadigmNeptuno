@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:ns0="http://com/televisa/comer/integration/service/beans/pgm/ventamodulos" 
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+            targetNamespace="http://com/televisa/comer/integration/service/beans/pgm/ventamodulos"
+            attributeFormDefault="qualified"
+            elementFormDefault="qualified"
+            >
+   <xsd:complexType name="CommercialList">
+      <xsd:sequence>
+         <xsd:element name="Mode" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="Campaign" type="ns0:Campaign" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="Campaign">
+      <xsd:sequence>
+        <xsd:element name="Action" type="xsd:string" minOccurs="1"/>
+        <xsd:element name="OrderID" type="xsd:string" minOccurs="1"/>
+        <xsd:element name="AgencyID" type="xsd:string" minOccurs="1"/>
+        <xsd:element name="AdvertirserID" type="xsd:string" minOccurs="1"/>
+        <xsd:element name="InitialDate" type="xsd:string" minOccurs="1"/>
+        <xsd:element name="EndDate" type="xsd:string" minOccurs="1"/>
+        <xsd:element name="MasterContract" type="xsd:string" minOccurs="1"/>
+        <xsd:element name="RateCard" type="xsd:string" minOccurs="1"/>
+        <xsd:element name="TargetID" type="xsd:string" />
+         <xsd:element name="Channel" type="ns0:Channel" maxOccurs="unbounded"/>
+         <xsd:element name="Spot" type="ns0:Spot" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="Channel">
+      <xsd:sequence>
+         <xsd:element name="ChannelID" type="xsd:string" minOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="Spot">
+      <xsd:sequence>
+         <xsd:element name="Action" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="SpotID" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="Date" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="BuyUnitID" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="BreakID" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="Hour" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="Duration" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="ChannelID" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="SpotFormatID" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="SpotComments" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="MediaID" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="ProductID" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="BookingPos" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="SpotPrice" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="Revenue" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="Priority" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="Digital" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="Paga" type="xsd:string" minOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="RecibirDatosExternosResponse">
+      <xsd:sequence>
+         <xsd:element name="RecibirDatosExternosResult" type="ns0:RecibirDatosExternosResult" minOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="RecibirDatosExternosResult">
+      <xsd:sequence>
+         <xsd:element name="CodRespuesta" type="ns0:CodRespuesta" minOccurs="1"/>         
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="CodRespuesta">
+      <xsd:sequence>
+         <xsd:element name="ItemCabecera" type="ns0:ItemCabecera" maxOccurs="unbounded"/>         
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="ItemCabecera">
+      <xsd:sequence>
+         <xsd:element name="ProcessID" type="xsd:string" minOccurs="1"/>         
+         <xsd:element name="Resultado" type="xsd:string" minOccurs="1"/>         
+         <xsd:element name="TipoProceso" type="xsd:string" minOccurs="1"/>         
+         <xsd:element name="ItemRespuesta" type="ns0:ItemRespuesta" maxOccurs="unbounded"/>         
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="ItemRespuesta">
+      <xsd:sequence>
+         <xsd:element name="Elemento" type="xsd:string" minOccurs="1"/>         
+         <xsd:element name="IdElemento" type="xsd:string" minOccurs="1"/>         
+         <xsd:element name="Resultado" type="xsd:string" minOccurs="1"/>         
+         <xsd:element name="ListaMensaje" type="ns0:ListaMensaje" minOccurs="0"/>         
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="ListaMensaje">
+      <xsd:sequence>
+         <xsd:element name="IdError" type="xsd:string" minOccurs="1"/>         
+         <xsd:element name="Descripcion" type="xsd:string" minOccurs="1"/>           
+      </xsd:sequence>
+   </xsd:complexType>
+   
+</xsd:schema>

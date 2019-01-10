@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:ns0="http://com/televisa/comer/integration/service/beans/request/programs" 
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+            targetNamespace="http://com/televisa/comer/integration/service/beans/request/programs"
+            attributeFormDefault="qualified"
+            elementFormDefault="qualified"
+            >
+   <xsd:complexType name="RAIZ">
+      <xsd:sequence>   
+         <xsd:element name="Programas" type="ns0:Programa" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="Programa">
+      <xsd:sequence>
+         <xsd:element name="externoIDPrograma" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="descripcionPrograma" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="indActivo" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="indTarifaPrograma" type="xsd:string" minOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   
+</xsd:schema>

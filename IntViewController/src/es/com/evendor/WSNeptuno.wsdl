@@ -1,0 +1,155 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://evendor.com.es/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://evendor.com.es/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation>Web Service de Evendor EveTv</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://evendor.com.es/">
+      <s:element name="RecibirDatosExternos">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xmlentrada">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="1" maxOccurs="1" name="esOffline" type="s:boolean"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RecibirDatosExternosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RecibirDatosExternosResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AuthHeader" type="tns:AuthHeader"/>
+      <s:complexType name="AuthHeader">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="UsuarioLogadoID" type="s:string"/>
+        </s:sequence>
+        <s:anyAttribute/>
+      </s:complexType>
+      <s:element name="ConsultarEstadoProceso">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xmlentrada">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultarEstadoProcesoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ConsultarEstadoProcesoResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="RecibirDatosExternosSoapIn">
+    <wsdl:part name="parameters" element="tns:RecibirDatosExternos"/>
+  </wsdl:message>
+  <wsdl:message name="RecibirDatosExternosSoapOut">
+    <wsdl:part name="parameters" element="tns:RecibirDatosExternosResponse"/>
+  </wsdl:message>
+  <wsdl:message name="RecibirDatosExternosAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader"/>
+  </wsdl:message>
+  <wsdl:message name="ConsultarEstadoProcesoSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsultarEstadoProceso"/>
+  </wsdl:message>
+  <wsdl:message name="ConsultarEstadoProcesoSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsultarEstadoProcesoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ConsultarEstadoProcesoAuthHeader">
+    <wsdl:part name="AuthHeader" element="tns:AuthHeader"/>
+  </wsdl:message>
+  <wsdl:portType name="WSNeptunoSoap">
+    <wsdl:operation name="RecibirDatosExternos">
+      <wsdl:documentation>El método recibe un XML y un booleano esOnline (1 - offline / 0 - online) y devuelve un XML</wsdl:documentation>
+      <wsdl:input message="tns:RecibirDatosExternosSoapIn"/>
+      <wsdl:output message="tns:RecibirDatosExternosSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarEstadoProceso">
+      <wsdl:documentation>El método recibe un XML con el IdProceso y devuelve un XML con el estado del proceso</wsdl:documentation>
+      <wsdl:input message="tns:ConsultarEstadoProcesoSoapIn"/>
+      <wsdl:output message="tns:ConsultarEstadoProcesoSoapOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSNeptunoSoap" type="tns:WSNeptunoSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="RecibirDatosExternos">
+      <soap:operation soapAction="http://evendor.com.es/RecibirDatosExternos" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <soap:header message="tns:RecibirDatosExternosAuthHeader" part="AuthHeader" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarEstadoProceso">
+      <soap:operation soapAction="http://evendor.com.es/ConsultarEstadoProceso" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <soap:header message="tns:ConsultarEstadoProcesoAuthHeader" part="AuthHeader" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WSNeptunoSoap12" type="tns:WSNeptunoSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="RecibirDatosExternos">
+      <soap12:operation soapAction="http://evendor.com.es/RecibirDatosExternos" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:RecibirDatosExternosAuthHeader" part="AuthHeader" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarEstadoProceso">
+      <soap12:operation soapAction="http://evendor.com.es/ConsultarEstadoProceso" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:ConsultarEstadoProcesoAuthHeader" part="AuthHeader" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WSNeptuno">
+    <wsdl:documentation>Web Service de Evendor EveTv</wsdl:documentation>
+    <wsdl:port name="WSNeptunoSoap" binding="tns:WSNeptunoSoap">
+      <soap:address location="http://10.7.15.178:8080/WSNeptuno.asmx"/>
+    </wsdl:port>
+    <wsdl:port name="WSNeptunoSoap12" binding="tns:WSNeptunoSoap12">
+      <soap12:address location="http://10.7.15.178:8080/WSNeptuno.asmx"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

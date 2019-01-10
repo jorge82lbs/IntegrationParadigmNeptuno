@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <f:view>
+        <af:document title="Inicio" id="d1" smallIconSource="/images/icon_get_world.gif">
+            <af:form id="f1">
+                <af:pageTemplate viewId="/templates/integrationTemplate.jspx" id="pt1">
+                    <f:facet name="content">
+                    <af:panelGroupLayout layout="scroll" id="PnlCont"
+                                             inlineStyle="border-style:none;">
+                        <!--<af:button text="Aceptar" id="BtnAceptAltWs" icon="/images/aceptar.gif"
+                                   shortDesc="Test"
+                                   action="#{LoginBean.testAction2}"/>-->
+                    </af:panelGroupLayout>
+                    </f:facet>
+                </af:pageTemplate>
+            </af:form>
+        </af:document>
+    </f:view>
+</jsp:root>

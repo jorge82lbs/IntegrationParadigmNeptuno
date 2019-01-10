@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="CodRespuesta">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ItemCabecera">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ProcessID" />
+              <xs:element name="Resultado" />
+              <xs:element name="TipoProceso" />
+              <xs:element name="ItemRespuesta">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Elemento" />
+                    <xs:element name="IdElemento" />
+                    <xs:element name="Resultado" />
+                    <xs:element name="ListaMensaje" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="IdCodigo" />
+                          <xs:element name="Descripcion" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

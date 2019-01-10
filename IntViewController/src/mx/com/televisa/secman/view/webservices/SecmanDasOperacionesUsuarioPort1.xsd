@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:tns="http://xmlns.soin.tvsa.com/Secman/Servicios/UsuarioPermisos" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://xmlns.soin.tvsa.com/Secman/Servicios/UsuarioPermisos">
+  <xs:complexType name="PermisosUsuarioInputParameters">
+    <xs:sequence>
+      <xs:element name="UserName" type="xs:string"/>
+      <xs:element name="nomAplicacion" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OperacionesUsuarioOutputParameters">
+    <xs:sequence>
+      <xs:element name="UserName" type="tns:UserName"/>
+      <xs:element name="AplicacionName" type="tns:NomAplicacion"/>
+      <xs:element name="OperacionesCollection" type="tns:OperacionesCollection"/>
+      <xs:element name="Error" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UserName">
+    <xs:sequence>
+      <xs:element name="UserName" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute ref="tns:DescriptionName"/>
+  </xs:complexType>
+  <xs:complexType name="NomAplicacion">
+    <xs:sequence>
+      <xs:element name="NomAplicacion" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute ref="tns:DescriptionName"/>
+  </xs:complexType>
+  <xs:complexType name="OperacionesCollection">
+    <xs:sequence>
+      <xs:element name="Operacion" type="tns:Operacion" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Operacion">
+    <xs:sequence>
+      <xs:element name="OperacionId" type="tns:OperacionId"/>
+      <xs:element name="OperacionName" type="tns:OperacionName"/>
+      <xs:element name="OperacionDesc" type="tns:OperacionDesc"/>
+      <xs:element name="OperacionNum" type="tns:OperacionNum"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OperacionId">
+    <xs:sequence>
+      <xs:element name="OperacionId" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute ref="tns:DescriptionId"/>
+  </xs:complexType>
+  <xs:complexType name="OperacionName">
+    <xs:sequence>
+      <xs:element name="OperacionName" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute ref="tns:DescriptionName"/>
+  </xs:complexType>
+  <xs:complexType name="OperacionDesc">
+    <xs:sequence>
+      <xs:element name="OperacionDesc" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute ref="tns:DescriptionName"/>
+  </xs:complexType>
+  <xs:complexType name="OperacionNum">
+    <xs:sequence>
+      <xs:element name="OperacionNum" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute ref="tns:DescriptionName"/>
+  </xs:complexType>
+  <xs:attribute name="DescriptionId" type="xs:string"/>
+  <xs:attribute name="DescriptionName" type="xs:string"/>
+</xs:schema>

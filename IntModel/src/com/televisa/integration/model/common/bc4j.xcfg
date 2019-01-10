@@ -1,0 +1,16 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<BC4JConfig version="11.1" xmlns="http://xmlns.oracle.com/bc4j/configuration">
+   <AppModuleConfigBag ApplicationName="com.televisa.integration.model.AppModuleIntergration">
+      <AppModuleConfig DeployPlatform="LOCAL" name="AppModuleIntergrationLocal" ApplicationName="com.televisa.integration.model.AppModuleIntergration" jbo.project="com.televisa.integration.model.IntModel" java.naming.factory.initial="oracle.jbo.common.JboInitialContextFactory">
+         <Database jbo.locking.mode="optimistic" jbo.sql92.JdbcDriverClass="com.ibm.as400.access.AS400JDBCDriver" jbo.TypeMapEntries="Java" jbo.SQLBuilder="SQL92"/>
+         <Security AppModuleJndiName="com.televisa.integration.model.AppModuleIntergration"/>
+         <Custom ns0:ns0="http://xmlns.oracle.com/bc4j/configuration" ns0:JDBCDataSource="jdbc/MOR_DS_PG1" xmlns:ns0="http://xmlns.oracle.com/bc4j/configuration"/>
+      </AppModuleConfig>
+      <AppModuleConfig jbo.project="com.televisa.integration.model.IntModel" ApplicationName="com.televisa.integration.model.AppModuleIntergration" DeployPlatform="LOCAL" name="AppModuleIntergrationShared" java.naming.factory.initial="oracle.jbo.common.JboInitialContextFactory">
+         <AM-Pooling jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.resetnontransactionalstate="false" jbo.ampool.maxpoolsize="1" jbo.ampool.isuseexclusive="false"/>
+         <Database jbo.TypeMapEntries="Java" jbo.sql92.JdbcDriverClass="com.ibm.as400.access.AS400JDBCDriver" jbo.locking.mode="optimistic" jbo.SQLBuilder="SQL92"/>
+         <Security AppModuleJndiName="com.televisa.integration.model.AppModuleIntergration"/>
+         <Custom ns0:JDBCDataSource="jdbc/MOR_DS_PG1" ns0:ns0="http://xmlns.oracle.com/bc4j/configuration" xmlns:ns0="http://xmlns.oracle.com/bc4j/configuration"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+</BC4JConfig>

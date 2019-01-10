@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.10.8" id="servicesConfigPagePageDef"
+                Package="pages">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="EvetvIntServicesCatTabView1" DataControl="AppModuleIntergrationDataControl"
+              id="EvetvIntServicesCatTabView1Iterator"/>
+    <searchRegion Binds="EvetvIntServicesCatTabView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="EvetvIntServicesCatTabView1Query"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="EvetvIntServicesCatTabView1Iterator" id="EvetvIntServicesCatTabView1">
+      <nodeDefinition DefName="com.televisa.integration.model.EvetvIntServicesCatTabView"
+                      Name="EvetvIntServicesCatTabView10">
+        <AttrNames>
+          <Item Value="IdService"/>
+          <Item Value="NomService"/>
+          <Item Value="IndServiceWsdl"/>
+          <Item Value="IndOrigin"/>
+          <Item Value="IndDestiny"/>
+          <Item Value="IndSystem"/>
+          <Item Value="IndSynchronous"/>
+          <Item Value="IndEstatus"/>
+          <Item Value="AttributeCategory"/>
+          <Item Value="Attribute1"/>
+          <Item Value="Attribute2"/>
+          <Item Value="Attribute3"/>
+          <Item Value="Attribute4"/>
+          <Item Value="Attribute5"/>
+          <Item Value="Attribute6"/>
+          <Item Value="Attribute7"/>
+          <Item Value="Attribute8"/>
+          <Item Value="Attribute9"/>
+          <Item Value="Attribute10"/>
+          <Item Value="Attribute11"/>
+          <Item Value="Attribute12"/>
+          <Item Value="Attribute13"/>
+          <Item Value="Attribute14"/>
+          <Item Value="Attribute15"/>
+          <Item Value="FecCreationDate"/>
+          <Item Value="NumCreatedBy"/>
+          <Item Value="FecLastUpdateDate"/>
+          <Item Value="NumLastUpdatedBy"/>
+          <Item Value="NumLastUpdateLogin"/>
+          <Item Value="IndDescService"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

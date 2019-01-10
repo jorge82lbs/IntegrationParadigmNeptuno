@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="EvetvIntNotificationsTblVw"
+  Version="12.1.3.10.8"
+  InheritPersonalization="merge"
+  DBObjectType="table"
+  DBObjectName="EVENTAS.EVETV_INT_NOTIFICATIONS_TBL_VW"
+  AliasName="EvetvIntNotificationsTblVw"
+  BindingStyle="JDBC">
+  <Attribute
+    Name="IdNotification"
+    ColumnName="ID_NOTIFICATION"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_NOTIFICATIONS_TBL_VW"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="IdService"
+    ColumnName="ID_SERVICE"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_NOTIFICATIONS_TBL_VW"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="NomService"
+    Precision="150"
+    ColumnName="NOM_SERVICE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_NOTIFICATIONS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="IndProcess"
+    ColumnName="IND_PROCESS"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    TableName="EVENTAS.EVETV_INT_NOTIFICATIONS_TBL_VW"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="IndProcessNom"
+    Precision="50"
+    ColumnName="IND_PROCESS_NOM"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_NOTIFICATIONS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="IndUsersGroup"
+    Precision="150"
+    ColumnName="IND_USERS_GROUP"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_NOTIFICATIONS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="DesUsersGroup"
+    Precision="350"
+    ColumnName="DES_USERS_GROUP"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_NOTIFICATIONS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="350"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="IndSubject"
+    Precision="150"
+    ColumnName="IND_SUBJECT"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_NOTIFICATIONS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="IndMessage"
+    Precision="550"
+    ColumnName="IND_MESSAGE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_NOTIFICATIONS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="550"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="IndEstatus"
+    Precision="1"
+    ColumnName="IND_ESTATUS"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="EVENTAS.EVETV_INT_NOTIFICATIONS_TBL_VW"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </Attribute>
+  <Key
+    Name="EvetvintnotificationstblvwPrimaryKey"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="EVETVINTNOTIFICATIONSTBLVW_PRI"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="com.televisa.integration.model.EvetvIntNotificationsTblVw.IdNotification"/>
+      <Item Value="com.televisa.integration.model.EvetvIntNotificationsTblVw.IdService"/>
+      <Item Value="com.televisa.integration.model.EvetvIntNotificationsTblVw.NomService"/>
+      <Item Value="com.televisa.integration.model.EvetvIntNotificationsTblVw.IndProcess"/>
+      <Item Value="com.televisa.integration.model.EvetvIntNotificationsTblVw.IndProcessNom"/>
+      <Item Value="com.televisa.integration.model.EvetvIntNotificationsTblVw.IndUsersGroup"/>
+      <Item Value="com.televisa.integration.model.EvetvIntNotificationsTblVw.DesUsersGroup"/>
+      <Item Value="com.televisa.integration.model.EvetvIntNotificationsTblVw.IndSubject"/>
+      <Item Value="com.televisa.integration.model.EvetvIntNotificationsTblVw.IndMessage"/>
+      <Item Value="com.televisa.integration.model.EvetvIntNotificationsTblVw.IndEstatus"/>
+    </AttrArray>
+  </Key>
+</Entity>

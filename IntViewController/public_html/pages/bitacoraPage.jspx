@@ -1,0 +1,298 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <f:view>
+        <af:document title="Bitácora de Servicios" id="d1" smallIconSource="/images/icon_world.gif">
+            <af:messages id="m1"/>
+            <af:form id="f1">
+            <af:resource type="javascript">
+                    function enforcePreventUserInput(evt) {                    
+                        var popup = AdfPage.PAGE.findComponentByAbsoluteId('p1oadLogin');
+                        if (popup != null) {
+                            AdfPage.PAGE.addBusyStateListener(popup, handleBusyState);
+                            evt.preventUserInput();
+                        }
+                    }
+                
+                    function handleBusyState(evt) {
+                        var popup = AdfPage.PAGE.findComponentByAbsoluteId('p1oadLogin');
+                        if (popup != null) {
+                            if (evt.isBusy()) {
+                                popup.show();
+                            }
+                            else {
+                                popup.hide();
+                                AdfPage.PAGE.removeBusyStateListener(popup, handleBusyState);
+                            }
+                        }
+                    }        
+                </af:resource>
+                <af:pageTemplate viewId="/templates/integrationTemplate.jspx" id="pt1">
+                    <f:facet name="content">
+                     <af:panelGroupLayout layout="scroll" id="PnlCont"
+                                             inlineStyle="border-style:none;">
+                            <af:panelHeader text="Bitacora de Servicios Paradigm-Neptuno" id="PnlHead"
+                                type="default"
+                                messageType="none"
+                                shortDesc="Bitacora de Servicios Paradigm-Neptuno"
+                                inlineStyle="border-style:none;">
+                            <f:facet name="toolbar">
+                                <af:statusIndicator id="StiIndicator" shortDesc="Status Indicator"/>
+                            </f:facet>
+                            </af:panelHeader>
+                            <af:separator id="sepTitle"/>
+                            <af:panelGroupLayout layout="horizontal" id="PnlGpTbl" styleClass="AFStretchWidth"
+                                                 valign="top" halign="left" 
+                                                 inlineStyle="border-style:none; height:415px;">
+                            <af:panelSplitter id="PnlSpliMain" splitterPosition="302"
+                                      inlineStyle="width:1350px; "
+                                      collapsed="false"
+                                      firstBorder="skin">
+                                <f:facet name="first">
+                                    <af:panelGroupLayout layout="scroll"
+                                                         xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                                                         id="PnlGpAln">
+                                          <af:outputFormatted value="Opciones de Búsqueda" id="LblBsc"
+                                                            inlineStyle="color:Olive; font-weight:bold; 
+                                                            font-size:small; text-align:left;"/>
+                                        <af:separator id="sdedew"/>
+                                        <af:panelGroupLayout layout="horizontal" id="PnlUtil" halign="right"
+                                                            inlineStyle="border-style:none;">
+                                            <af:link text=" " id="BtnReset" 
+                                                     icon="/images/action_refresh_blue.gif" partialSubmit="true"
+                                                     shortDesc="Reiniciar valores de búsqueda"
+                                                     actionListener="#{BitacoraBean.resetFilterValues}">
+                                            </af:link>
+                                            <af:spacer id="SpcAx" width="10" height="5"/>
+                                            
+                                            <af:link icon="/images/excel.gif"
+                                                               id="LnkExel"
+                                                               inlineStyle="text-align:center;"                                                   
+                                                               shortDesc="Exportar a Excel">
+                                                <af:exportCollectionActionListener exportedId="tblBit"
+                                                                           type="excelHTML"
+                                                                           filename="LogXLS.xls"/>
+                                            </af:link>
+                                            
+                                            <af:spacer id="SpcAxTbl" width="10" height="5"/>
+                                            <af:link text=" " id="BtnResetTbl"
+                                                            icon="/images/restaurar.gif" 
+                                                            shortDesc="Reiniciar tabla"
+                                                     action="#{BitacoraBean.refreshMainTable}">
+                                            </af:link>
+                                        </af:panelGroupLayout>
+                                        <af:panelFormLayout id="PnlSearch" rows="14"
+                                                          maxColumns="1">
+                                            <af:selectOneChoice unselectedLabel="-- Seleccione --"
+                                                                label="Servicio Web"
+                                                                binding="#{BitacoraBean.poFilterServiceSel}"
+                                                                shortDesc="Servicio Web"
+                                                                partialTriggers="BtnReset"
+                                                                id="soc1">
+                                                <f:selectItems value="#{BitacoraBean.listWebServices}" id="sid1"/>
+                                            </af:selectOneChoice>
+                                            <af:inputText label="idServiceFilter"                                                  
+                                                  id="TxtFilterIdService"
+                                                  visible="false"
+                                                  partialTriggers="soc1 BtnReset"
+                                                  binding="#{BitacoraBean.poFilterIdService}"/>
+                                                  
+                                            <af:selectOneChoice unselectedLabel="-- Seleccione --"
+                                                                label="Proceso"
+                                                                shortDesc="Proceso"
+                                                                binding="#{BitacoraBean.poFilterProcessSel}" 
+                                                                partialTriggers="BtnReset"
+                                                                id="soc4">
+                                                <f:selectItems value="#{BitacoraBean.listProcess}" id="sid1s"/>
+                                            </af:selectOneChoice>
+                                         
+                                         <af:inputDate label="Fecha Incial" 
+                                                       partialTriggers="BtnReset" 
+                                                       id="TxtFilterFecIni" 
+                                                       columns="9" 
+                                                       binding="#{BitacoraBean.poInitialDate}"
+                                                       valueChangeListener="#{BitacoraBean.validateDateListener}" 
+                                                       autoSubmit="true">
+                                            <af:convertDateTime pattern="yyyy-MM-dd" secondaryPattern="yyyy/MM/dd"/>
+                                          </af:inputDate>
+                                          <af:inputDate label="Fecha Final"
+                                                       partialTriggers="BtnReset" 
+                                                       id="TxtFilterFecFin" 
+                                                       columns="9" 
+                                                       binding="#{BitacoraBean.poFinalDate}"
+                                                       valueChangeListener="#{BitacoraBean.validateFinalDateListener}" 
+                                                       autoSubmit="true">
+                                            <af:convertDateTime pattern="yyyy-MM-dd" secondaryPattern="yyyy/MM/dd"/>
+                                          </af:inputDate>
+                                        <af:spacer width="10" height="10" id="s33"/>
+                                        <af:button text="Buscar por Filtros"
+                                                  id="BtnSearch"
+                                                  icon="/images/ver_orden.gif"
+                                                  shortDesc="Buscar Elementos"
+                                                  action="#{BitacoraBean.searchFilterLogServicesAction}"/>
+                                      </af:panelFormLayout>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                  <f:facet name="second">
+                                  <!-- ################################### TABLA PRINCIPAL ##################################################### !-->
+                                <af:table value="#{bindings.EvetvIntServicesBitacoraVwView1.collectionModel}"
+                                          var="row" rows="#{bindings.EvetvIntServicesBitacoraVwView1.rangeSize}"
+                                          emptyText="#{bindings.EvetvIntServicesBitacoraVwView1.viewable ? 
+                                          'No data to display.' : 'Access Denied.'}"
+                                          rowBandingInterval="0"
+                                          selectedRowKeys="#{bindings.EvetvIntServicesBitacoraVwView1.collectionModel.selectedRow}"
+                                          selectionListener="#{bindings.EvetvIntServicesBitacoraVwView1.collectionModel.makeCurrent}"
+                                          rowSelection="single"
+                                          fetchSize="#{bindings.EvetvIntServicesBitacoraVwView1.rangeSize}"
+                                          filterModel="#{bindings.EvetvIntServicesBitacoraVwView1Query.queryDescriptor}"
+                                          queryListener="#{bindings.EvetvIntServicesBitacoraVwView1Query.processQuery}"
+                                          filterVisible="true"
+                                          styleClass="AFStretchWidth"
+                                          columnStretching="column:c27"
+                                          varStatus="vs" id="tblBit" autoHeightRows="20"
+                                          binding="#{BitacoraBean.poTblLog}">
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesBitacoraVwView1.hints.IdBitacora.name}"
+                                               filterable="false" sortable="true" headerText="Bit&#225;cora"
+                                               visible="false"
+                                               id="c1">
+                                        <af:outputText value="#{row.IdBitacora}"
+                                                       shortDesc="#{bindings.EvetvIntServicesBitacoraVwView1.hints.IdBitacora.tooltip}"
+                                                       id="ot1"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesBitacoraVwView1.hints.IdLogServices.name}"
+                                               filterable="false" sortable="false" headerText="Id Request"
+                                               visible="true" align="center" width="75"
+                                               id="c2">
+                                        <af:outputText value="#{row.IdLogServices}"
+                                                       shortDesc="#{bindings.EvetvIntServicesBitacoraVwView1.hints.IdLogServices.tooltip}"
+                                                       id="ot2">
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.EvetvIntServicesBitacoraVwView1.hints.IdLogServices.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesBitacoraVwView1.hints.IdService.name}"
+                                               filterable="false" sortable="true" headerText="IdServicio"
+                                               visible="false"
+                                               id="c3">
+                                        <af:outputText value="#{row.IdService}"
+                                                       shortDesc="#{bindings.EvetvIntServicesBitacoraVwView1.hints.IdService.tooltip}"
+                                                       id="ot3">
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.EvetvIntServicesBitacoraVwView1.hints.IdService.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesBitacoraVwView1.hints.NomService.name}"
+                                               filterable="false" sortable="true"
+                                               width="250"
+                                               headerText="Servicio" id="c4">
+                                        <af:outputText value="#{row.NomService}"
+                                                       shortDesc="#{bindings.EvetvIntServicesBitacoraVwView1.hints.NomService.tooltip}"
+                                                       id="ot4"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesBitacoraVwView1.hints.IndProcess.name}"
+                                               filterable="false" sortable="true"
+                                               visible="false"
+                                               headerText="IdProceso" id="c5">
+                                        <af:outputText value="#{row.IndProcess}"
+                                                       shortDesc="#{bindings.EvetvIntServicesBitacoraVwView1.hints.IndProcess.tooltip}"
+                                                       id="ot5">
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.EvetvIntServicesBitacoraVwView1.hints.IndProcess.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesBitacoraVwView1.hints.IndProcessNom.name}"
+                                               filterable="false"                                                        
+                                               width="150"
+                                               sortable="true" headerText="Proceso" id="c6">
+                                        <af:outputText value="#{row.IndProcessNom}"
+                                                       shortDesc="#{bindings.EvetvIntServicesBitacoraVwView1.hints.IndProcessNom.tooltip}"
+                                                       id="ot6"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesBitacoraVwView1.hints.NumEvtbProcessId.name}"
+                                               filterable="false" sortable="true" 
+                                               visible="false"
+                                               headerText="ID EveTV" id="c7">
+                                        <af:outputText value="#{row.NumEvtbProcessId}"
+                                                       shortDesc="#{bindings.EvetvIntServicesBitacoraVwView1.hints.NumEvtbProcessId.tooltip}"
+                                                       id="ot7">
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.EvetvIntServicesBitacoraVwView1.hints.NumEvtbProcessId.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesBitacoraVwView1.hints.NumPgmProcessId.name}"
+                                               filterable="false" sortable="true" 
+                                               visible="false"
+                                               headerText="ID Paradigm"
+                                               id="c8">
+                                        <af:outputText value="#{row.NumPgmProcessId}"
+                                                       shortDesc="#{bindings.EvetvIntServicesBitacoraVwView1.hints.NumPgmProcessId.tooltip}"
+                                                       id="ot8">
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.EvetvIntServicesBitacoraVwView1.hints.NumPgmProcessId.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesBitacoraVwView1.hints.IndEvento.name}"
+                                               filterable="false" sortable="true" 
+                                               width="300"
+                                               headerText="Evento" id="c9">
+                                        <af:outputText value="#{row.IndEvento}"
+                                                       shortDesc="#{bindings.EvetvIntServicesBitacoraVwView1.hints.IndEvento.tooltip}"
+                                                       id="ot9"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesBitacoraVwView1.hints.IndEstatus.name}"
+                                               filterable="false" sortable="true" 
+                                               visible="false"
+                                               headerText="Estatus" id="cStat">
+                                        <af:outputText value="#{row.IndEstatus}"
+                                                       shortDesc="#{bindings.EvetvIntServicesBitacoraVwView1.hints.IndEstatus.tooltip}"
+                                                       id="ot10"/>
+                                    </af:column>                                            
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesBitacoraVwView1.hints.Attribute15.name}"
+                                               filterable="false" 
+                                               width="150"
+                                               sortable="true" headerText="Usuario" id="c26">
+                                        <af:outputText value="#{row.Attribute15}"
+                                                       shortDesc="#{bindings.EvetvIntServicesBitacoraVwView1.hints.Attribute15.tooltip}"
+                                                       id="ot26"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesBitacoraVwView1.hints.FecCreationDate.name}"
+                                               filterable="false" sortable="true" width="150" align="center"
+                                               headerText="Fecha Creaci&#243;n" id="c27">
+                                        <af:outputText value="#{row.FecCreationDate}"
+                                                       shortDesc="#{bindings.EvetvIntServicesBitacoraVwView1.hints.FecCreationDate.tooltip}"
+                                                       id="ot27">
+                                            <af:convertDateTime pattern="yyyy-MM-dd HH:mm:ss"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesBitacoraVwView1.hints.NumCreatedBy.name}"
+                                               filterable="false" sortable="true" headerText="Id Usuario"
+                                               visible="false"
+                                               id="c28">
+                                        <af:outputText value="#{row.NumCreatedBy}"
+                                                       shortDesc="#{bindings.EvetvIntServicesBitacoraVwView1.hints.NumCreatedBy.tooltip}"
+                                                       id="ot28">
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.EvetvIntServicesBitacoraVwView1.hints.NumCreatedBy.format}"/>
+                                        </af:outputText>
+                                    </af:column>                                            
+                                </af:table>
+                            </f:facet>
+                            </af:panelSplitter>
+                            </af:panelGroupLayout>
+                        </af:panelGroupLayout>     
+                    </f:facet>
+                </af:pageTemplate>
+                <!-- ################################### POPUP LOADING .... ##################################### !-->
+                <af:popup id="p1oadLogin" contentDelivery="immediate">
+                  <af:dialog id="dLogin" type="none" title="Procesando Información" closeIconVisible="false">
+                    <af:panelGroupLayout id="Pnlpgl1Login" layout="vertical" halign="center">
+                      <af:image source="/images/loading_blue.gif" id="ImgIdxLoad" shortDesc="Cargando..."/>
+                      <af:outputText value="... por favor espere." id="LblIdxLoad1Login"/>
+                    </af:panelGroupLayout>
+                  </af:dialog>
+                </af:popup>
+            </af:form>
+        </af:document>
+    </f:view>
+</jsp:root>

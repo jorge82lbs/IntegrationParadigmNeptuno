@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<definitions xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://tempuri.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/" name="SecmanBsAutenticar">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://xmlns.soin.tvsa.com/Secman/Servicios/SecmanDasComerAutenticar" schemaLocation="SecmanBsAutenticarSoap12HttpPort1.xsd"/>
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import namespace="http://tempuri.org/" schemaLocation="SecmanBsAutenticarSoap12HttpPort2.xsd"/>
+    </xsd:schema>
+  </types>
+  <message name="autenticarUsuario">
+    <part name="parameters" element="tns:autenticarUsuario"/>
+  </message>
+  <message name="autenticarUsuarioResponse">
+    <part name="parameters" element="tns:autenticarUsuarioResponse"/>
+  </message>
+  <portType name="SecmanBsAutenticar">
+    <operation name="autenticarUsuario">
+      <input message="tns:autenticarUsuario"/>
+      <output message="tns:autenticarUsuarioResponse"/>
+    </operation>
+  </portType>
+  <binding name="SecmanBsAutenticarSoap12HttpPortBinding" type="tns:SecmanBsAutenticar">
+    <soap12:binding transport="http://www.w3.org/2003/05/soap/bindings/HTTP/" style="document"/>
+    <operation name="autenticarUsuario">
+      <soap12:operation soapAction=""/>
+      <input>
+        <soap12:body use="literal"/>
+      </input>
+      <output>
+        <soap12:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="SecmanBsAutenticar">
+    <port name="SecmanBsAutenticarSoap12HttpPort" binding="tns:SecmanBsAutenticarSoap12HttpPortBinding">
+      <soap12:address location="http://tvmiddev1.televisa.net:10106/SecmanWebServices/SecmanBsAutenticarSoap12HttpPort"/>
+    </port>
+  </service>
+</definitions>

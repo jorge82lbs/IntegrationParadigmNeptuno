@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:tns="http://webServices.view.secman.televisa.com.mx/" xmlns:ns1="http://xmlns.soin.tvsa.com/Secman/Servicios/UsuarioPermisos" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://webServices.view.secman.televisa.com.mx/">
+  <xs:import namespace="http://xmlns.soin.tvsa.com/Secman/Servicios/UsuarioPermisos" schemaLocation="SecmanDasOperacionesUsuarioPort1.xsd"/>
+  <xs:element name="ObtenerOperacionesUsuario" type="tns:ObtenerOperacionesUsuario"/>
+  <xs:element name="ObtenerOperacionesUsuarioResponse" type="tns:ObtenerOperacionesUsuarioResponse"/>
+  <xs:complexType name="ObtenerOperacionesUsuario">
+    <xs:sequence>
+      <xs:element name="arg0" type="ns1:PermisosUsuarioInputParameters" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ObtenerOperacionesUsuarioResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns1:OperacionesUsuarioOutputParameters" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

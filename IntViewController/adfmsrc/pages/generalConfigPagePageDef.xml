@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.10.8" id="generalConfigPagePageDef"
+                Package="pages">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="EvetvIntConfigParamTabView1" RangeSize="25" DataControl="AppModuleIntergrationDataControl"
+              id="EvetvIntConfigParamTabView1Iterator"/>
+    <searchRegion Binds="EvetvIntConfigParamTabView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="EvetvIntConfigParamTabView1Query"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="EvetvIntConfigParamTabView1Iterator" id="EvetvIntConfigParamTabView1">
+      <nodeDefinition DefName="com.televisa.integration.model.EvetvIntConfigParamTabView"
+                      Name="EvetvIntConfigParamTabView10">
+        <AttrNames>
+          <Item Value="IdParameter"/>
+          <Item Value="NomParameter"/>
+          <Item Value="IndDescParameter"/>
+          <Item Value="IndUsedBy"/>
+          <Item Value="IndValueParameter"/>
+          <Item Value="IndEstatus"/>
+          <Item Value="AttributeCategory"/>
+          <Item Value="Attribute1"/>
+          <Item Value="Attribute2"/>
+          <Item Value="Attribute3"/>
+          <Item Value="Attribute4"/>
+          <Item Value="Attribute5"/>
+          <Item Value="Attribute6"/>
+          <Item Value="Attribute7"/>
+          <Item Value="Attribute8"/>
+          <Item Value="Attribute9"/>
+          <Item Value="Attribute10"/>
+          <Item Value="Attribute11"/>
+          <Item Value="Attribute12"/>
+          <Item Value="Attribute13"/>
+          <Item Value="Attribute14"/>
+          <Item Value="Attribute15"/>
+          <Item Value="FecCreationDate"/>
+          <Item Value="NumCreatedBy"/>
+          <Item Value="FecLastUpdateDate"/>
+          <Item Value="NumLastUpdatedBy"/>
+          <Item Value="NumLastUpdateLogin"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

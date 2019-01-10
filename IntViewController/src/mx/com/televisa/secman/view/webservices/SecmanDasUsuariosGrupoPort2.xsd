@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:tns="http://webServices.view.secman.televisa.com.mx/" xmlns:ns1="http://xmlns.soin.tvsa.com/Secman/Servicios/UsuarioGrupos" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://webServices.view.secman.televisa.com.mx/">
+  <xs:import namespace="http://xmlns.soin.tvsa.com/Secman/Servicios/UsuarioGrupos" schemaLocation="SecmanDasUsuariosGrupoPort1.xsd"/>
+  <xs:element name="obtenerUsuariosGrupo" type="tns:obtenerUsuariosGrupo"/>
+  <xs:element name="obtenerUsuariosGrupoResponse" type="tns:obtenerUsuariosGrupoResponse"/>
+  <xs:complexType name="obtenerUsuariosGrupo">
+    <xs:sequence>
+      <xs:element name="arg0" type="ns1:UsuariosGrupoInputParameters" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="obtenerUsuariosGrupoResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns1:UsuariosCollection" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

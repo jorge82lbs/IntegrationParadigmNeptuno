@@ -1,0 +1,10 @@
+
+
+*.class
+*.ear
+*.war
+*.tmp
+*.gif
+*.png
+*.jpg
+

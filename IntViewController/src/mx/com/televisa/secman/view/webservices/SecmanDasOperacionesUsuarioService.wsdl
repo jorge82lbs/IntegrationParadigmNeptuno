@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://webServices.view.secman.televisa.com.mx/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://webServices.view.secman.televisa.com.mx/" name="SecmanDasOperacionesUsuarioService">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://xmlns.soin.tvsa.com/Secman/Servicios/UsuarioPermisos" schemaLocation="SecmanDasOperacionesUsuarioPort1.xsd"/>
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import namespace="http://webServices.view.secman.televisa.com.mx/" schemaLocation="SecmanDasOperacionesUsuarioPort2.xsd"/>
+    </xsd:schema>
+  </types>
+  <message name="ObtenerOperacionesUsuario">
+    <part name="parameters" element="tns:ObtenerOperacionesUsuario"/>
+  </message>
+  <message name="ObtenerOperacionesUsuarioResponse">
+    <part name="parameters" element="tns:ObtenerOperacionesUsuarioResponse"/>
+  </message>
+  <portType name="SecmanDasOperacionesUsuario">
+    <operation name="ObtenerOperacionesUsuario">
+      <input message="tns:ObtenerOperacionesUsuario"/>
+      <output message="tns:ObtenerOperacionesUsuarioResponse"/>
+    </operation>
+  </portType>
+  <binding name="SecmanDasOperacionesUsuarioPortBinding" type="tns:SecmanDasOperacionesUsuario">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <operation name="ObtenerOperacionesUsuario">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="SecmanDasOperacionesUsuarioService">
+    <port name="SecmanDasOperacionesUsuarioPort" binding="tns:SecmanDasOperacionesUsuarioPortBinding">
+      <soap:address location="http://tvmiddev1.televisa.net:10106/SecmanWebServices/SecmanDasOperacionesUsuarioPort"/>
+    </port>
+  </service>
+</definitions>

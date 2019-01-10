@@ -1,0 +1,15 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<oracle-webservice-clients xmlns:ns2="http://java.sun.com/xml/ns/javaee">
+   <webservice-client>
+      <service-qname localpart="SecmanDasUsuarioPermisosService"
+                     namespaceURI="http://webServices.view.secman.televisa.com.mx/"/>
+      <port-info>
+         <wsdl-port localpart="SecmanDasUsuarioPermisosPort"
+                    namespaceURI="http://webServices.view.secman.televisa.com.mx/"/>
+         <runtime/>
+         <operations>
+            <operation name="obtenerRolTareaPermisos"/>
+         </operations>
+      </port-info>
+   </webservice-client>
+</oracle-webservice-clients>

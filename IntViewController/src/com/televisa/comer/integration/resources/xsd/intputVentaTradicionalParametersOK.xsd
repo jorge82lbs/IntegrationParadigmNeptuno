@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:ns0="http://com/televisa/comer/integration/service/beans/traditionalsale" 
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+            targetNamespace="http://com/televisa/comer/integration/service/beans/traditionalsale"
+            attributeFormDefault="qualified"
+            elementFormDefault="qualified"
+            >
+   <xsd:complexType name="TraditionalResponse">
+      <xsd:sequence>
+         <xsd:element name="IdRequestTraditionalRes" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="XmlMessageResponse" type="ns0:XmlMessageResponseCollection"/>
+         <xsd:element name="Error" type="xsd:string" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="TraditionalInputParameters">
+      <xsd:sequence>
+         <xsd:element name="IdRequestTraditionalReq" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="IdService" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="UserName" type="xsd:string" minOccurs="1"/>         
+         <xsd:element name="IdUser" type="xsd:string" minOccurs="1"/>	
+         <xsd:element name="DateQuery" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="ChannelList" type="ns0:ChannelsCollection"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="ChannelsCollection">
+      <xsd:sequence>
+         <xsd:element name="Channels" type="ns0:Channel" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="Channel">
+      <xsd:sequence>
+         <xsd:element name="Channel" type="xsd:string" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="XmlMessageResponseCollection">
+      <xsd:sequence>
+         <xsd:element name="XmlMessageReqRes" type="ns0:XmlMessageReqRes" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="XmlMessageReqRes">
+      <xsd:sequence>
+         <xsd:element name="XmlMessageRequest" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="XmlMessageResponse" type="xsd:string" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:element name="ParrillasResponse" type="ns0:TraditionalResponse"/>
+   <xsd:element name="ParrillasInputParameters" type="ns0:TraditionalInputParameters"/>
+</xsd:schema>

@@ -1,0 +1,1343 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <f:view>
+        <af:document title="Configuración de Servicios Web" id="d1" smallIconSource="/images/icon_get_world.gif">
+            <af:messages id="m1"/>
+            <af:form id="f1">            
+            <af:resource type="javascript">                            
+                    function enforcePreventUserInput(evt) {                    
+                        var popup = AdfPage.PAGE.findComponentByAbsoluteId('p1oadLogin');
+                        if (popup != null) {
+                            AdfPage.PAGE.addBusyStateListener(popup, handleBusyState);
+                            evt.preventUserInput();
+                        }
+                    }
+                
+                    function handleBusyState(evt) {
+                        var popup = AdfPage.PAGE.findComponentByAbsoluteId('p1oadLogin');
+                        if (popup != null) {
+                            if (evt.isBusy()) {
+                                popup.show();
+                            }
+                            else {
+                                popup.hide();
+                                AdfPage.PAGE.removeBusyStateListener(popup, handleBusyState);
+                            }
+                        }
+                    }        
+                </af:resource>
+                <af:pageTemplate viewId="/templates/integrationTemplate.jspx" id="pt1">
+                    <f:facet name="content">                        
+                        <af:panelGroupLayout layout="scroll" id="PnlContServ"
+                                             inlineStyle="border-style:none;">
+                            <af:resource type="css">
+                                af|dialog{
+                                  -tr-default-content-width : -1;
+                                  -tr-default-content-height : -1;
+                                }          
+                            </af:resource>
+                            <af:panelHeader text="Configuración de Servicios Web" id="PnlHeadServ"
+                                type="default"
+                                messageType="none"
+                                shortDesc="Configuración de Servicios Web"
+                                inlineStyle="border-style:none;">
+                            <f:facet name="toolbar">
+                                <af:statusIndicator id="StiIndicator" shortDesc="Status Indicator"/>
+                            </f:facet>
+                            </af:panelHeader>
+                            <af:separator id="sepTitle"/>
+                            <af:panelGroupLayout layout="horizontal" id="PnlGpUserTbl" styleClass="AFStretchWidth"
+                                                 valign="top" halign="left" 
+                                                 inlineStyle="border-style:none; height:415px;">
+                            <af:panelSplitter id="PnlSpliMain" splitterPosition="302"
+                                      inlineStyle="width:1350px; height:407px;"
+                                      collapsed="false"
+                                      firstBorder="skin">
+                                <f:facet name="first">
+                                    <af:panelGroupLayout layout="scroll"                                                        
+                                                         id="PnlGpAln"
+                                                         visible="#{!UserMenuBean.lsRolUsrVtaTradicional}"
+                                                         >
+                                          <af:outputFormatted value="Buscar Servicios" id="LblBscUsers"
+                                                            inlineStyle="color:Olive; font-weight:bold; 
+                                                            font-size:small; text-align:left;"/>
+                                        <af:separator id="sdedew"/>
+                                        <af:panelGroupLayout layout="horizontal" id="PnlUtil" halign="right"
+                                                            inlineStyle="border-style:none;">
+                                            <af:link text=" " id="BtnReset" 
+                                                                icon="/images/action_refresh_blue.gif"
+                                                                partialSubmit="true"
+                                                                shortDesc="Reiniciar valores de búsqueda"
+                                                     actionListener="#{ServicesConfigBean.resetFilterValues}">
+                                            </af:link>
+                                            <af:spacer id="SpcAx" width="10" height="5"/>                                            
+                                            <af:link icon="/images/excel.gif"
+                                                               id="LnkExel"
+                                                               inlineStyle="text-align:center;"                                                   
+                                                               shortDesc="Exportar a Excel">
+                                                <af:exportCollectionActionListener exportedId="tblSrv"
+                                                                           type="excelHTML"
+                                                                           filename="ServicesXLS.xls"/>
+                                            </af:link>
+                                            <af:spacer id="SpcAxTbl" width="10" height="5"/>
+                                            <af:link text=" " id="BtnResetTbl"
+                                                            icon="/images/restaurar.gif" 
+                                                            shortDesc="Reiniciar tabla"
+                                                     action="#{ServicesConfigBean.refreshMainTable}">
+                                            </af:link>
+                                        </af:panelGroupLayout>
+                                        <af:panelFormLayout id="PnlSearch" rows="14"
+                                                          maxColumns="1">
+                                                          
+                                        <af:selectOneChoice unselectedLabel="-- Seleccione --"
+                                                            label="Servicio"
+                                                            partialTriggers="BtnReset"
+                                                            id="soc1"
+                                                            binding="#{ServicesConfigBean.poFilterDesServiceSel}">
+                                            <f:selectItems value="#{ServicesConfigBean.listWebServices}" id="sid1"/>
+                                        </af:selectOneChoice>
+                                                          
+                                         <af:selectOneChoice unselectedLabel="-- Seleccione --"
+                                                            label="Servicio Web"
+                                                            partialTriggers="BtnReset"
+                                                            id="soc11"
+                                                            binding="#{ServicesConfigBean.poFilterServiceSel}">
+                                            <f:selectItems value="#{ServicesConfigBean.listWebServicesValidSearch}"
+                                            id="sid11"/>
+                                        </af:selectOneChoice>
+                                        
+                                        <af:inputText id="TxtFilterServicio"
+                                                      label="Servicio Web" columns="20"
+                                                      partialTriggers="BtnReset"
+                                                      binding="#{ServicesConfigBean.poFilterService}">
+                                        </af:inputText>
+                                        
+                                        <af:inputText id="TxtFilterWsdl" label="Wsdl"
+                                                      columns="20" 
+                                                      visible="false"
+                                                      partialTriggers="BtnReset" 
+                                                      binding="#{ServicesConfigBean.poFilterWsdl}">
+                                        </af:inputText>
+                                        
+                                        <af:selectOneChoice label="Sistema Propietario" id="selSystemFil" 
+                                        unselectedLabel="-- Seleccione --"
+                                                        binding="#{ServicesConfigBean.poFilterSystem}" 
+                                                        partialTriggers="BtnReset">
+                                        <af:selectItem label="Integraci&#243;n" value="Integration" id="si1Fil"/>
+                                            <af:selectItem label="eVeTV" value="Evetv" id="si2Fil"/>
+                                            <af:selectItem label="Paradigm" value="Paradigm" id="si3Fil"/>
+                                        </af:selectOneChoice>
+                                        <af:selectOneChoice label="Sistema Origen" id="selSystemOrFil" 
+                                        unselectedLabel="-- Seleccione --"
+                                                            binding="#{ServicesConfigBean.poFilterSystemOr}" 
+                                                            partialTriggers="BtnReset">
+                                            <af:selectItem label="Integraci&#243;n" value="Integration" id="si1OrFil"/>
+                                            <af:selectItem label="eVeTV" value="Evetv" id="si2OrFil"/>
+                                            <af:selectItem label="Paradigm" value="Paradigm" id="si3OrFil"/>
+                                        </af:selectOneChoice>
+                                        <af:selectOneChoice label="Sistema Destino" id="selSystemDesFil" 
+                                        unselectedLabel="-- Seleccione --"
+                                                            binding="#{ServicesConfigBean.poFilterSystemDes}" 
+                                                            partialTriggers="BtnReset">
+                                            <af:selectItem label="Integraci&#243;n" value="Integration" id="si1DeFil"/>
+                                            <af:selectItem label="eVeTV" value="Evetv" id="si2DeFil"/>
+                                            <af:selectItem label="Paradigm" value="Paradigm" id="si3DeFil"/>
+                                        </af:selectOneChoice>    
+                                        
+                                        <af:selectOneChoice label="As&#237;ncrono" id="selAsFil" 
+                                        unselectedLabel="-- Seleccione --"
+                                                            binding="#{ServicesConfigBean.poFilterAsynSel}" 
+                                                            partialTriggers="BtnReset">
+                                            <af:selectItem label="As&#237;ncrono" value="1" id="si1AsFil"/>
+                                            <af:selectItem label="S&#237;ncrono" value="0" id="si2AsFil"/>
+                                        </af:selectOneChoice>   
+                                        <af:selectOneChoice label="Estatus" id="selStatFil" unselectedLabel="Seleccione"
+                                                            binding="#{ServicesConfigBean.poFilterStatusSel}" 
+                                                            visible="false"
+                                                            partialTriggers="BtnReset">
+                                            <af:selectItem label="Activo" value="1" id="si1StatFil"/>
+                                            <af:selectItem label="Inactivo" value="0" id="si2StatFil"/>
+                                        </af:selectOneChoice> 
+                                        <af:spacer width="10" height="10" id="s33"/>
+                                        <af:button text="Buscar por Filtros"
+                                                  id="BtnSearch"
+                                                  icon="/images/ver_orden.gif"
+                                                  shortDesc="Buscar Elementos"
+                                                  action="#{ServicesConfigBean.searchFilterServicesAction}"/>
+                                                  <af:spacer id="SpcfAx" width="10" height="160"/>
+                                      </af:panelFormLayout>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                  <f:facet name="second">
+                                  <af:panelGroupLayout id="pgl2" layout="vertical">
+                            <!-- ######################### TABLA PRINCIPAL SERVICIOS WEB ################# !-->        
+                            <af:table value="#{bindings.EvetvIntServicesCatTabView1.collectionModel}"
+                                      var="row" rows="#{bindings.EvetvIntServicesCatTabView1.rangeSize}"
+                                      emptyText="#{bindings.EvetvIntServicesCatTabView1.viewable ? 'Sin información para mostrar.' : 'Access Denied.'}"
+                                      rowBandingInterval="0"
+                                      selectedRowKeys="#{bindings.EvetvIntServicesCatTabView1.collectionModel.selectedRow}"
+                                      selectionListener="#{ServicesConfigBean.rowSelectionListener}"
+                                      rowSelection="single"
+                                      fetchSize="#{bindings.EvetvIntServicesCatTabView1.rangeSize}"
+                                      filterModel="#{bindings.EvetvIntServicesCatTabView1Query.queryDescriptor}"
+                                      queryListener="#{bindings.EvetvIntServicesCatTabView1Query.processQuery}"
+                                      filterVisible="true" varStatus="vs" 
+                                      id="tblSrv"
+                                      styleClass="AFStretchWidth"
+                                    binding="#{ServicesConfigBean.poTblWebServices}" autoHeightRows="6">
+                                    <af:column align="center" id="colCrudSweb"
+                                            frozen="true" sortable="false"
+                                            visible="#{UserMenuBean.lsOprCrud}"
+                                            width="85">
+                                        <f:facet name="header">
+                                        <af:group id="g2">
+                                            <af:link icon="/images/newIcon_int.png"
+                                                       id="LnkAlta" text="Nuevo"
+                                                       inlineStyle="text-align:center;"
+                                                       shortDesc="Alta de Servicios Web"
+                                                     actionListener="#{ServicesConfigBean.showSavePopupService}"/>
+                                        </af:group>
+                                        </f:facet>
+                                        <af:panelGroupLayout layout="horizontal"
+                                                            id="PnlOpc" valign="top"
+                                                            halign="left">
+                                            <af:link icon="/images/editIcon_int.png"
+                                                     id="LnkEditSweb"
+                                                     inlineStyle="text-align:center;"
+                                                     partialSubmit="true"
+                                                     actionListener="#{ServicesConfigBean.showEditPopupService}"
+                                                     shortDesc="Editar Servicio Web"/>
+                                            <af:spacer width="8" id="s8r911w" height="5"/>
+                                            <af:link icon="/images/deleteIcon_int.png"
+                                                     id="LnkDelSweb"
+                                                     inlineStyle="text-align:center;"
+                                                     partialSubmit="true"
+                                                      actionListener="#{ServicesConfigBean.showDeletePopupService}"
+                                                     shortDesc="Eliminar Servicio Web"/>
+                                            <af:spacer width="8" id="spacer1" height="5"/>
+                                            <af:link icon="/images/list_settings.gif"
+                                                     id="LnkCronSweb"
+                                                     inlineStyle="text-align:center;"
+                                                     partialSubmit="true"
+                                                     visible="#{row.NomService != 'WsVentaModulos' and row.NomService != 'WsLogComercial' and row.NomService != 'WsParrillasClient' and row.NomService != 'WsVtaTradicionalClient' and row.NomService != 'WsPreemtion'}"
+                                                     actionListener="#{ServicesConfigBean.showTabCronService}"
+                                                     shortDesc="Configuración de Servicio Cron"/>
+                                            <af:spacer width="5" id="spacer14" height="5"/>
+                                        </af:panelGroupLayout>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.IdService.name}"
+                                               filterable="false" sortable="true"
+                                               visible="false"
+                                               headerText="#{bindings.EvetvIntServicesCatTabView1.hints.IdService.label}"
+                                               id="c1">
+                                        <af:outputText value="#{row.IdService}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.IdService.tooltip}"
+                                                       id="ot1">
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.EvetvIntServicesCatTabView1.hints.IdService.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.IndDescService.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="Nombre Servicio" align="center" width="160" frozen="true"
+                                               id="c2d">
+                                        <af:outputText value="#{row.IndDescService}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.IndDescService.tooltip}"
+                                                       id="ot2d"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.NomService.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="Servicio" align="center" width="100" frozen="true"
+                                               id="c2">
+                                        <af:outputText value="#{row.NomService}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.NomService.tooltip}"
+                                                       id="ot2"/>
+                                    </af:column>
+                                    <af:column align="center" id="colExecute"
+                                            sortable="false" frozen="true"
+                                            visible="#{UserMenuBean.lsOprExecuteCron}"
+                                            width="80">
+                                        <f:facet name="header">
+                                            <af:group id="g2btn">
+                                                <af:outputFormatted value="Ejecutar" id="of1"/>
+                                            </af:group>
+                                        </f:facet>
+                                         <af:link text=" " id="BtnPlay" 
+                                                 icon="/images/action_forward.gif"
+                                                 partialSubmit="true"
+                                                 visible="#{row.NomService != 'WsVentaModulos' and row.NomService != 'WsLogComercial' and row.NomService != 'WsParrillasClient' and row.NomService != 'WsVtaTradicionalClient' and row.NomService != 'WsPreemtion'}"
+                                                 actionListener="#{ServicesConfigBean.showExecutePopupService}"
+                                                 shortDesc="Ejecutar Ahora">
+                                        </af:link>                                               
+                                    </af:column>                                            
+                                    <af:column align="center" id="colOpCron"
+                                            sortable="false" frozen="true"
+                                            visible="#{UserMenuBean.lsOprInitStopCron}"
+                                            width="100">
+                                        <f:facet name="header">
+                                            <af:group id="g2btnCr">
+                                                <af:outputFormatted value="Operaciones Cron" id="of1Cr"/>
+                                            </af:group>
+                                        </f:facet>
+                                         <af:panelGroupLayout layout="horizontal"
+                                                            id="PnlOpcCron" valign="top"
+                                                            halign="left">
+                                        <af:link text=" " id="BtnInit" 
+                                                 icon="/images/icon_clock.gif"
+                                                 partialSubmit="true"
+                                                 visible="#{row.NomService != 'WsVentaModulos' and row.NomService != 'WsLogComercial' and row.NomService != 'WsParrillasClient' and row.NomService != 'WsVtaTradicionalClient' and row.NomService != 'WsPreemtion'}"
+                                                 actionListener="#{ServicesConfigBean.showBeginPopupService}"
+                                                 shortDesc="Iniciar Cron">
+                                        </af:link>
+                                        <af:spacer width="15" height="10" id="sper3"/>
+                                        <af:link text=" " id="BtnStop" 
+                                                 icon="/images/action_stop.gif"
+                                                 partialSubmit="true"
+                                                 visible="#{row.NomService != 'WsVentaModulos' and row.NomService != 'WsLogComercial' and row.NomService != 'WsParrillasClient' and row.NomService != 'WsVtaTradicionalClient' and row.NomService != 'WsPreemtion'}"
+                                                 actionListener="#{ServicesConfigBean.showStopPopupService}"
+                                                 shortDesc="Detener Cron">
+                                        </af:link>
+                                        </af:panelGroupLayout>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute1.name}"
+                                               filterable="false" sortable="false"
+                                               headerText="Cron Activado" align="center"    
+                                               id="c10">
+                                        <af:link icon="/images/#{row.Attribute2}"
+                                                 id="LnkCrnAct"
+                                                 visible="#{row.Attribute1}"
+                                                 inlineStyle="text-align:center;"
+                                                 shortDesc="#{row.Attribute3}"/>
+                                        <!--<af:outputText value="#{row.Attribute1}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute1.tooltip}"
+                                                       id="ot10"/>-->
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.IndServiceWsdl.name}"
+                                               filterable="false" sortable="true"
+                                               align="center" width="140"
+                                               visible="false"
+                                               headerText="Wsdl"
+                                               id="c3">
+                                        <af:outputText value="#{row.IndServiceWsdl}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.IndServiceWsdl.tooltip}"
+                                                       id="ot3"/>
+                                    </af:column>
+                                    
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.IndOrigin.name}"
+                                               filterable="false" sortable="true"
+                                               align="center" width="140"
+                                               headerText="Sistema Origen"
+                                               id="c4">
+                                        <af:outputText value="#{row.IndOrigin}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.IndOrigin.tooltip}"
+                                                       id="ot4"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.IndDestiny.name}"
+                                               filterable="false" sortable="true"
+                                               align="center" width="140"
+                                               headerText="Sistema Destino"
+                                               id="c5">
+                                        <af:outputText value="#{row.IndDestiny}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.IndDestiny.tooltip}"
+                                                       id="ot5"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.IndSystem.name}"
+                                               filterable="false" sortable="true"
+                                               align="center" width="140"
+                                               headerText="Sistema Propietario"
+                                               id="c6">
+                                        <af:outputText value="#{row.IndSystem}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.IndSystem.tooltip}"
+                                                       id="ot6"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.IndSynchronous.name}"
+                                               filterable="false" sortable="true"
+                                               align="center" width="100"
+                                               headerText="Asíncrono"
+                                               id="c7">
+                                        <af:selectBooleanCheckbox text="" label=" "
+                                                                  id="sbcAsy"
+                                                                  disabled="true"
+                                                                  value="#{row.bindings.IndSynchronous.inputValue == '1'}"
+                                                                  />
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.IndEstatus.name}"
+                                               filterable="false" sortable="true"
+                                               align="center" width="80"
+                                               headerText="Estatus"
+                                               id="c8">
+                                        <af:selectBooleanCheckbox text="" label=" "
+                                                                  id="sbcEst"
+                                                                  disabled="true"
+                                                                  value="#{row.bindings.IndEstatus.inputValue == '1'}"
+                                                                  />
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.AttributeCategory.name}"
+                                               filterable="false" sortable="true"
+                                               visible="false"
+                                               headerText="#{bindings.EvetvIntServicesCatTabView1.hints.AttributeCategory.label}"
+                                               id="c9">
+                                        <af:outputText value="#{row.AttributeCategory}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.AttributeCategory.tooltip}"
+                                                       id="ot9"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute2.name}"
+                                               filterable="false" sortable="true"
+                                               visible="false"
+                                               headerText="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute2.label}"
+                                               id="c11">
+                                        <!--<af:outputText value="#{row.Attribute2}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute2.tooltip}"
+                                                       id="ot11"/>-->
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute3.name}"
+                                               filterable="false" sortable="true"
+                                               visible="false"
+                                               headerText="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute3.label}"
+                                               id="c12">
+                                        <af:outputText value="#{row.Attribute3}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute3.tooltip}"
+                                                       id="ot12"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute4.name}"
+                                               filterable="false" sortable="true"
+                                               visible="false"
+                                               headerText="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute4.label}"
+                                               id="c13">
+                                        <af:outputText value="#{row.Attribute4}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute4.tooltip}"
+                                                       id="ot13"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute5.name}"
+                                               filterable="false" sortable="true"
+                                               visible="false"
+                                               headerText="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute5.label}"
+                                               id="c14">
+                                        <af:outputText value="#{row.Attribute5}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute5.tooltip}"
+                                                       id="ot14"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute6.name}"
+                                               filterable="false" sortable="true"
+                                               visible="false"
+                                               headerText="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute6.label}"
+                                               id="c15">
+                                        <af:outputText value="#{row.Attribute6}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute6.tooltip}"
+                                                       id="ot15"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute7.name}"
+                                               filterable="false" sortable="true"
+                                               visible="false"
+                                               headerText="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute7.label}"
+                                               id="c16">
+                                        <af:outputText value="#{row.Attribute7}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute7.tooltip}"
+                                                       id="ot16"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute8.name}"
+                                               filterable="false" sortable="true"
+                                               visible="false"
+                                               headerText="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute8.label}"
+                                               id="c17">
+                                        <af:outputText value="#{row.Attribute8}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute8.tooltip}"
+                                                       id="ot17"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute9.name}"
+                                               filterable="false" sortable="true"
+                                               visible="false"
+                                               headerText="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute9.label}"
+                                               id="c18">
+                                        <af:outputText value="#{row.Attribute9}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute9.tooltip}"
+                                                       id="ot18"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute10.name}"
+                                               filterable="false" sortable="true"
+                                               visible="false"
+                                               headerText="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute10.label}"
+                                               id="c19">
+                                        <af:outputText value="#{row.Attribute10}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute10.tooltip}"
+                                                       id="ot19"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute11.name}"
+                                               filterable="false" sortable="true"
+                                               visible="false"
+                                               headerText="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute11.label}"
+                                               id="c20">
+                                        <af:outputText value="#{row.Attribute11}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute11.tooltip}"
+                                                       id="ot20"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute12.name}"
+                                               filterable="false" sortable="true"
+                                               visible="false"
+                                               headerText="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute12.label}"
+                                               id="c21">
+                                        <af:outputText value="#{row.Attribute12}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute12.tooltip}"
+                                                       id="ot21"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute13.name}"
+                                               filterable="false" sortable="true"
+                                               visible="false"
+                                               headerText="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute13.label}"
+                                               id="c22">
+                                        <af:outputText value="#{row.Attribute13}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute13.tooltip}"
+                                                       id="ot22"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute14.name}"
+                                               filterable="false" sortable="true"
+                                               visible="false"
+                                               headerText="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute14.label}"
+                                               id="c23">
+                                        <af:outputText value="#{row.Attribute14}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute14.tooltip}"
+                                                       id="ot23"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute15.name}"
+                                               filterable="false" sortable="true"
+                                               visible="false"
+                                               headerText="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute15.label}"
+                                               id="c24">
+                                        <af:outputText value="#{row.Attribute15}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.Attribute15.tooltip}"
+                                                       id="ot24"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.FecCreationDate.name}"
+                                               filterable="false" sortable="true"
+                                               align="center"
+                                               headerText="Fecha Creación"
+                                               width="140"
+                                               id="c25">                                               
+                                        <af:outputText value="#{row.FecCreationDate}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.FecCreationDate.tooltip}"
+                                                       id="ot25">
+                                            <af:convertDateTime pattern="yyyy-MM-dd hh:mm:ss"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.NumCreatedBy.name}"
+                                               filterable="false" sortable="true"
+                                               visible="false"
+                                               headerText="#{bindings.EvetvIntServicesCatTabView1.hints.NumCreatedBy.label}"
+                                               id="c26">
+                                        <af:outputText value="#{row.NumCreatedBy}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.NumCreatedBy.tooltip}"
+                                                       id="ot26">
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.EvetvIntServicesCatTabView1.hints.NumCreatedBy.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.FecLastUpdateDate.name}"
+                                               filterable="false" sortable="true"
+                                               visible="false"
+                                               headerText="#{bindings.EvetvIntServicesCatTabView1.hints.FecLastUpdateDate.label}"
+                                               id="c27">
+                                        
+                                        <af:outputText value="#{row.FecLastUpdateDate}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.FecLastUpdateDate.tooltip}"
+                                                       id="ot27">
+                                            <af:convertDateTime pattern="yyyy-MM-dd hh:mm:ss"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.NumLastUpdatedBy.name}"
+                                               filterable="false" sortable="true"
+                                               visible="false"
+                                               headerText="#{bindings.EvetvIntServicesCatTabView1.hints.NumLastUpdatedBy.label}"
+                                               id="c28">
+                                        <af:outputText value="#{row.NumLastUpdatedBy}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.NumLastUpdatedBy.tooltip}"
+                                                       id="ot28">
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.EvetvIntServicesCatTabView1.hints.NumLastUpdatedBy.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntServicesCatTabView1.hints.NumLastUpdateLogin.name}"
+                                               filterable="false" sortable="true"
+                                               visible="false"
+                                               headerText="#{bindings.EvetvIntServicesCatTabView1.hints.NumLastUpdateLogin.label}"
+                                               id="c29">
+                                        <af:outputText value="#{row.NumLastUpdateLogin}"
+                                                       shortDesc="#{bindings.EvetvIntServicesCatTabView1.hints.NumLastUpdateLogin.tooltip}"
+                                                       id="ot29">
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.EvetvIntServicesCatTabView1.hints.NumLastUpdateLogin.format}"/>
+                                        </af:outputText>
+                                    </af:column>                                            
+                                </af:table>                                            
+                                       
+                                <af:panelGroupLayout layout="vertical" id="PnslTblM" 
+                                         visible="#{!UserMenuBean.lsRolUsrVtaTradicional}"
+                                         valign="top" halign="left">
+                                    <af:spacer id="SpcAxAcg" width="15" height="5"/>
+                                    <af:panelGroupLayout layout="horizontal" id="PnslTbl" valign="top" halign="left">
+                                    <!--action="#{ServicesConfigBean.saveConfigurationAction}"-->
+                                        <af:button text="Guardar Configuración" id="b1Save" 
+                                        icon="/images/action_save.gif"
+                                                   action="#{ServicesConfigBean.showPopupSaveConfirm}"
+                                                   disabled="true"
+                                                   visible="#{UserMenuBean.lsOprInsertCron}"
+                                                   partialTriggers="tblSrv:LnkCronSweb ::BtnAltWs ::BtnDelOkCr"
+                                                   binding="#{ServicesConfigBean.poBtnSaveCronService}"/>
+                                        <af:spacer id="SpcAxAc" width="15" height="5"/>
+                                        <af:button text="Eliminar" id="b1Delete" icon="/images/cancelar.gif" 
+                                                   disabled="true"
+                                                   partialTriggers="tblSrv:LnkCronSweb ::BtnAltWs ::BtnDelOkCr"
+                                                   visible="#{UserMenuBean.lsOprDeleteCron}"
+                                                   binding="#{ServicesConfigBean.poBtnDeleteCronService}"
+                                                   action="#{ServicesConfigBean.showDeletePopupCronService}"/>
+                                        <af:spacer id="SpcfeAxAc" width="20" height="5"/>
+                                        <af:button text="Reiniciar Crones" shortDesc="Reiniciar Todos Los Crones"
+                                                   id="BtnRestCrons" visible="true"                                                   
+                                                   binding="#{ServicesConfigBean.poBtnResetCronService}"
+                                                   icon="/images/icon_history.gif"
+                                                   action="#{ServicesConfigBean.showResetCronsAction}"/>
+                                     </af:panelGroupLayout>
+                                     
+                                     <af:panelGroupLayout layout="horizontal" id="PnsldTbl" valign="top" halign="left"
+                                                          inlineStyle="margin-bottom:0px; margin-top:1px; 
+                                                          padding-bottom:2px; padding-top:2px;">
+                                     <af:link text=" " id="BtnIcServ" 
+                                                icon="/images/web-icon16x16.png" 
+                                                visible="false"
+                                                partialTriggers="tblSrv:LnkCronSweb ::BtnAltWs ::BtnDelOkCr"
+                                                shortDesc="Servicio"
+                                              binding="#{ServicesConfigBean.poServiceToCron}"
+                                              inlineStyle="font-weight:bold; vertical-align:bottom;">
+                                    </af:link>
+                                    <af:spacer id="SpcAxAec" width="10" height="2"/>
+                                    <af:link text=" " id="BtnIcServStat" 
+                                                visible="false"
+                                                partialTriggers="tblSrv:LnkCronSweb ::BtnAltWs ::BtnDelOkCr"
+                                                shortDesc="Estado"
+                                              binding="#{ServicesConfigBean.poServiceToCronStatus}"
+                                             inlineStyle="vertical-align:bottom;">
+                                    </af:link>                                                                                                                                                                       
+                                    </af:panelGroupLayout>
+                                    <af:inputText label="idTabSel"                                                  
+                                                  id="TxtidTabSel"
+                                                  visible="false"
+                                                  value="MINUTOS"
+                                                  partialTriggers="sdim sdih sdis sdihMs ::BtnAltWs ::BtnDelOkCr"
+                                                  binding="#{ServicesConfigBean.poIdTabSelected}"/>
+                                    <af:inputText label="idServSel"                                                  
+                                                  id="TxtidServSel"
+                                                  visible="false"
+                                                  partialTriggers="tblSrv ::BtnAltWs ::BtnDelOkCr tblSrv:LnkCronSweb"
+                                                  binding="#{ServicesConfigBean.poIdServiceSelected}"/>
+                                    <af:inputText label="idServOP"                                                  
+                                                  id="TxtidServOp"
+                                                  visible="false"
+                                                  partialTriggers="tblSrv:LnkCronSweb ::BtnAltWs ::BtnDelOkCr"
+                                                  binding="#{ServicesConfigBean.poOperation}"/>
+                                    <af:inputText label="TxtIdCronConf"                                                  
+                                                  id="TxtIdCronConf"
+                                                  visible="false"
+                                                  partialTriggers="tblSrv:LnkCronSweb ::BtnAltWs ::BtnDelOkCr"
+                                                  binding="#{ServicesConfigBean.poIdCronConfiguration}"/>
+                                    <af:inputText label="TxtServicio"                                                  
+                                                  id="TxtServicio"
+                                                  visible="false"
+                                                  partialTriggers="tblSrv:LnkCronSweb ::BtnAltWs ::BtnDelOkCr"
+                                                  binding="#{ServicesConfigBean.poNomServicioCron}"/>         
+                                    <af:panelGroupLayout layout="horizontal" id="PnlTbl" inlineStyle="height:215px;" 
+                                    styleClass="AFStretchWidth" valign="top" halign="left">
+                        
+                                        <af:panelTabbed id="PnlAuto" styleClass="AFStretchWidth" dimensionsFrom="auto" 
+                                                        binding="#{ServicesConfigBean.poPanelTabbed}">
+                                            <!-- MINUTOS -->
+                                            <af:showDetailItem text="Minutos" id="sdim" 
+                                            binding="#{ServicesConfigBean.poTabMinutos}" disabled="true"
+                                                        disclosureListener="#{ServicesConfigBean.disMinutos}"
+                                                        partialTriggers="tblSrv:LnkCronSweb ::BtnAltWs ::BtnDelOkCr">
+                                                <af:panelGridLayout id="pglf2">
+                                                    <af:gridRow marginTop="5px" height="auto" 
+                                                    marginBottom="5px" id="gr1">
+                                                        <af:gridCell marginStart="5px" width="20%" id="gc1">
+                                                        <af:panelGroupLayout id="pgl1v" layout="vertical">
+                                                        <af:panelGroupLayout id="pgl1" layout="horizontal">
+                                                            <af:inputNumberSpinbox label="Cada" id="ins1" columns="5" 
+                                                            binding="#{ServicesConfigBean.poCadaMinutos}" 
+                                                            disabled="true"/>
+                                                            <af:spacer id="SpcAxm" width="5" height="5"/>
+                                                            <af:outputText value="Minutos" id="otn24"/>
+                                                        </af:panelGroupLayout>
+                                                        
+                                                        <af:separator id="sepMinutesMin"/>
+                                                        <af:panelGroupLayout id="pgl1hiMin" layout="horizontal">
+                                                            <af:inputNumberSpinbox label="Hora Inicio" id="ins1hiMin" 
+                                                            minimum="00" maximum="23" columns="3" 
+                                                   binding="#{ServicesConfigBean.poBeginHorasMin}"/>
+                                                            <af:inputNumberSpinbox label=" " id="ins1miMin" columns="3" 
+                                                            minimum="00" maximum="59" 
+                                                   binding="#{ServicesConfigBean.poBeginMinutesMin}"/>
+                                                        </af:panelGroupLayout>
+
+                                                        <af:separator id="sepDeadLineh"/>
+                                                        <af:panelGroupLayout id="pgl1hiDlh" layout="horizontal">
+                                                            <af:inputNumberSpinbox label="Hora DeadLine" id="ins1hiDlh"
+                                                            minimum="00" maximum="23" columns="3" 
+                                                            binding="#{ServicesConfigBean.poDeadLineMinutos}"
+                                                                                   />
+                                                            <af:inputNumberSpinbox label=" " id="midlmin" columns="3" 
+                                                            minimum="00" maximum="59" 
+                                                            binding="#{ServicesConfigBean.poDeadLineMinMinutos}"/>
+                                                        </af:panelGroupLayout>
+                                                        </af:panelGroupLayout>
+                                                        </af:gridCell>
+                                                        <af:gridCell marginStart="5px" width="80%" marginEnd="5px" 
+                                                        id="gc2">
+                                                        <af:panelGroupLayout id="pgl1e" layout="vertical">
+                                                            <af:outputText value="Excepto" id="otn242" 
+                                                            inlineStyle="font-weight:bold;"/>
+                                                            <af:selectBooleanCheckbox text="Lunes" label="" 
+                                                            id="sbcLun" binding="#{ServicesConfigBean.poLunMinutos}"
+                                                            disabled="true"/>
+                                                            <af:selectBooleanCheckbox text="Martes" label="" 
+                                                            id="sbcMar" binding="#{ServicesConfigBean.poMarMinutos}"
+                                                            disabled="true"/>
+                                                            <af:selectBooleanCheckbox text="Miércoles" label=""
+                                                            id="sbcMie" binding="#{ServicesConfigBean.poMieMinutos}"
+                                                            disabled="true"/>
+                                                            <af:selectBooleanCheckbox text="Jueves" label="" 
+                                                            id="sbcJue" binding="#{ServicesConfigBean.poJueMinutos}" 
+                                                            disabled="true"/>
+                                                            <af:selectBooleanCheckbox text="Viernes" label="" 
+                                                            id="sbcVie" binding="#{ServicesConfigBean.poVieMinutos}"
+                                                            disabled="true"/>
+                                                            <af:selectBooleanCheckbox text="Sábado" label="" 
+                                                            id="sbcSab" binding="#{ServicesConfigBean.poSabMinutos}"
+                                                            disabled="true"/>
+                                                            <af:selectBooleanCheckbox text="Domingo" label="" 
+                                                            id="sbcDom" binding="#{ServicesConfigBean.poDomMinutos}" 
+                                                            disabled="true"/>
+                                                        </af:panelGroupLayout>
+                                                        </af:gridCell>
+                                                    </af:gridRow>
+                                                </af:panelGridLayout>
+                                            </af:showDetailItem>
+                                            <!-- HORAS -->
+                                            <af:showDetailItem text="Horas" id="sdih" 
+                                            binding="#{ServicesConfigBean.poTabHoras}" disabled="true"
+                                             disclosureListener="#{ServicesConfigBean.disHoras}" 
+                                             partialTriggers="tblSrv:LnkCronSweb ::BtnAltWs ::BtnDelOkCr">
+                                            <af:panelGridLayout id="pgl2h">
+                                                    <af:gridRow marginTop="5px" height="auto" marginBottom="5px" 
+                                                    id="gr1h">
+                                                        <af:gridCell marginStart="5px" width="30%" id="gc1h">
+                                                        <af:panelGroupLayout id="pgl1hv" layout="vertical">
+                                                            <af:panelGroupLayout id="pgl1h" layout="horizontal">                                                                
+                                                                <af:inputNumberSpinbox label="Cada" id="ins1h" 
+                                                                columns="5" binding="#{ServicesConfigBean.poCadaHoras}"/>
+                                                                <af:spacer id="SpcAxmh" width="5" height="5"/>
+                                                                <af:outputText value="Horas" id="otn24h"/>
+                                                            </af:panelGroupLayout>
+                                                        </af:panelGroupLayout>
+                                                        <af:separator id="sepMinutes"/>
+                                                        <af:panelGroupLayout id="pgl1hi" layout="horizontal">                                                            
+                                                            <af:inputNumberSpinbox label="Hora Inicio" id="ins1hi" 
+                                                            minimum="00" maximum="23" columns="3" 
+                                                   binding="#{ServicesConfigBean.poBeginHoras}"/>
+                                                            <af:inputNumberSpinbox label=" " id="ins1mi" columns="3" 
+                                                            minimum="00" maximum="59" 
+                                                   binding="#{ServicesConfigBean.poBeginMinutes}"/>
+                                                        </af:panelGroupLayout>
+                                                        <af:separator id="sepDeadLine"/>
+                                                        <af:panelGroupLayout id="pgl1hiDl" layout="horizontal">
+                                                            <af:inputNumberSpinbox label="Hora DeadLine" id="ins1hiDl" 
+                                                            minimum="00" maximum="23" columns="3" 
+                                                            binding="#{ServicesConfigBean.poDeadLineHoras}"
+                                                                                   />
+                                                            <af:inputNumberSpinbox label=" " id="ins1midl" columns="3" 
+                                                            minimum="00" maximum="59" 
+                                                            binding="#{ServicesConfigBean.poDeadLineMinHoras}"/>
+                                                        </af:panelGroupLayout>
+                                                        </af:gridCell>
+                                                        <af:gridCell marginStart="5px" width="70%" marginEnd="5px" id="gc2h">
+                                                        <af:panelGroupLayout id="pgl1eh" layout="vertical">
+                                                        <af:outputText value="Excepto" id="otn242h" 
+                                                        inlineStyle="font-weight:bold;"/>
+                                                        <af:selectBooleanCheckbox text="Lunes" label="" id="sbchLun"
+                                                        binding="#{ServicesConfigBean.poLunHoras}"/>
+                                                        <af:selectBooleanCheckbox text="Martes" label="" id="sbchMar" 
+                                                        binding="#{ServicesConfigBean.poMarHoras}"/>
+                                                        <af:selectBooleanCheckbox text="Miércoles" label="" id="sbchMie" 
+                                                        binding="#{ServicesConfigBean.poMieHoras}"/>
+                                                        <af:selectBooleanCheckbox text="Jueves" label="" id="sbchJue" 
+                                                        binding="#{ServicesConfigBean.poJueHoras}"/>
+                                                        <af:selectBooleanCheckbox text="Viernes" label="" id="sbchVie" 
+                                                        binding="#{ServicesConfigBean.poVieHoras}"/>
+                                                        <af:selectBooleanCheckbox text="Sábado" label="" id="sbchSab"
+                                                        binding="#{ServicesConfigBean.poSabHoras}"/>
+                                                        <af:selectBooleanCheckbox text="Domingo" label="" id="sbchDom" 
+                                                        binding="#{ServicesConfigBean.poDomHoras}"/>
+                                                        </af:panelGroupLayout>
+                                                        </af:gridCell>
+                                                    </af:gridRow>
+                                                </af:panelGridLayout>
+                                            </af:showDetailItem>
+                                            <!-- DIARIO -->
+                                            <af:showDetailItem text="Diario" id="sdid" binding="#{ServicesConfigBean.poTabDias}" disabled="true"
+                                            disclosureListener="#{ServicesConfigBean.disDias}" partialTriggers="tblSrv:LnkCronSweb ::BtnAltWs ::BtnDelOkCr">
+                                            <af:panelGridLayout id="pgl2d">
+                                                    <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr1d">
+                                                        <af:gridCell marginStart="5px" width="30%" id="gc1d">
+                                                        <af:panelGroupLayout id="pgl1dv" layout="vertical">                                                        
+                                                            <af:panelGroupLayout id="pgl1d" layout="horizontal" visible="false">
+                                                                <af:selectBooleanRadio text=" " label=" " id="sbr1" 
+                                                                group="gD" partialTriggers="ins1d ins1di ins1md"
+                                                                   binding="#{ServicesConfigBean.poRadioDayEvery}"
+                                                                   visible="false"/>
+                                                                <af:inputNumberSpinbox label="Cada" id="ins1d"
+                                                                columns="5" binding="#{ServicesConfigBean.poCadaDias}"
+                                                     valueChangeListener="#{ServicesConfigBean.validateDayEveryRadio}"
+                                                     autoSubmit="true"/>
+                                                                <af:spacer id="SpcAxmd" width="5" height="5"/>
+                                                                <af:outputText value="Días" id="otn24d"/>
+                                                            </af:panelGroupLayout>
+                                                        </af:panelGroupLayout>
+                                                        <af:separator id="sepDays"/>
+                                                        <af:panelGroupLayout id="pgl1di" layout="horizontal">
+                                                            <af:selectBooleanRadio text=" " label=" " id="sbr31"
+                                                            group="gD" partialTriggers="ins1d ins1di ins1md"
+                                                                       binding="#{ServicesConfigBean.poRadioDayBegin}"
+                                                                       visible="false"/>
+                                                            <af:inputNumberSpinbox label="Hora Inicio" id="ins1di" 
+                                                            minimum="00" maximum="23" columns="3" 
+                                                                       binding="#{ServicesConfigBean.poBeginDias}"/>
+                                                             <af:inputNumberSpinbox label=" " id="ins1md" columns="3"
+                                                             minimum="00" maximum="59" 
+                                                               binding="#{ServicesConfigBean.poBeginDayMinutes}"/>
+                                                        </af:panelGroupLayout>
+                                                        </af:gridCell>
+                                                        <af:gridCell marginStart="5px" width="70%" marginEnd="5px" id="gc2d">
+                                                        <af:panelGroupLayout id="pgl1ed" layout="vertical">
+                                                        <af:outputText value="Excepto" id="otn242d" 
+                                                        inlineStyle="font-weight:bold;"/>
+                                                        <af:selectBooleanCheckbox text="Lunes" label="" id="sbcdLun" 
+                                                        binding="#{ServicesConfigBean.poLunDias}"/>
+                                                        <af:selectBooleanCheckbox text="Martes" label="" id="sbcdMar"
+                                                        binding="#{ServicesConfigBean.poMarDias}"/>
+                                                        <af:selectBooleanCheckbox text="Miércoles" label="" id="sbcdMie" 
+                                                        binding="#{ServicesConfigBean.poMieDias}"/>
+                                                        <af:selectBooleanCheckbox text="Jueves" label="" id="sbcdJue"
+                                                        binding="#{ServicesConfigBean.poJueDias}"/>
+                                                        <af:selectBooleanCheckbox text="Viernes" label="" id="sbcdVie"
+                                                        binding="#{ServicesConfigBean.poVieDias}"/>
+                                                        <af:selectBooleanCheckbox text="Sábado" label="" id="sbcdSab" 
+                                                        binding="#{ServicesConfigBean.poSabDias}"/>
+                                                        <af:selectBooleanCheckbox text="Domingo" label="" id="sbcdDom" 
+                                                        binding="#{ServicesConfigBean.poDomDias}"/>
+                                                        </af:panelGroupLayout>
+                                                        </af:gridCell>
+                                                    </af:gridRow>
+                                                </af:panelGridLayout>
+                                            </af:showDetailItem>
+                                            <!-- SEMANAL -->
+                                            <af:showDetailItem text="Semanal" id="sdis" 
+                                            binding="#{ServicesConfigBean.poTabSemanas}" disabled="true"
+                                            disclosureListener="#{ServicesConfigBean.disSemanas}" 
+                                            partialTriggers="tblSrv:LnkCronSweb ::BtnAltWs ::BtnDelOkCr">
+                                            <af:panelGridLayout id="pgls">
+                                                    <af:gridRow marginTop="5px" height="auto" marginBottom="5px" 
+                                                    id="grs">
+                                                        <af:gridCell marginStart="5px" width="20%" id="gcs">
+                                                        <af:panelGroupLayout id="pgss" layout="horizontal">
+                                                            <af:inputNumberSpinbox label="Hora Inicio" id="ins1diw" 
+                                                            minimum="00" maximum="23" columns="3" 
+                                                                   binding="#{ServicesConfigBean.poSemanasHoraIni}"/>
+                                                        <af:inputNumberSpinbox label=" " id="ins1mdw" columns="3"
+                                                            minimum="00" maximum="59" 
+                                                            binding="#{ServicesConfigBean.poBeginSemanasMinutoIni}"/>
+                                                        </af:panelGroupLayout>
+                                                        </af:gridCell>
+                                                        <af:gridCell marginStart="5px" width="80%" marginEnd="5px" 
+                                                        id="gs2">
+                                                        <af:panelGroupLayout id="pglse" layout="vertical">
+                                                        <af:outputText value="Los Días" id="otn24s" 
+                                                        inlineStyle="font-weight:bold;"/>
+                                                        <af:selectBooleanCheckbox text="Lunes" label="" id="sbcsLun"
+                                                        binding="#{ServicesConfigBean.poLunWeek}"/>
+                                                        <af:selectBooleanCheckbox text="Martes" label="" id="sbcsMar" 
+                                                        binding="#{ServicesConfigBean.poMarWeek}"/>
+                                                        <af:selectBooleanCheckbox text="Miércoles" label="" id="sbcsMie" 
+                                                        binding="#{ServicesConfigBean.poMieWeek}"/>
+                                                        <af:selectBooleanCheckbox text="Jueves" label="" id="sbcsJue"
+                                                        binding="#{ServicesConfigBean.poJueWeek}"/>
+                                                        <af:selectBooleanCheckbox text="Viernes" label="" id="sbcsVie"
+                                                        binding="#{ServicesConfigBean.poVieWeek}"/>
+                                                        <af:selectBooleanCheckbox text="Sábado" label="" id="sbcsSab" 
+                                                        binding="#{ServicesConfigBean.poSabWeek}"/>
+                                                        <af:selectBooleanCheckbox text="Domingo" label="" id="sbcsDom" 
+                                                        binding="#{ServicesConfigBean.poDomWeek}"/>
+                                                        </af:panelGroupLayout>
+                                                        </af:gridCell>
+                                                    </af:gridRow>
+                                                </af:panelGridLayout>
+                                            </af:showDetailItem>
+                                            <!-- MENSUAL -->
+                                            <af:showDetailItem text="Mensual" id="sdihMs" 
+                                            binding="#{ServicesConfigBean.poTabMeses}" disabled="true"
+                                            disclosureListener="#{ServicesConfigBean.disMeses}"
+                                            partialTriggers="tblSrv:LnkCronSweb ::BtnAltWs ::BtnDelOkCr">
+                                                <af:panelGridLayout id="pgl3">
+                                                    <af:gridRow marginTop="5px" height="auto" id="gr2">
+                                                        <af:gridCell marginStart="5px" width="50%" id="gc3">
+                                                            <af:panelGroupLayout id="pgl1ms" layout="horizontal">
+                                                                <af:selectBooleanRadio text=" " label=" " id="sbrms"
+                                                                group="gM" 
+                                                                partialTriggers="ins1ms inds1ms soc21 soc22 inds1vms"
+                                                                binding="#{ServicesConfigBean.poRadioTheDay}"/>
+                                                                <af:spacer id="SpcAxmdms" width="5" height="5"/>
+                                                                <af:inputNumberSpinbox label="El Día" id="ins1ms" 
+                                                                columns="5" binding="#{ServicesConfigBean.poMesTheDay}"
+                                                    valueChangeListener="#{ServicesConfigBean.validateMesTheDayRadio}" 
+                                                    autoSubmit="true"/>
+                                                                <af:spacer id="Spcmdms4" width="88" height="5"/>
+                                                                <af:inputNumberSpinbox label="Cada" id="inds1ms" 
+                                                                columns="5" binding="#{ServicesConfigBean.poMesEvery}"
+                                                    valueChangeListener="#{ServicesConfigBean.validateMesEveryRadio}" 
+                                                    autoSubmit="true"/>
+                                                                <af:spacer id="Spcmdms" width="5" height="5"/>
+                                                                <af:outputText value="Mes(es)" id="otn24ms"/>
+                                                            </af:panelGroupLayout>
+                                                            <af:separator id="sepMes2"/>
+                                                        </af:gridCell>
+                                                        <af:gridCell marginStart="5px" width="50%" 
+                                                        marginEnd="5px" id="gc4">
+                                                            
+                                                        </af:gridCell>
+                                                    </af:gridRow>
+                                                    <af:gridRow marginTop="5px" height="auto" id="gr3">
+                                                        <af:gridCell marginStart="5px" width="50%" id="gc5">
+                                                        <af:panelGroupLayout id="pgl1ms2" layout="horizontal">
+                                                                <af:selectBooleanRadio text=" " label=" " id="sbrms2" 
+                                                                group="gM" 
+                                                                partialTriggers="ins1ms inds1ms soc21 soc22 inds1vms"
+                                                                binding="#{ServicesConfigBean.poRadioTheDayOfWeek}"/>
+                                                                <af:spacer id="SpcAxmdmsm" width="5" height="5"/>
+                                                                <af:selectOneChoice label="El" id="soc21" 
+                                                                autoSubmit="true"
+                                                valueChangeListener="#{ServicesConfigBean.validateMesDayInitListener}"
+                                                binding="#{ServicesConfigBean.poDayOfSelected}">
+                                                            <af:selectItem label="Primer" value="first" id="first"/>
+                                                            <af:selectItem label="Segundo" value="second" id="second"/>
+                                                            <af:selectItem label="Tercer" value="third" id="third"/>
+                                                            <af:selectItem label="Cuarto" value="fourth" id="fourth"/>
+                                                                </af:selectOneChoice>
+                                                                <af:spacer id="Spcmdms4m" width="10" height="5"/>
+                                                                <af:selectOneChoice label=" " id="soc22" 
+                                                                autoSubmit="true"
+                                            valueChangeListener="#{ServicesConfigBean.validateMesDayOfWeekInitListener}"
+                                                                binding="#{ServicesConfigBean.poDayOfWeekSelected}">
+                                                                <af:selectItem label="Lunes" value="mon" id="si1m"/>
+                                                                <af:selectItem label="Martes" value="tue" id="si2m"/>
+                                                                <af:selectItem label="Miércoles" value="wed" id="si3m"/>
+                                                                <af:selectItem label="Jueves" value="thu" id="si4m"/>
+                                                                <af:selectItem label="Viernes" value="fri" id="si5m"/>
+                                                                <af:selectItem label="Sábado" value="sat" id="si6m"/>
+                                                                <af:selectItem label="Domingo" value="sun" id="si7m"/>
+                                                                </af:selectOneChoice>
+                                                                <af:spacer id="Spcmdmsm" width="15" height="5"/>
+                                                                <af:inputNumberSpinbox label="Cada" id="inds1vms"
+                                                                columns="5" binding="#{ServicesConfigBean.poMesEveryOf}"
+                                                    valueChangeListener="#{ServicesConfigBean.validateMesEveryOfRadio}" 
+                                                    autoSubmit="true"/>
+                                                                <af:spacer id="Spcmdvfms" width="5" height="5"/>
+                                                                <af:outputText value="Mes(es)" id="otn24mes"/>                                                        
+                                                            </af:panelGroupLayout>
+                                                            <af:separator id="sepMes1"/>
+                                                        </af:gridCell>
+                                                        <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                                                        id="gc6"/>
+                                                    </af:gridRow>
+                                                    <af:gridRow marginTop="5px" height="auto" marginBottom="5px" 
+                                                    id="gr4">
+                                                        <af:gridCell marginStart="5px" width="50%" id="gc7">
+                                                        <af:panelGroupLayout id="pgl13ms" layout="horizontal">
+                                                                <af:spacer id="SpcAxm3dms" width="5" height="5"/>
+                                                                <af:inputNumberSpinbox label="Hora Inicio" id="ins1dis"
+                                                                minimum="00" maximum="23" columns="3" 
+                                                                binding="#{ServicesConfigBean.poMesHoraIni}"/>
+                                                             <af:inputNumberSpinbox label=" " id="ins1mds" columns="3" 
+                                                             minimum="00" maximum="59" 
+                                                             binding="#{ServicesConfigBean.poMesMinutoIni}"/>
+                                                                </af:panelGroupLayout>
+                                                        </af:gridCell>
+                                                        <af:gridCell marginStart="5px" width="50%" marginEnd="5px" 
+                                                        id="gc8"/>
+                                                    </af:gridRow>
+                                                </af:panelGridLayout>
+                                            </af:showDetailItem>
+        
+                                        </af:panelTabbed>
+                                    </af:panelGroupLayout>
+                                </af:panelGroupLayout>
+                            </af:panelGroupLayout>
+                          </f:facet>
+                            </af:panelSplitter>
+                            </af:panelGroupLayout>
+                        </af:panelGroupLayout>
+                    </f:facet>
+                </af:pageTemplate>
+                <!-- ################################### POPUP ALTA ##################################################### !-->
+                <af:popup id="popupSaveService" contentDelivery="lazyUncached"
+                          binding="#{ServicesConfigBean.poPopupSaveService}">
+                    <af:panelWindow id="PnlSaveService" modal="true" closeIconVisible="false"
+                                    title="Alta Servicio Web" titleIconSource="/images/note_new.gif" 
+                                    styleClass="AFStretchWidth">
+                        <af:panelGroupLayout layout="vertical" id="PnlGrpAltaWs" valign="middle" halign="center"
+                        styleClass="AFStretchWidth">
+                            <af:panelFormLayout id="PnlFrmAltaWs" rows="14" maxColumns="1" inlineStyle="width:400px;">     
+                            
+                                    <af:inputText label="idService"                                                  
+                                                  visible="false"
+                                                  id="it9">                                        
+                                    </af:inputText>
+                                    <af:inputText label="Nombre del Servicio"                                                  
+                                                  shortDesc="Servicio"
+                                                  visible="true"
+                                                  id="TxtPopSaveNomService"
+                                                  binding="#{ServicesConfigBean.poPopSaveNomService}">
+                                    </af:inputText>
+                                    <af:selectOneChoice 
+                                                    label="Servicio"                                                    
+                                                    shortDesc="Seleccione Servicio Web"
+                                                    id="soc2" unselectedLabel="-- Seleccione --"
+                                                    binding="#{ServicesConfigBean.poSaveNomServiceSel}">
+                                        <f:selectItems value="#{ServicesConfigBean.listWebServicesValid}" id="sid1n"/>
+                                    </af:selectOneChoice>
+                                    
+                                    <af:inputText label="WSDL"                                                  
+                                                  shortDesc="Wsdl"
+                                                  visible="false"
+                                                  id="TxtPopSaveWsdl" binding="#{ServicesConfigBean.poPopSaveWsdl}">
+                                    </af:inputText>
+                                    
+                                    <af:selectOneChoice label="Sistema Propietario" id="selSystem"
+                                    unselectedLabel="-- Seleccione --"
+                                                        binding="#{ServicesConfigBean.poPopSaveSystem}">
+                                        <af:selectItem label="Integraci&#243;n" value="Integration" id="si1p"/>
+                                        <af:selectItem label="eVeTV" value="Evetv" id="si2p"/>
+                                        <af:selectItem label="Paradigm" value="Paradigm" id="si3p"/>
+                                    </af:selectOneChoice>
+                                    <af:selectOneChoice label="Sistema Origen" id="selSystemOr" 
+                                    unselectedLabel="-- Seleccione --"
+                                                        binding="#{ServicesConfigBean.poPopSaveSystemOr}">
+                                        <af:selectItem label="Integraci&#243;n" value="Integration" id="si1Or"/>
+                                        <af:selectItem label="eVeTV" value="Evetv" id="si2Or"/>
+                                        <af:selectItem label="Paradigm" value="Paradigm" id="si3Or"/>
+                                    </af:selectOneChoice>
+                                    <af:selectOneChoice label="Sistema Destino" id="selSystemDes" 
+                                    unselectedLabel="-- Seleccione --"
+                                                        binding="#{ServicesConfigBean.poPopSaveSystemDes}">
+                                        <af:selectItem label="Integraci&#243;n" value="Integration" id="si1De"/>
+                                        <af:selectItem label="eVeTV" value="Evetv" id="si2De"/>
+                                        <af:selectItem label="Paradigm" value="Paradigm" id="si3De"/>
+                                    </af:selectOneChoice>
+                                    
+                                    <af:selectBooleanCheckbox text="" label="As&#237;ncrono" id="sbcAs"
+                                                              binding="#{ServicesConfigBean.poPopSaveAsyn}"/>
+                                    
+                                    <af:selectBooleanCheckbox text="" label="Estatus" id="sbcSta"
+                                                              binding="#{ServicesConfigBean.poPopSaveStatus}"/>
+                                <af:spacer width="10" height="10" id="spacer158"/>
+                                <af:spacer width="10" height="10" id="spacer3"/>
+                            </af:panelFormLayout>
+                            <af:panelGroupLayout id="PnlFrmBtnsPg">
+                                <af:button text="Aceptar" id="BtnAltWs" icon="/images/aceptar.gif"
+                                            shortDesc="Guardar Servicio Web"
+                                           action="#{ServicesConfigBean.saveServiceAction}"/>
+                                <af:spacer width="10" height="10" id="SpcLoadOrder_111"/>
+                                <af:button text="Cancelar" id="BtnCancelAlt" icon="/images/cancelar.gif" 
+                                shortDesc="Cierra el Popup." immediate="true"
+                                           action="#{ServicesConfigBean.cancelSaveServiceAction}"/>
+                            </af:panelGroupLayout>
+                        </af:panelGroupLayout>
+                    </af:panelWindow>
+                </af:popup>
+                
+                <!-- ################################### POPUP ELIMINAR ########################################## !-->
+                <af:popup id="popupDeleteWs" contentDelivery="lazyUncached"                          
+                          binding="#{ServicesConfigBean.poPopupDeleteService}">
+                  <af:panelWindow id="PnlDeleteUsuario" 
+                               inlineStyle="border-style:none;"
+                               modal="true" 
+                               closeIconVisible="false"
+                               title="Eliminar Servicio Web" 
+                               titleIconSource="/images/page_user_light.gif">
+                    <af:panelGroupLayout layout="vertical" 
+                                      id="PnlDeleteWsMsg" 
+                                      inlineStyle="border-style:none;" 
+                                      valign="middle" 
+                                      halign="center">
+                      <af:spacer width="10" height="10" id="SpcLogin_41aDel"/>
+                      <af:panelLabelAndMessage id="PnlLblMsg"
+                                               inlineStyle="border-style:none; color:Olive;"
+                                               binding="#{ServicesConfigBean.poDeleteMsgLbl}"/>
+                         <af:spacer width="50" height="25" id="SpcLoadOrder_10"/>
+                            <af:outputText id="TxtIdBindingsDelete" visible="false" 
+                            binding="#{ServicesConfigBean.poDeleteIdBinding}" />
+                            <af:panelGroupLayout layout="horizontal" id="PnlEliminarBtns" 
+                            inlineStyle="border-style:none;" valign="middle" halign="center">
+                           <af:button text="Aceptar" id="BtnEliminarAceptar"
+                                             icon="/images/aceptar.gif"
+                                             action="#{ServicesConfigBean.deleteWebServiceAction}">
+                                <af:clientListener method="enforcePreventUserInput" type="action"/>
+                            </af:button>
+                           <af:spacer width="10" height="25" id="SpcLoadOrder_11"/>
+                           <af:button text="Cancelar" id="BtnEliminarCancelar"
+                                             icon="/images/cancelar.gif"
+                                             action="#{ServicesConfigBean.cancelDeleteWebService}"/>
+                       </af:panelGroupLayout> 
+                    </af:panelGroupLayout>
+                  </af:panelWindow>
+                </af:popup>
+                
+                <!-- ################################### POPUP EDITAR ############################################ !-->
+                <af:popup id="popupUdateService" contentDelivery="lazyUncached"
+                          binding="#{ServicesConfigBean.poPopupUpdateService}" partialTriggers="pt1:tblSrv:LnkEditSweb">
+                    <af:panelWindow id="PnlUpdService" modal="true" closeIconVisible="false"
+                                    title="Editar Servicio Web" 
+                                    partialTriggers="pt1:tblSrv:LnkEditSweb"
+                                    titleIconSource="/images/note_new.gif" styleClass="AFStretchWidth">
+                        <af:panelGroupLayout layout="vertical" id="PnlGrpUpdWs" 
+                        partialTriggers="pt1:tblSrv:LnkEditSweb"
+                        valign="middle" halign="center" styleClass="AFStretchWidth">
+                            <af:panelFormLayout id="PnlFrmUpdWs" 
+                            partialTriggers="pt1:tblSrv:LnkEditSweb"
+                            rows="14" maxColumns="1" inlineStyle="width:400px;">                                 
+                                    <af:inputText label="idService"                                                                                                   
+                                                  id="it9Upd"
+                                                  visible="false"
+                                                  partialTriggers="pt1:tblSrv:LnkEditSweb"
+                                                  binding="#{ServicesConfigBean.poPopUpdateIdService}">
+                                    </af:inputText>
+                                    <af:inputText label="Servicio"                                                  
+                                                  id="TxtPopUpdNomService"
+                                                  readOnly="true"
+                                                  partialTriggers="pt1:tblSrv:LnkEditSweb"
+                                                  binding="#{ServicesConfigBean.poPopUpdateNomService}">
+                                    </af:inputText>
+                                    <af:inputText label="Nombre del Servicio"                                                  
+                                                  id="TxtPopUpdDesService"
+                                                  partialTriggers="pt1:tblSrv:LnkEditSweb"
+                                                  binding="#{ServicesConfigBean.poPopUpdateDesService}">
+                                    </af:inputText>
+                                    <af:inputText label="WSDL"                                                 
+                                                  id="TxtPopUpdWsdl" 
+                                                  visible="false"
+                                                  partialTriggers="pt1:tblSrv:LnkEditSweb"
+                                                  binding="#{ServicesConfigBean.poPopUpdateWsdl}">
+                                    </af:inputText>
+                                    <af:selectOneChoice label="Sistema Propietario" id="selUpdSystem" 
+                                    unselectedLabel="-- Seleccione --"
+                                                        binding="#{ServicesConfigBean.poPopUpdateSystem}"
+                                                        >
+                                        <af:selectItem label="Integraci&#243;n" value="Integration" id="si1Upd"/>
+                                        <af:selectItem label="eVeTV" value="Evetv" id="si2Upd"/>
+                                        <af:selectItem label="Paradigm" value="Paradigm" id="si3Upd"/>
+                                    </af:selectOneChoice>
+                                    <af:selectOneChoice label="Sistema Origen" id="selUpdSystemOr"
+                                    unselectedLabel="-- Seleccione --"
+                                                        binding="#{ServicesConfigBean.poPopUpdateSystemOr}">
+                                        <af:selectItem label="Integraci&#243;n" value="Integration" id="si1OrUpd"/>
+                                        <af:selectItem label="eVeTV" value="Evetv" id="si2OrUpd"/>
+                                        <af:selectItem label="Paradigm" value="Paradigm" id="si3OrUpd"/>
+                                    </af:selectOneChoice>
+                                    <af:selectOneChoice label="Sistema Destino" id="selUpdSystemDes" 
+                                    unselectedLabel="-- Seleccione --"
+                                                        binding="#{ServicesConfigBean.poPopUpdateSystemDes}">
+                                        <af:selectItem label="Integraci&#243;n" value="Integration" id="si1DeUpd"/>
+                                        <af:selectItem label="eVeTV" value="Evetv" id="si2DeUpd"/>
+                                        <af:selectItem label="Paradigm" value="Paradigm" id="si3DeUpd"/>
+                                    </af:selectOneChoice>
+                                    <af:selectBooleanCheckbox text="" label="As&#237;ncrono" id="sbcAsUpd"
+                                                              binding="#{ServicesConfigBean.poPopUpdateAsyn}"/>
+                                    <af:selectBooleanCheckbox text="" label="Estatus" id="sbcStUpda"
+                                                              binding="#{ServicesConfigBean.poPopUpdateStatus}"/>
+                                <af:spacer width="10" height="10" id="spacer158Upd"/>
+                                <af:spacer width="10" height="10" id="spacer3Upd"/>
+                            </af:panelFormLayout>
+                            <af:panelGroupLayout id="PnlFrmBtnsPgUpd">
+                                <af:button text="Aceptar" id="BtnAceptUpdWs" icon="/images/aceptar.gif"
+                                            shortDesc="Guardar Servicio Web"
+                                           action="#{ServicesConfigBean.updateServiceAction}"/>
+                                <af:spacer width="10" height="10" id="SpcUpd111"/>
+                                <af:button text="Cancelar" id="BtnCancelAltUpd" icon="/images/cancelar.gif" 
+                                shortDesc="Cierra el Popup." immediate="true"
+                                           action="#{ServicesConfigBean.cancelUpdateServiceAction}"/>
+                            </af:panelGroupLayout>
+                        </af:panelGroupLayout>
+                    </af:panelWindow>
+                </af:popup>
+                
+                <!-- ################################### POPUP EXECUTE SERVICE #################################### !-->
+                <af:popup id="popupExecuteWs" contentDelivery="lazyUncached"                          
+                          binding="#{ServicesConfigBean.poPopupExecuteService}">
+                  <af:panelWindow id="PnlExecute" 
+                               inlineStyle="border-style:none;"
+                               modal="true" 
+                               closeIconVisible="false"
+                            binding="#{ServicesConfigBean.poPopPanelExeBinding}"
+                               title="Servicio Web" 
+                               titleIconSource="/images/siguientePage.png">
+                    <af:panelGroupLayout layout="vertical" 
+                                      id="PnlExeWsMsg" 
+                                      inlineStyle="border-style:none;" 
+                                      valign="middle" 
+                                      halign="center">
+                      <af:spacer width="10" height="10" id="SpcExeDel"/>
+                      <af:panelLabelAndMessage id="PnlLblMsgExe"
+                                               inlineStyle="border-style:none; color:Olive;"
+                                               binding="#{ServicesConfigBean.poExecuteMsgLbl}"/>
+                         <af:spacer width="50" height="25" id="SpcLoExe_10"/>
+                            <af:outputText id="TxtIdBindingsExe" visible="false" 
+                            binding="#{ServicesConfigBean.poExecuteIdBinding}" />
+                            <af:outputText id="TxtNomBindingsExe" visible="false" 
+                            binding="#{ServicesConfigBean.poExecuteNomBinding}" />
+                            <af:outputText id="TxtActionBindings" visible="false"
+                            binding="#{ServicesConfigBean.poActionServiceBinding}" />
+                            <af:panelGroupLayout layout="horizontal" id="PnlExeBtns" inlineStyle="border-style:none;"
+                            valign="middle" halign="center">
+                           <af:button text="Aceptar" id="BtnExeAceptar"
+                                             icon="/images/aceptar.gif"
+                                             action="#{ServicesConfigBean.executeWebServiceAction}">
+                                <af:clientListener method="enforcePreventUserInput" type="action"/>
+                            </af:button>
+                           <af:spacer width="10" height="25" id="Spcexex_11"/>
+                           <af:button text="Cancelar" id="BtnExeCancelar"
+                                             icon="/images/cancelar.gif"
+                                             action="#{ServicesConfigBean.cancelExecuteWebService}"/>
+                       </af:panelGroupLayout> 
+                    </af:panelGroupLayout>
+                  </af:panelWindow>
+                </af:popup>
+                
+                <!-- ################## POPUP ELIMINAR CRON CONFIGURATION ######################################## !-->
+                <af:popup id="popupDeleteCr" contentDelivery="lazyUncached"                          
+                          binding="#{ServicesConfigBean.poPopupDeleteCronService}">
+                  <af:panelWindow id="PnlDeleteCr" 
+                               inlineStyle="border-style:none;"
+                               modal="true" 
+                               closeIconVisible="false"
+                               title="Eliminar Configuración Cron" 
+                               titleIconSource="/images/page_user_light.gif">
+                    <af:panelGroupLayout layout="vertical" 
+                                      id="PnlDeleteCrMsg" 
+                                      inlineStyle="border-style:none;" 
+                                      valign="middle" 
+                                      halign="center">
+                      <af:spacer width="10" height="10" id="SpcCr"/>
+                      <af:panelLabelAndMessage id="PnlLblMsgCr"
+                                               inlineStyle="border-style:none; color:Olive;"
+                                               binding="#{ServicesConfigBean.poDeleteCronMsgLbl}"/>
+                         <af:spacer width="50" height="25" id="SpcLoadCr10"/>
+                            <af:outputText id="TxtIdBindingsDeleteCr" visible="false" 
+                            binding="#{ServicesConfigBean.poDeleteCronIdBinding}" />
+                            <af:panelGroupLayout layout="horizontal" id="PnlEliminarBtnsCr" 
+                            inlineStyle="border-style:none;" valign="middle" halign="center">
+                           <af:button text="Aceptar" id="BtnDelOkCr"
+                                             icon="/images/aceptar.gif"
+                                             action="#{ServicesConfigBean.deleteCronServiceAction}">
+                                <af:clientListener method="enforcePreventUserInput" type="action"/>
+                            </af:button>
+                           <af:spacer width="10" height="25" id="SpcLoaCr_11"/>
+                           <af:button text="Cancelar" id="BtnEliminarCancelarCr"
+                                             icon="/images/cancelar.gif"
+                                             action="#{ServicesConfigBean.cancelDeleteCronService}"/>
+                       </af:panelGroupLayout> 
+                    </af:panelGroupLayout>
+                  </af:panelWindow>
+                </af:popup>
+                
+                <!-- ################## POPUP CONFIRM SAVE CRON CONFIGURATION ######################################## !-->
+                <af:popup id="popupSaveCr" contentDelivery="lazyUncached"                          
+                          binding="#{ServicesConfigBean.poPopupSaveCronService}">
+                  <af:panelWindow id="PnlSaveCr" 
+                               inlineStyle="border-style:none;"
+                               modal="true" 
+                               closeIconVisible="false"
+                               title="Guardar Configuración Cron" 
+                               titleIconSource="/images/icon_alert.gif">
+                    <af:panelGroupLayout layout="vertical" 
+                                      id="PnlSaveCrMsg" 
+                                      inlineStyle="border-style:none;" 
+                                      valign="middle" 
+                                      halign="center">
+                      <af:spacer width="10" height="10" id="SpcSaveCr"/>
+                      <af:panelLabelAndMessage id="PnlLblMsgSaveCr"
+                                               inlineStyle="border-style:none; color:Olive;"
+                                               binding="#{ServicesConfigBean.poSaveCronMsgLbl}"/>
+                         <af:spacer width="50" height="25" id="SpcSaveCr10"/>
+                            <af:panelGroupLayout layout="horizontal" id="PnlSaveBtnsCr" 
+                            inlineStyle="border-style:none;" valign="middle" halign="center">
+                           <af:button text="Aceptar" id="BtnSaveOkCr"
+                                             icon="/images/aceptar.gif"
+                                             action="#{ServicesConfigBean.saveCronAction}">
+                                <af:clientListener method="enforcePreventUserInput" type="action"/>
+                            </af:button>
+                           <af:spacer width="10" height="25" id="SpcSaveCr_11"/>
+                           <af:button text="Cancelar" id="BtnSaveCancelarCr"
+                                             icon="/images/cancelar.gif"
+                                             action="#{ServicesConfigBean.cancelSaveCronAction}"/>
+                       </af:panelGroupLayout> 
+                    </af:panelGroupLayout>
+                  </af:panelWindow>
+                </af:popup>
+                
+                
+                <!-- ################## POPUP CONFIRM RESET ALL CRON ######################################## !-->
+                <af:popup id="popupRstCr" contentDelivery="lazyUncached"                          
+                          binding="#{ServicesConfigBean.poPopupRstCronService}">
+                  <af:panelWindow id="PnlRstCr" 
+                               inlineStyle="border-style:none;"
+                               modal="true" 
+                               closeIconVisible="false"
+                               title="Reiniciar Todos los Crones Configurados" 
+                               titleIconSource="/images/page_refresh.gif">
+                    <af:panelGroupLayout layout="vertical" 
+                                      id="PnlRstCrMsg" 
+                                      inlineStyle="border-style:none;" 
+                                      valign="middle" 
+                                      halign="center">
+                      <af:spacer width="10" height="10" id="SpcRstCr"/>
+                      <af:panelLabelAndMessage id="PnlLblMsgRstCr"
+                                               inlineStyle="border-style:none; color:Olive;"
+                                               label="Confirmar Reinicio de Crones"/>
+                      <af:spacer width="50" height="25" id="SpcSRstCr10"/>
+                      <af:panelGroupLayout layout="horizontal" id="PnlRstBtnsCr" 
+                                           inlineStyle="border-style:none;" valign="middle" halign="center">
+                      <af:button text="Aceptar" id="BtnRstOkCr"
+                                 icon="/images/aceptar.gif"
+                                 action="#{ServicesConfigBean.listCronsAction}">
+                        <af:clientListener method="enforcePreventUserInput" type="action"/>
+                      </af:button>
+                      <af:spacer width="10" height="25" id="SpcRstCr_11"/>
+                      <af:button text="Cancelar" id="BtnRstCancelarCr"
+                                 icon="/images/cancelar.gif"
+                                 action="#{ServicesConfigBean.cancelResetCronAction}"/>
+                      </af:panelGroupLayout> 
+                    </af:panelGroupLayout>
+                  </af:panelWindow>
+                </af:popup>
+                
+                <!-- ################################### POPUP LOADING .... ##################################### !-->
+                <af:popup id="p1oadLogin" contentDelivery="immediate">
+                  <af:dialog id="dLogin" type="none" title="Procesando Información" closeIconVisible="false">
+                    <af:panelGroupLayout id="Pnlpgl1Login" layout="vertical" halign="center">
+                      <af:image source="/images/loading_blue.gif" id="ImgIdxLoad" shortDesc="Cargando..."/>
+                      <af:outputText value="... por favor espere." id="LblIdxLoad1Login"/>
+                    </af:panelGroupLayout>
+                  </af:dialog>
+                </af:popup>
+                                
+            </af:form>
+        </af:document>
+    </f:view>
+</jsp:root>

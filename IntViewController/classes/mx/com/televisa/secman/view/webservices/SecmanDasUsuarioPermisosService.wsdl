@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://webServices.view.secman.televisa.com.mx/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://webServices.view.secman.televisa.com.mx/" name="SecmanDasUsuarioPermisosService">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://xmlns.soin.tvsa.com/Secman/Servicios/UsuarioPermisos" schemaLocation="SecmanDasUsuarioPermisosPort1.xsd"/>
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import namespace="http://webServices.view.secman.televisa.com.mx/" schemaLocation="SecmanDasUsuarioPermisosPort2.xsd"/>
+    </xsd:schema>
+  </types>
+  <message name="obtenerRolTareaPermisos">
+    <part name="parameters" element="tns:obtenerRolTareaPermisos"/>
+  </message>
+  <message name="obtenerRolTareaPermisosResponse">
+    <part name="parameters" element="tns:obtenerRolTareaPermisosResponse"/>
+  </message>
+  <portType name="SecmanDasUsuarioPermisos">
+    <operation name="obtenerRolTareaPermisos">
+      <input message="tns:obtenerRolTareaPermisos"/>
+      <output message="tns:obtenerRolTareaPermisosResponse"/>
+    </operation>
+  </portType>
+  <binding name="SecmanDasUsuarioPermisosPortBinding" type="tns:SecmanDasUsuarioPermisos">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <operation name="obtenerRolTareaPermisos">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="SecmanDasUsuarioPermisosService">
+    <port name="SecmanDasUsuarioPermisosPort" binding="tns:SecmanDasUsuarioPermisosPortBinding">
+      <soap:address location="http://tvmiddev1.televisa.net:10106/SecmanWebServices/SecmanDasUsuarioPermisosPort"/>
+    </port>
+  </service>
+</definitions>

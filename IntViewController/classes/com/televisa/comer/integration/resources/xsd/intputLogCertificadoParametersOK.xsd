@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:ns0="http://com/televisa/comer/integration/service/beans/logcertificado" 
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+            targetNamespace="http://com/televisa/comer/integration/service/beans/logcertificado"
+            attributeFormDefault="qualified"
+            elementFormDefault="qualified"
+            >
+   <xsd:complexType name="LogCertificadoResponse">
+      <xsd:sequence>
+         <xsd:element name="IdRequestLogCertificadoRes" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="XmlMessageResponseLcert" type="ns0:XmlMessageLcertResponseCollection"/>
+         <xsd:element name="ErrorLcert" type="xsd:string" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="LogCertificadoInputParameters">
+      <xsd:sequence>
+         <xsd:element name="IdRequestLogCertificadoReq" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="IdService" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="UserName" type="xsd:string" minOccurs="1"/>         
+         <xsd:element name="IdUser" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="DateQueryLcert" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="ChannelLcertList" type="ns0:ChannelsLcertCollection"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="ChannelsLcertCollection">
+      <xsd:sequence>
+         <xsd:element name="ChannelsLcert" type="ns0:ChannelLcert" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="ChannelLcert">
+      <xsd:sequence>
+         <xsd:element name="ChannelLcert" type="xsd:string" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="XmlMessageLcertResponseCollection">
+      <xsd:sequence>
+         <xsd:element name="XmlMessageLcertReqRes" type="ns0:XmlMessageLcertReqRes" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="XmlMessageLcertReqRes">
+      <xsd:sequence>
+         <xsd:element name="XmlMessageLcertRequest" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="XmlMessageLcertResponse" type="xsd:string" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:element name="LogCertificadoResponse" type="ns0:LogCertificadoResponse"/>
+   <xsd:element name="LogCertificadoInputParameters" type="ns0:LogCertificadoInputParameters"/>
+</xsd:schema>

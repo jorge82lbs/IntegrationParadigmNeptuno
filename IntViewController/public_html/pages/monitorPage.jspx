@@ -1,0 +1,1906 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <f:view>
+        <af:document title="Monitoreo de Servicios" id="d1" smallIconSource="/images/icon_get_world.gif">
+            <af:messages id="m1"/>
+            <af:form id="f1">
+            <af:resource type="javascript">
+                    function enforcePreventUserInput(evt) {                    
+                        var popup = AdfPage.PAGE.findComponentByAbsoluteId('p1oadLogin');
+                        if (popup != null) {
+                            AdfPage.PAGE.addBusyStateListener(popup, handleBusyState);
+                            evt.preventUserInput();
+                        }
+                    }
+                
+                    function handleBusyState(evt) {
+                        var popup = AdfPage.PAGE.findComponentByAbsoluteId('p1oadLogin');
+                        if (popup != null) {
+                            if (evt.isBusy()) {
+                                popup.show();
+                            }
+                            else {
+                                popup.hide();
+                                AdfPage.PAGE.removeBusyStateListener(popup, handleBusyState);
+                            }
+                        }
+                    }        
+                </af:resource>
+                <af:pageTemplate viewId="/templates/integrationTemplate.jspx" id="pt1">
+                    <f:facet name="content">
+                     <af:panelGroupLayout layout="scroll" id="PnlCont"
+                                             inlineStyle="border-style:none;">
+                            <af:panelHeader text="Monitoreo de Servicios" id="PnlHead"
+                                type="default"
+                                messageType="none"
+                                shortDesc="Monitoreo de Servicios"
+                                inlineStyle="border-style:none;">
+                            <f:facet name="toolbar">
+                                <af:statusIndicator id="StiIndicator" shortDesc="Status Indicator"/>
+                            </f:facet>
+                            </af:panelHeader>
+                            <af:separator id="sepTitle"/>
+                            <af:panelGroupLayout layout="horizontal" id="PnlGpTbl" styleClass="AFStretchWidth"
+                                                 valign="top" halign="left" 
+                                                 inlineStyle="border-style:none; height:415px;">
+                            <af:panelSplitter id="PnlSpliMain" splitterPosition="302"
+                                      inlineStyle="width:1350px; "
+                                      collapsed="false"
+                                      firstBorder="skin">
+                                <f:facet name="first">
+                                    <af:panelGroupLayout layout="scroll"
+                                                         xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                                                         id="PnlGpAln">
+                                          <af:outputFormatted value="Opciones de Búsqueda" id="LblBsc"
+                                                            inlineStyle="color:Olive; font-weight:bold;
+                                                            font-size:small; text-align:left;"/>
+                                        <af:separator id="sdedew"/>
+                                        <af:panelGroupLayout layout="horizontal" id="PnlUtil" halign="right"
+                                                            inlineStyle="border-style:none;">
+                                            <af:link text=" " id="BtnReset" 
+                                                                icon="/images/action_refresh_blue.gif"
+                                                                partialSubmit="true"
+                                                                shortDesc="Reiniciar valores de búsqueda"
+                                                     actionListener="#{MonitorBean.resetFilterValues}">
+                                            </af:link>
+                                            <af:spacer id="SpcAx" width="10" height="5"/>
+                                            
+                                            <af:link icon="/images/excel.gif"
+                                                               id="LnkExel"
+                                                               inlineStyle="text-align:center;"                                                   
+                                                               shortDesc="Exportar a Excel">
+                                                <af:exportCollectionActionListener exportedId="tblLog"
+                                                                           type="excelHTML"
+                                                                           filename="LogXLS.xls"/>
+                                            </af:link>
+                                            
+                                            <af:spacer id="SpcAxTbl" width="10" height="5"/>
+                                            <af:link text=" " id="BtnResetTbl"
+                                                            icon="/images/restaurar.gif" 
+                                                            shortDesc="Reiniciar tabla"
+                                                     action="#{MonitorBean.refreshMainTable}">
+                                            </af:link>
+                                        </af:panelGroupLayout>
+                                        <af:panelFormLayout id="PnlSearch" rows="14"
+                                                          maxColumns="1">
+                                            <af:selectOneChoice unselectedLabel="-- Seleccione --"
+                                                                label="Servicio Web"
+                                                                binding="#{MonitorBean.poFilterServiceSel}"
+                                                                shortDesc="Servicio Web"
+                                                                partialTriggers="BtnReset"
+                                                                id="soc1">
+                                                <f:selectItems value="#{MonitorBean.listWebServices}" id="sid1"/>
+                                            </af:selectOneChoice>
+                                            <af:inputText label="idServiceFilter"                                                  
+                                                  id="TxtFilterIdService"
+                                                  visible="false"
+                                                  partialTriggers="soc1 BtnReset"
+                                                  binding="#{MonitorBean.poFilterIdService}"/>
+                                                  
+                                            <af:selectOneChoice unselectedLabel="-- Seleccione --"
+                                                                label="Proceso"
+                                                                shortDesc="Proceso"
+                                                                binding="#{MonitorBean.poFilterProcessSel}" 
+                                                                partialTriggers="BtnReset"
+                                                                id="soc4">
+                                                <f:selectItems value="#{MonitorBean.listProcess}" id="sid1s"/>
+                                            </af:selectOneChoice>
+                                         
+                                         <af:inputDate label="Fecha Incial" 
+                                                       partialTriggers="BtnReset" 
+                                                       id="TxtFilterFecIni" 
+                                                       columns="9" 
+                                                       binding="#{MonitorBean.poInitialDate}"
+                                                       valueChangeListener="#{MonitorBean.validateDateListener}" 
+                                                       autoSubmit="true">
+                                            <af:convertDateTime pattern="yyyy-MM-dd" secondaryPattern="yyyy/MM/dd"/>
+                                          </af:inputDate>
+                                          <af:inputDate label="Fecha Final"
+                                                       partialTriggers="BtnReset" 
+                                                       id="TxtFilterFecFin" 
+                                                       columns="9" 
+                                                       binding="#{MonitorBean.poFinalDate}"
+                                                       valueChangeListener="#{MonitorBean.validateFinalDateListener}" 
+                                                       autoSubmit="true">
+                                            <af:convertDateTime pattern="yyyy-MM-dd" secondaryPattern="yyyy/MM/dd"/>
+                                          </af:inputDate>
+                                        <af:spacer width="10" height="10" id="s33"/>
+                                        <af:button text="Buscar por Filtros"
+                                                  id="BtnSearch"
+                                                  icon="/images/ver_orden.gif"
+                                                  shortDesc="Buscar Elementos"
+                                                  action="#{MonitorBean.searchFilterLogServicesAction}"/>
+                                        </af:panelFormLayout>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                  <f:facet name="second">
+                          <!-- ################################### TABLA PRINCIPAL ############################### !-->
+                               <af:table value="#{bindings.EvetvIntServicesLogVwView1.collectionModel}"
+                                      var="row" rows="#{bindings.EvetvIntServicesLogVwView1.rangeSize}"
+                                      emptyText="#{bindings.EvetvIntServicesLogVwView1.viewable ? 'Sin información para mostrar.' : 'Access Denied.'}"
+                                      rowBandingInterval="0"
+                                      selectedRowKeys="#{bindings.EvetvIntServicesLogVwView1.collectionModel.selectedRow}"
+                                      selectionListener="#{bindings.EvetvIntServicesLogVwView1.collectionModel.makeCurrent}"
+                                      rowSelection="single"
+                                      fetchSize="#{bindings.EvetvIntServicesLogVwView1.rangeSize}"
+                                      filterModel="#{bindings.EvetvIntServicesLogVwView1Query.queryDescriptor}"
+                                      queryListener="#{bindings.EvetvIntServicesLogVwView1Query.processQuery}"
+                                      filterVisible="true" varStatus="vs" 
+                                      id="tblLog"
+                                      binding="#{MonitorBean.poTblLog}"
+                                      columnStretching="column:c32"
+                                      styleClass="AFStretchWidth"
+                                      autoHeightRows="20"
+                                      >
+                                      
+                            <af:column align="center" id="colCrudNot" frozen="true" sortable="false"
+                                               width="85" 
+                                               filterable="false">
+                                <af:panelGroupLayout layout="horizontal" id="PnlOpc" valign="top"
+                                                     halign="left">
+                                    <af:link icon="/images/search16x16.png" id="LnkDelSweb"
+                                             inlineStyle="text-align:center;" partialSubmit="true"
+                                             actionListener="#{MonitorBean.showParrillasDetails}"
+                                             shortDesc="View Details"/>
+                                    <af:spacer width="10" id="spacer1" height="5"/>
+                                </af:panelGroupLayout>
+                            </af:column>
+                                      
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.IdLogServices.name}"
+                                           filterable="false" sortable="true"
+                                           visible="true" align="center" frozen="true"
+                                           headerText="Id Request" width="75"
+                                           id="c1">
+                                    <af:outputText value="#{row.IdLogServices}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.IdLogServices.tooltip}"
+                                                   id="ot1">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.EvetvIntServicesLogVwView1.hints.IdLogServices.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.IdService.name}"
+                                           filterable="false" sortable="true"
+                                           visible="false"
+                                           headerText="#{bindings.EvetvIntServicesLogVwView1.hints.IdService.label}"
+                                           id="c2">
+                                    <af:outputText value="#{row.IdService}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.IdService.tooltip}"
+                                                   id="ot2">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.EvetvIntServicesLogVwView1.hints.IdService.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.NomService.name}"
+                                           filterable="false" sortable="true"
+                                           frozen="true" align="center"
+                                           headerText="Servicio"
+                                           id="c3" width="140">
+                                    <af:outputText value="#{row.NomService}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.NomService.tooltip}"
+                                                   id="ot3"/>
+                                </af:column>
+                                
+                                <af:column filterable="false" sortable="false"
+                                           frozen="true" align="center"
+                                           headerText="Request"
+                                           id="c3Q" width="100">
+                                    <af:link icon="/images/page_right.gif" id="LnkDeRRr"
+                                             inlineStyle="text-align:center;" 
+                                             shortDesc="View Details">
+                                        <af:fileDownloadActionListener method="#{MonitorBean.downloadFileRequestAction}" />         
+                                    </af:link>
+                                </af:column>
+                                
+                                <af:column filterable="false" sortable="false"
+                                           frozen="true" align="center"
+                                           headerText="Response"
+                                           id="c3Qr" width="100">
+                                    <af:link icon="/images/page_left.gif" id="LnkDeRRrss"
+                                             inlineStyle="text-align:center;" 
+                                             shortDesc="View Details">
+                                        <af:fileDownloadActionListener method="#{MonitorBean.downloadFileResponseAction}"/>         
+                                    </af:link>
+                                </af:column>
+                                
+                                <af:column sortProperty="Estatus"
+                                           filterable="false" sortable="true"
+                                           headerText="Estatus" align="center"
+                                           frozen="true"
+                                           id="c12" width="100">
+                                    <af:outputText value="#{row.IndCalculateStatus}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.IndCalculateStatus.tooltip}"
+                                                   id="ot12"/>
+                                    <!--
+                                    <af:link text=" " 
+                                             id="BtnErrMain" 
+                                             icon="/images/error.gif"
+                                             visible="#{row.IndCalculateStatus == '0'}"
+                                             shortDesc="Con Error"/>
+                                    -->
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.IndProcess.name}"
+                                           filterable="false" sortable="true"
+                                           visible="false"
+                                           headerText="Proceso"
+                                           id="c4">
+                                    <af:outputText value="#{row.IndProcess}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.IndProcess.tooltip}"
+                                                   id="ot4">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.EvetvIntServicesLogVwView1.hints.IndProcess.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute9.name}"
+                                           filterable="false" sortable="true"
+                                           frozen="true"
+                                           headerText="Servicio"
+                                           id="c23">
+                                    <af:outputText value="#{row.Attribute9}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute9.tooltip}"
+                                                   id="ot23"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.IndProcessNom.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="Proceso" visible="false"
+                                           frozen="true" align="center"
+                                           id="c5" width="140">
+                                    <af:outputText value="#{row.IndProcessNom}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.IndProcessNom.tooltip}"
+                                                   id="ot5"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.IndResponse.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="Respuesta" align="center"
+                                           id="c6" width="140">
+                                    <af:outputText value="#{row.IndResponse}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.IndResponse.tooltip}"
+                                                   id="ot6"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.NumUser.name}"
+                                           filterable="false" sortable="true"
+                                           visible="false"
+                                           headerText="#{bindings.EvetvIntServicesLogVwView1.hints.NumUser.label}"
+                                           id="c7">
+                                    <af:outputText value="#{row.NumUser}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.NumUser.tooltip}"
+                                                   id="ot7">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.EvetvIntServicesLogVwView1.hints.NumUser.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.FecResponse.name}"
+                                           filterable="false" sortable="true" align="center"
+                                           headerText="Fecha Respuesta"
+                                           id="c8" width="140">
+                                    <af:outputText value="#{row.FecResponse}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.FecResponse.tooltip}"
+                                                   id="ot8">
+                                        <af:convertDateTime pattern="yyyy-MM-dd hh:mm:ss"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.FecRequest.name}"
+                                           filterable="false" sortable="true" align="center"
+                                           headerText="Fecha Solicitud"
+                                           id="c9" width="140">
+                                    
+                                    <af:outputText value="#{row.FecRequest}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.FecRequest.tooltip}"
+                                                   id="ot9">
+                                        <af:convertDateTime pattern="yyyy-MM-dd hh:mm:ss"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.NumEvtbProcessId.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="Id EveTV" align="center"
+                                           id="c10" width="100">
+                                    <af:outputText value="#{row.NumEvtbProcessId}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.NumEvtbProcessId.tooltip}"
+                                                   id="ot10">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.EvetvIntServicesLogVwView1.hints.NumEvtbProcessId.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.NumPgmProcessId.name}"
+                                           filterable="false" sortable="true" align="center"
+                                           headerText="Id Paradigm"
+                                           id="c11" width="100">
+                                    <af:outputText value="#{row.NumPgmProcessId}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.NumPgmProcessId.tooltip}"
+                                                   id="ot11">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.EvetvIntServicesLogVwView1.hints.NumPgmProcessId.format}"/>
+                                    </af:outputText>
+                                </af:column>                                        
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.IndEstatus.name}"
+                                           filterable="false" sortable="true"
+                                           visible="false"
+                                           headerText="#{bindings.EvetvIntServicesLogVwView1.hints.IndEstatus.label}"
+                                           id="c13">
+                                    <af:outputText value="#{row.IndEstatus}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.IndEstatus.tooltip}"
+                                                   id="ot13"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.AttributeCategory.name}"
+                                           filterable="false" sortable="true"
+                                           visible="false"
+                                           headerText="#{bindings.EvetvIntServicesLogVwView1.hints.AttributeCategory.label}"
+                                           id="c14">
+                                    <af:outputText value="#{row.AttributeCategory}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.AttributeCategory.tooltip}"
+                                                   id="ot14"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute1.name}"
+                                           filterable="false" sortable="true"
+                                           visible="false"
+                                           headerText="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute1.label}"
+                                           id="c15">
+                                    <af:outputText value="#{row.Attribute1}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute1.tooltip}"
+                                                   id="ot15"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute2.name}"
+                                           filterable="false" sortable="true"
+                                           visible="false"
+                                           headerText="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute2.label}"
+                                           id="c16">
+                                    <af:outputText value="#{row.Attribute2}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute2.tooltip}"
+                                                   id="ot16"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute3.name}"
+                                           filterable="false" sortable="true"
+                                           visible="false"
+                                           headerText="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute3.label}"
+                                           id="c17">
+                                    <af:outputText value="#{row.Attribute3}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute3.tooltip}"
+                                                   id="ot17"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute4.name}"
+                                           filterable="false" sortable="true"
+                                           visible="false"
+                                           headerText="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute4.label}"
+                                           id="c18">
+                                    <af:outputText value="#{row.Attribute4}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute4.tooltip}"
+                                                   id="ot18"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute5.name}"
+                                           filterable="false" sortable="true"
+                                           visible="false"
+                                           headerText="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute5.label}"
+                                           id="c19">
+                                    <af:outputText value="#{row.Attribute5}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute5.tooltip}"
+                                                   id="ot19"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute6.name}"
+                                           filterable="false" sortable="true"
+                                           visible="false"
+                                           headerText="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute6.label}"
+                                           id="c20">
+                                    <af:outputText value="#{row.Attribute6}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute6.tooltip}"
+                                                   id="ot20"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute7.name}"
+                                           filterable="false" sortable="true"
+                                           visible="false"
+                                           headerText="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute7.label}"
+                                           id="c21">
+                                    <af:outputText value="#{row.Attribute7}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute7.tooltip}"
+                                                   id="ot21"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute8.name}"
+                                           filterable="false" sortable="true"
+                                           visible="false"
+                                           headerText="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute8.label}"
+                                           id="c22">
+                                    <af:outputText value="#{row.Attribute8}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute8.tooltip}"
+                                                   id="ot22"/>
+                                </af:column>
+                                
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute10.name}"
+                                           filterable="false" sortable="true"
+                                           visible="false"
+                                           headerText="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute10.label}"
+                                           id="c24">
+                                    <af:outputText value="#{row.Attribute10}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute10.tooltip}"
+                                                   id="ot24"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute11.name}"
+                                           filterable="false" sortable="true"
+                                           visible="false"
+                                           headerText="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute11.label}"
+                                           id="c25">
+                                    <af:outputText value="#{row.Attribute11}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute11.tooltip}"
+                                                   id="ot25"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute12.name}"
+                                           filterable="false" sortable="true"
+                                           visible="false"
+                                           headerText="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute12.label}"
+                                           id="c26">
+                                    <af:outputText value="#{row.Attribute12}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute12.tooltip}"
+                                                   id="ot26"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute13.name}"
+                                           filterable="false" sortable="true"
+                                           visible="false"
+                                           headerText="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute13.label}"
+                                           id="c27">
+                                    <af:outputText value="#{row.Attribute13}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute13.tooltip}"
+                                                   id="ot27"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute14.name}"
+                                           filterable="false" sortable="true"
+                                           visible="false"
+                                           headerText="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute14.label}"
+                                           id="c28">
+                                    <af:outputText value="#{row.Attribute14}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute14.tooltip}"
+                                                   id="ot28"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute15.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="Creador Por" align="center"
+                                           id="c29" width="100">
+                                    <af:outputText value="#{row.Attribute15}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.Attribute15.tooltip}"
+                                                   id="ot29"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.FecCreationDate.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="Fecha Creación" align="center"
+                                           id="c30" width="150">                                            
+                                    <af:outputText value="#{row.FecCreationDate}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.FecCreationDate.tooltip}"
+                                                   id="ot30">
+                                        <af:convertDateTime pattern="yyyy-MM-dd hh:mm:ss"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.NumCreatedBy.name}"
+                                           filterable="false" sortable="true"
+                                           visible="false"
+                                           headerText="#{bindings.EvetvIntServicesLogVwView1.hints.NumCreatedBy.label}"
+                                           id="c31">
+                                    <af:outputText value="#{row.NumCreatedBy}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.NumCreatedBy.tooltip}"
+                                                   id="ot31">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.EvetvIntServicesLogVwView1.hints.NumCreatedBy.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.FecLastUpdateDate.name}"
+                                           filterable="false" sortable="true" align="center"
+                                           headerText="Fecha Modificación"
+                                           width="140"
+                                           id="c32">                                            
+                                    <af:outputText value="#{row.FecLastUpdateDate}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.FecLastUpdateDate.tooltip}"
+                                                   id="ot32">
+                                        <af:convertDateTime pattern="yyyy-MM-dd hh:mm:ss"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.NumLastUpdatedBy.name}"
+                                           filterable="false" sortable="true"
+                                           visible="false"
+                                           headerText="#{bindings.EvetvIntServicesLogVwView1.hints.NumLastUpdatedBy.label}"
+                                           id="c33">
+                                    <af:outputText value="#{row.NumLastUpdatedBy}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.NumLastUpdatedBy.tooltip}"
+                                                   id="ot33">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.EvetvIntServicesLogVwView1.hints.NumLastUpdatedBy.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntServicesLogVwView1.hints.NumLastUpdateLogin.name}"
+                                           filterable="false" sortable="true"
+                                           visible="false"
+                                           headerText="#{bindings.EvetvIntServicesLogVwView1.hints.NumLastUpdateLogin.label}"
+                                           id="c34">
+                                    <af:outputText value="#{row.NumLastUpdateLogin}"
+                                                   shortDesc="#{bindings.EvetvIntServicesLogVwView1.hints.NumLastUpdateLogin.tooltip}"
+                                                   id="ot34">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.EvetvIntServicesLogVwView1.hints.NumLastUpdateLogin.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                            </af:table>
+                            </f:facet>
+                            </af:panelSplitter>
+                            </af:panelGroupLayout>
+                        </af:panelGroupLayout>     
+                    </f:facet>
+                </af:pageTemplate>
+                
+                
+                <!-- ################################### POPUP PROGRAMAS .... ##################################### !-->
+                <af:popup id="popupProgramas" contentDelivery="lazyUncached"
+                              binding="#{MonitorBean.poPopupProgramas}">
+                      <af:panelWindow id="PnlProgramas"  modal="true" closeIconVisible="true" 
+                      title="Detalle de Solicitud"
+                                      titleIconSource="/images/interface_installer.gif"
+                                      inlineStyle="border-style:none; width:100em;">
+                        <af:panelStretchLayout id="psl1Pgr">
+                            <f:facet name="bottom"/>
+                            <f:facet name="center">
+                        <af:panelGroupLayout id="PnlGrpPgrm" layout="scroll" >
+                            <af:table value="#{bindings.EvetvIntRstProgramasTabView1.collectionModel}" var="row"
+                                      rows="#{bindings.EvetvIntRstProgramasTabView1.rangeSize}"
+                                      emptyText="#{bindings.EvetvIntRstProgramasTabView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                      rowBandingInterval="0"
+                                      selectedRowKeys="#{bindings.EvetvIntRstProgramasTabView1.collectionModel.selectedRow}"
+                                      selectionListener="#{bindings.EvetvIntRstProgramasTabView1.collectionModel.makeCurrent}"
+                                      rowSelection="single"
+                                      fetchSize="#{bindings.EvetvIntRstProgramasTabView1.rangeSize}"
+                                      filterModel="#{bindings.EvetvIntRstProgramasTabView1Query.queryDescriptor}"
+                                      queryListener="#{bindings.EvetvIntRstProgramasTabView1Query.processQuery}"
+                                      filterVisible="true" varStatus="vs" id="t2"
+                                      inlineStyle="height:250px; background-color:#EBEFF5; width:1050px;"
+                                  binding="#{MonitorBean.poTblProgramas}"
+                                    autoHeightRows="20"
+                                      >
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.IdRequest.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstProgramasTabView1.hints.IdRequest.label}"
+                                           id="c92">
+                                    <af:outputText value="#{row.IdRequest}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.IdRequest.tooltip}"
+                                                   id="ot92">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.EvetvIntRstProgramasTabView1.hints.IdRequest.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.IdService.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstProgramasTabView1.hints.IdService.label}"
+                                           id="c93">
+                                    <af:outputText value="#{row.IdService}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.IdService.tooltip}"
+                                                   id="ot93">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.EvetvIntRstProgramasTabView1.hints.IdService.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.Buyuntid.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstProgramasTabView1.hints.Buyuntid.label}"
+                                           id="c94">
+                                    <af:outputText value="#{row.Buyuntid}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.Buyuntid.tooltip}"
+                                                   id="ot94"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.Buylnam.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstProgramasTabView1.hints.Buylnam.label}"
+                                           id="c95">
+                                    <af:outputText value="#{row.Buylnam}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.Buylnam.tooltip}"
+                                                   id="ot95"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.Indactivo.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstProgramasTabView1.hints.Indactivo.label}"
+                                           id="c96">
+                                    <af:outputText value="#{row.Indactivo}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.Indactivo.tooltip}"
+                                                   id="ot96"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.Indtarifaprograma.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstProgramasTabView1.hints.Indtarifaprograma.label}"
+                                           id="c97">
+                                    <af:outputText value="#{row.Indtarifaprograma}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.Indtarifaprograma.tooltip}"
+                                                   id="ot97"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.IndEstatus.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstProgramasTabView1.hints.IndEstatus.label}"
+                                           id="c98">
+                                    <af:outputText value="#{row.IndEstatus}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.IndEstatus.tooltip}"
+                                                   id="ot98"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.IndDescNeptuno.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstProgramasTabView1.hints.IndDescNeptuno.label}"
+                                           id="c99">
+                                    <af:outputText value="#{row.IndDescNeptuno}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.IndDescNeptuno.tooltip}"
+                                                   id="ot99"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.AttributeCategory.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstProgramasTabView1.hints.AttributeCategory.label}"
+                                           id="c100">
+                                    <af:outputText value="#{row.AttributeCategory}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.AttributeCategory.tooltip}"
+                                                   id="ot100"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute1.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute1.label}"
+                                           id="c101">
+                                    <af:outputText value="#{row.Attribute1}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute1.tooltip}"
+                                                   id="ot101"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute2.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute2.label}"
+                                           id="c102">
+                                    <af:outputText value="#{row.Attribute2}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute2.tooltip}"
+                                                   id="ot102"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute3.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute3.label}"
+                                           id="c103">
+                                    <af:outputText value="#{row.Attribute3}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute3.tooltip}"
+                                                   id="ot103"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute4.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute4.label}"
+                                           id="c104">
+                                    <af:outputText value="#{row.Attribute4}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute4.tooltip}"
+                                                   id="ot104"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute5.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute5.label}"
+                                           id="c105">
+                                    <af:outputText value="#{row.Attribute5}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute5.tooltip}"
+                                                   id="ot105"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute6.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute6.label}"
+                                           id="c106">
+                                    <af:outputText value="#{row.Attribute6}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute6.tooltip}"
+                                                   id="ot106"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute7.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute7.label}"
+                                           id="c107">
+                                    <af:outputText value="#{row.Attribute7}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute7.tooltip}"
+                                                   id="ot107"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute8.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute8.label}"
+                                           id="c108">
+                                    <af:outputText value="#{row.Attribute8}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute8.tooltip}"
+                                                   id="ot108"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute9.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute9.label}"
+                                           id="c109">
+                                    <af:outputText value="#{row.Attribute9}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute9.tooltip}"
+                                                   id="ot109"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute10.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="IdError"
+                                           id="c110">
+                                    <af:outputText value="#{row.Attribute10}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute10.tooltip}"
+                                                   id="ot110"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute11.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute11.label}"
+                                           id="c111">
+                                    <af:outputText value="#{row.Attribute11}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute11.tooltip}"
+                                                   id="ot111"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute12.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute12.label}"
+                                           id="c112">
+                                    <af:outputText value="#{row.Attribute12}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute12.tooltip}"
+                                                   id="ot112"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute13.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute13.label}"
+                                           id="c113">
+                                    <af:outputText value="#{row.Attribute13}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute13.tooltip}"
+                                                   id="ot113"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute14.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="Actualizado Por"
+                                           id="c114">
+                                    <af:outputText value="#{row.Attribute14}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute14.tooltip}"
+                                                   id="ot114"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute15.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="Creado Por"
+                                           id="c115">
+                                    <af:outputText value="#{row.Attribute15}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.Attribute15.tooltip}"
+                                                   id="ot115"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.FecCreationDate.name}"
+                                           filterable="false" sortable="false"
+                                           headerText="Creación"
+                                           id="c116">                                            
+                                    <af:outputText value="#{row.FecCreationDate}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.FecCreationDate.tooltip}"
+                                                   id="ot116">
+                                        <af:convertDateTime pattern="yyyy-MM-dd hh:mm:ss"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.NumCreatedBy.name}"
+                                           filterable="false" sortable="false" visible="false"
+                                           headerText="#{bindings.EvetvIntRstProgramasTabView1.hints.NumCreatedBy.label}"
+                                           id="c117">
+                                    <af:outputText value="#{row.NumCreatedBy}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.NumCreatedBy.tooltip}"
+                                                   id="ot117">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.EvetvIntRstProgramasTabView1.hints.NumCreatedBy.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.FecLastUpdateDate.name}"
+                                           filterable="false" sortable="false"
+                                           headerText="Actualización"
+                                           id="c118">
+                                    
+                                    <af:outputText value="#{row.FecLastUpdateDate}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.FecLastUpdateDate.tooltip}"
+                                                   id="ot118">
+                                        <af:convertDateTime pattern="yyyy-MM-dd hh:mm:ss"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.NumLastUpdatedBy.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstProgramasTabView1.hints.NumLastUpdatedBy.label}"
+                                           id="c119">
+                                    <af:outputText value="#{row.NumLastUpdatedBy}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.NumLastUpdatedBy.tooltip}"
+                                                   id="ot119">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.EvetvIntRstProgramasTabView1.hints.NumLastUpdatedBy.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstProgramasTabView1.hints.NumLastUpdateLogin.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstProgramasTabView1.hints.NumLastUpdateLogin.label}"
+                                           id="c120">
+                                    <af:outputText value="#{row.NumLastUpdateLogin}"
+                                                   shortDesc="#{bindings.EvetvIntRstProgramasTabView1.hints.NumLastUpdateLogin.tooltip}"
+                                                   id="ot120">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.EvetvIntRstProgramasTabView1.hints.NumLastUpdateLogin.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                            </af:table>
+                        </af:panelGroupLayout>
+                            </f:facet>
+                            <f:facet name="start"/>
+                            <f:facet name="end"/>
+                            <f:facet name="top"/>
+                        </af:panelStretchLayout>
+                    </af:panelWindow>
+                </af:popup>
+                
+                <!-- ################################### POPUP PARRILLAS .... ##################################### !-->
+                <af:popup id="popupParrillas" contentDelivery="lazyUncached"
+                              binding="#{MonitorBean.poParrillasPopup}">
+                      <af:panelWindow id="PnlParrillas"  modal="true" closeIconVisible="true"
+                                      title="Detalle de Solicitud"
+                                      titleIconSource="/images/interface_installer.gif"
+                                      inlineStyle="border-style:none; width:100em;">
+                        <af:panelStretchLayout id="psl1">
+                            <f:facet name="bottom"/>
+                            <f:facet name="center">
+                            
+                        <af:panelGroupLayout id="PnlGrpParrillas" layout="scroll" >
+                                <af:table value="#{bindings.EvetvIntRstParrillasTabView1.collectionModel}" var="row"
+                                          rows="#{bindings.EvetvIntRstParrillasTabView1.rangeSize}"
+                                          emptyText="#{bindings.EvetvIntRstParrillasTabView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                          rowBandingInterval="0"
+                                          selectedRowKeys="#{bindings.EvetvIntRstParrillasTabView1.collectionModel.selectedRow}"
+                                          selectionListener="#{bindings.EvetvIntRstParrillasTabView1.collectionModel.makeCurrent}"
+                                          rowSelection="single"
+                                          fetchSize="#{bindings.EvetvIntRstParrillasTabView1.rangeSize}"
+                                          filterModel="#{bindings.EvetvIntRstParrillasTabView1Query.queryDescriptor}"
+                                          queryListener="#{bindings.EvetvIntRstParrillasTabView1Query.processQuery}"
+                                          filterVisible="true" varStatus="vs" id="t1"
+                                          inlineStyle="height:250px; background-color:#EBEFF5; width:1050px;"
+                                          binding="#{MonitorBean.poTblParrillas}"
+                                            autoHeightRows="20">
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.IdRequest.name}"
+                                               filterable="false" sortable="true"
+                                               visible="false"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.IdRequest.label}"
+                                               id="c35">
+                                        <af:outputText value="#{row.IdRequest}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.IdRequest.tooltip}"
+                                                       id="ot35">
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.EvetvIntRstParrillasTabView1.hints.IdRequest.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.IdService.name}"
+                                               filterable="false" sortable="true"
+                                               visible="false"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.IdService.label}"
+                                               id="c36">
+                                        <af:outputText value="#{row.IdService}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.IdService.tooltip}"
+                                                       id="ot36">
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.EvetvIntRstParrillasTabView1.hints.IdService.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Bcsttim.name}"
+                                               filterable="false" sortable="true"
+                                               frozen="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Bcsttim.label}"
+                                               id="c37">
+                                        <af:outputText value="#{row.Bcsttim}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Bcsttim.tooltip}"
+                                                       id="ot37"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Seqnum.name}"
+                                               filterable="false" sortable="true"
+                                               visible="false"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Seqnum.label}"
+                                               id="c38">
+                                        <af:outputText value="#{row.Seqnum}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Seqnum.tooltip}"
+                                                       id="ot38"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Fmttyp.name}"
+                                               filterable="false" sortable="true"
+                                               visible="false"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Fmttyp.label}"
+                                               id="c39">
+                                        <af:outputText value="#{row.Fmttyp}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Fmttyp.tooltip}"
+                                                       id="ot39"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Untnum.name}"
+                                               filterable="false" sortable="true"
+                                               visible="false"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Untnum.label}"
+                                               id="c40">
+                                        <af:outputText value="#{row.Untnum}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Untnum.tooltip}"
+                                                       id="ot40"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Channelid.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Channelid.label}"
+                                               id="c41">
+                                        <af:outputText value="#{row.Channelid}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Channelid.tooltip}"
+                                                       id="ot41"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Datevalue.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Datevalue.label}"
+                                               id="c42">
+                                        <af:outputText value="#{row.Datevalue}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Datevalue.tooltip}"
+                                                       id="ot42"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Hourstart.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Hourstart.label}"
+                                               id="c43">
+                                        <af:outputText value="#{row.Hourstart}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Hourstart.tooltip}"
+                                                       id="ot43"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Hourend.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Hourend.label}"
+                                               id="c44">
+                                        <af:outputText value="#{row.Hourend}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Hourend.tooltip}"
+                                                       id="ot44"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Hour.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Hour.label}"
+                                               id="c45">
+                                        <af:outputText value="#{row.Hour}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Hour.tooltip}"
+                                                       id="ot45"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Title.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Title.label}"
+                                               id="c46">
+                                        <af:outputText value="#{row.Title}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Title.tooltip}"
+                                                       id="ot46"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Episodename.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Episodename.label}"
+                                               id="c47">
+                                        <af:outputText value="#{row.Episodename}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Episodename.tooltip}"
+                                                       id="ot47"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Epno.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Epno.label}"
+                                               id="c48">
+                                        <af:outputText value="#{row.Epno}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Epno.tooltip}"
+                                                       id="ot48"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Slotduration.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Slotduration.label}"
+                                               id="c49">
+                                        <af:outputText value="#{row.Slotduration}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Slotduration.tooltip}"
+                                                       id="ot49"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Titleid.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Titleid.label}"
+                                               id="c50">
+                                        <af:outputText value="#{row.Titleid}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Titleid.tooltip}"
+                                                       id="ot50"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Episodenameid.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Episodenameid.label}"
+                                               id="c51">
+                                        <af:outputText value="#{row.Episodenameid}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Episodenameid.tooltip}"
+                                                       id="ot51"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Buyunitid.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Buyunitid.label}"
+                                               id="c52">
+                                        <af:outputText value="#{row.Buyunitid}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Buyunitid.tooltip}"
+                                                       id="ot52"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Buyunit.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Buyunit.label}"
+                                               id="c53">
+                                        <af:outputText value="#{row.Buyunit}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Buyunit.tooltip}"
+                                                       id="ot53"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Exceptcofepris.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Exceptcofepris.label}"
+                                               id="c54">
+                                        <af:outputText value="#{row.Exceptcofepris}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Exceptcofepris.tooltip}"
+                                                       id="ot54"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Eventspecial.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Eventspecial.label}"
+                                               id="c55">
+                                        <af:outputText value="#{row.Eventspecial}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Eventspecial.tooltip}"
+                                                       id="ot55"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.BuyuntidCorte.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.BuyuntidCorte.label}"
+                                               id="c56">
+                                        <af:outputText value="#{row.BuyuntidCorte}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.BuyuntidCorte.tooltip}"
+                                                       id="ot56"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.DateCorte.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.DateCorte.label}"
+                                               id="c57">
+                                        <af:outputText value="#{row.DateCorte}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.DateCorte.tooltip}"
+                                                       id="ot57"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.HourCorte.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.HourCorte.label}"
+                                               id="c58">
+                                        <af:outputText value="#{row.HourCorte}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.HourCorte.tooltip}"
+                                                       id="ot58"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Corteid.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Corteid.label}"
+                                               id="c59">
+                                        <af:outputText value="#{row.Corteid}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Corteid.tooltip}"
+                                                       id="ot59"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Descorte.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Descorte.label}"
+                                               id="c60">
+                                        <af:outputText value="#{row.Descorte}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Descorte.tooltip}"
+                                                       id="ot60"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Overlay.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Overlay.label}"
+                                               id="c61">
+                                        <af:outputText value="#{row.Overlay}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Overlay.tooltip}"
+                                                       id="ot61"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Breakid.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Breakid.label}"
+                                               id="c62">
+                                        <af:outputText value="#{row.Breakid}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Breakid.tooltip}"
+                                                       id="ot62"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Description.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Description.label}"
+                                               id="c63">
+                                        <af:outputText value="#{row.Description}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Description.tooltip}"
+                                                       id="ot63"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.DateBreak.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.DateBreak.label}"
+                                               id="c64">
+                                        <af:outputText value="#{row.DateBreak}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.DateBreak.tooltip}"
+                                                       id="ot64"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.HourBreak.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.HourBreak.label}"
+                                               id="c65">
+                                        <af:outputText value="#{row.HourBreak}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.HourBreak.tooltip}"
+                                                       id="ot65"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Totalduration.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Totalduration.label}"
+                                               id="c66">
+                                        <af:outputText value="#{row.Totalduration}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Totalduration.tooltip}"
+                                                       id="ot66"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Comercialduration.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Comercialduration.label}"
+                                               id="c67">
+                                        <af:outputText value="#{row.Comercialduration}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Comercialduration.tooltip}"
+                                                       id="ot67"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.IndEstatus.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.IndEstatus.label}"
+                                               id="c68">
+                                        <af:outputText value="#{row.IndEstatus}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.IndEstatus.tooltip}"
+                                                       id="ot68"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.IndDescNeptuno.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.IndDescNeptuno.label}"
+                                               id="c69">
+                                        <af:outputText value="#{row.IndDescNeptuno}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.IndDescNeptuno.tooltip}"
+                                                       id="ot69"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.IdProcessNeptuno.name}"
+                                               filterable="false" sortable="true"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.IdProcessNeptuno.label}"
+                                               id="c70">
+                                        <af:outputText value="#{row.IdProcessNeptuno}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.IdProcessNeptuno.tooltip}"
+                                                       id="ot70">
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.EvetvIntRstParrillasTabView1.hints.IdProcessNeptuno.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.AttributeCategory.name}"
+                                               filterable="false" sortable="true" visible="false"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.AttributeCategory.label}"
+                                               id="c71">
+                                        <af:outputText value="#{row.AttributeCategory}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.AttributeCategory.tooltip}"
+                                                       id="ot71"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute1.name}"
+                                               filterable="false" sortable="true" visible="false"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute1.label}"
+                                               id="c72">
+                                        <af:outputText value="#{row.Attribute1}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute1.tooltip}"
+                                                       id="ot72"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute2.name}"
+                                               filterable="false" sortable="true" visible="false"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute2.label}"
+                                               id="c73">
+                                        <af:outputText value="#{row.Attribute2}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute2.tooltip}"
+                                                       id="ot73"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute3.name}"
+                                               filterable="false" sortable="true" visible="false"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute3.label}"
+                                               id="c74">
+                                        <af:outputText value="#{row.Attribute3}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute3.tooltip}"
+                                                       id="ot74"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute4.name}"
+                                               filterable="false" sortable="true" visible="false"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute4.label}"
+                                               id="c75">
+                                        <af:outputText value="#{row.Attribute4}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute4.tooltip}"
+                                                       id="ot75"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute5.name}"
+                                               filterable="false" sortable="true" visible="false"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute5.label}"
+                                               id="c76">
+                                        <af:outputText value="#{row.Attribute5}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute5.tooltip}"
+                                                       id="ot76"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute6.name}"
+                                               filterable="false" sortable="true" visible="false"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute6.label}"
+                                               id="c77">
+                                        <af:outputText value="#{row.Attribute6}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute6.tooltip}"
+                                                       id="ot77"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute7.name}"
+                                               filterable="false" sortable="true" visible="false"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute7.label}"
+                                               id="c78">
+                                        <af:outputText value="#{row.Attribute7}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute7.tooltip}"
+                                                       id="ot78"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute8.name}"
+                                               filterable="false" sortable="true" visible="false"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute8.label}"
+                                               id="c79">
+                                        <af:outputText value="#{row.Attribute8}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute8.tooltip}"
+                                                       id="ot79"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute9.name}"
+                                               filterable="false" sortable="true" visible="false"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute9.label}"
+                                               id="c80">
+                                        <af:outputText value="#{row.Attribute9}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute9.tooltip}"
+                                                       id="ot80"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute10.name}"
+                                               filterable="false" sortable="true" visible="false"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute10.label}"
+                                               id="c81">
+                                        <af:outputText value="#{row.Attribute10}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute10.tooltip}"
+                                                       id="ot81"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute11.name}"
+                                               filterable="false" sortable="true" visible="false"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute11.label}"
+                                               id="c82">
+                                        <af:outputText value="#{row.Attribute11}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute11.tooltip}"
+                                                       id="ot82"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute12.name}"
+                                               filterable="false" sortable="true" visible="false"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute12.label}"
+                                               id="c83">
+                                        <af:outputText value="#{row.Attribute12}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute12.tooltip}"
+                                                       id="ot83"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute13.name}"
+                                               filterable="false" sortable="true" visible="false"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute13.label}"
+                                               id="c84">
+                                        <af:outputText value="#{row.Attribute13}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute13.tooltip}"
+                                                       id="ot84"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute14.name}"
+                                               filterable="false" sortable="true" visible="false"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute14.label}"
+                                               id="c85">
+                                        <af:outputText value="#{row.Attribute14}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute14.tooltip}"
+                                                       id="ot85"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute15.name}"
+                                               filterable="false" sortable="true" visible="false"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute15.label}"
+                                               id="c86">
+                                        <af:outputText value="#{row.Attribute15}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.Attribute15.tooltip}"
+                                                       id="ot86"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.FecCreationDate.name}"
+                                               filterable="false" sortable="true" visible="false"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.FecCreationDate.label}"
+                                               id="c87">
+                                        
+                                        <af:outputText value="#{row.FecCreationDate}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.FecCreationDate.tooltip}"
+                                                       id="ot87">
+                                            <af:convertDateTime pattern="#{bindings.EvetvIntRstParrillasTabView1.hints.FecCreationDate.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.NumCreatedBy.name}"
+                                               filterable="false" sortable="true" visible="false"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.NumCreatedBy.label}"
+                                               id="c88">
+                                        <af:outputText value="#{row.NumCreatedBy}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.NumCreatedBy.tooltip}"
+                                                       id="ot88">
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.EvetvIntRstParrillasTabView1.hints.NumCreatedBy.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.FecLastUpdateDate.name}"
+                                               filterable="false" sortable="true" visible="false"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.FecLastUpdateDate.label}"
+                                               id="c89">
+                                        
+                                        
+                                        <af:outputText value="#{row.FecLastUpdateDate}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.FecLastUpdateDate.tooltip}"
+                                                       id="ot89">
+                                            <af:convertDateTime pattern="#{bindings.EvetvIntRstParrillasTabView1.hints.FecLastUpdateDate.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.NumLastUpdatedBy.name}"
+                                               filterable="false" sortable="true" visible="false"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.NumLastUpdatedBy.label}"
+                                               id="c90">
+                                        <af:outputText value="#{row.NumLastUpdatedBy}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.NumLastUpdatedBy.tooltip}"
+                                                       id="ot90">
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.EvetvIntRstParrillasTabView1.hints.NumLastUpdatedBy.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.EvetvIntRstParrillasTabView1.hints.NumLastUpdateLogin.name}"
+                                               filterable="false" sortable="true" visible="false"
+                                               headerText="#{bindings.EvetvIntRstParrillasTabView1.hints.NumLastUpdateLogin.label}"
+                                               id="c91">
+                                        <af:outputText value="#{row.NumLastUpdateLogin}"
+                                                       shortDesc="#{bindings.EvetvIntRstParrillasTabView1.hints.NumLastUpdateLogin.tooltip}"
+                                                       id="ot91">
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.EvetvIntRstParrillasTabView1.hints.NumLastUpdateLogin.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                </af:table>
+                            </af:panelGroupLayout>
+                            </f:facet>
+                            <f:facet name="start"/>
+                            <f:facet name="end"/>
+                            <f:facet name="top"/>
+                        </af:panelStretchLayout>
+                    </af:panelWindow>
+                </af:popup>
+                
+                <!-- ############################### POPUP VENTA TRADICIONAL .... ############################## !-->
+                <af:popup id="popupTradicional" contentDelivery="lazyUncached"
+                              binding="#{MonitorBean.poPopupTradicional}">
+                      <af:panelWindow id="PnlTradicional"  modal="true" closeIconVisible="true" 
+                      title="Detalle de Solicitud"
+                                      titleIconSource="/images/interface_installer.gif"
+                                      inlineStyle="border-style:none; width:100em;">
+                        <af:panelStretchLayout id="psl1tr">
+                            <f:facet name="bottom"/>
+                            <f:facet name="center">
+                            <af:panelGroupLayout id="PnlGrpTradicional" layout="scroll" >
+                            <af:table value="#{bindings.EvetvIntRstVtradicionalTabView1.collectionModel}"
+                                      var="row" rows="#{bindings.EvetvIntRstVtradicionalTabView1.rangeSize}"
+                                      emptyText="#{bindings.EvetvIntRstVtradicionalTabView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                      rowBandingInterval="0"
+                                      selectedRowKeys="#{bindings.EvetvIntRstVtradicionalTabView1.collectionModel.selectedRow}"
+                                      selectionListener="#{bindings.EvetvIntRstVtradicionalTabView1.collectionModel.makeCurrent}"
+                                      rowSelection="single"
+                                      fetchSize="#{bindings.EvetvIntRstVtradicionalTabView1.rangeSize}"
+                                      filterModel="#{bindings.EvetvIntRstVtradicionalTabView1Query.queryDescriptor}"
+                                      queryListener="#{bindings.EvetvIntRstVtradicionalTabView1Query.processQuery}"
+                                      filterVisible="true" varStatus="vs" id="t3"
+                                      inlineStyle="height:250px; background-color:#EBEFF5; width:1050px;"
+                                  binding="#{MonitorBean.poTblTradicional}"
+                                    autoHeightRows="20">
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.IdRequest.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.IdRequest.label}"
+                                           id="c121">
+                                    <af:outputText value="#{row.IdRequest}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.IdRequest.tooltip}"
+                                                   id="ot1e2">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.EvetvIntRstVtradicionalTabView1.hints.IdRequest.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.IdService.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.IdService.label}"
+                                           id="c122">
+                                    <af:outputText value="#{row.IdService}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.IdService.tooltip}"
+                                                   id="ot121">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.EvetvIntRstVtradicionalTabView1.hints.IdService.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Ordid.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="Orden" frozen="true"
+                                           id="c123">
+                                    <af:outputText value="#{row.Ordid}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Ordid.tooltip}"
+                                                   id="ot122"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Sptmstid.name}"
+                                           filterable="false" sortable="true" frozen="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Sptmstid.label}"
+                                           id="c132">
+                                    <af:outputText value="#{row.Sptmstid}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Sptmstid.tooltip}"
+                                                   id="ot131"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Agyid.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Agyid.label}"
+                                           id="c124">
+                                    <af:outputText value="#{row.Agyid}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Agyid.tooltip}"
+                                                   id="ot123"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Advid.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Advid.label}"
+                                           id="c125">
+                                    <af:outputText value="#{row.Advid}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Advid.tooltip}"
+                                                   id="ot124"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Strdt.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Strdt.label}"
+                                           id="c126">
+                                    <af:outputText value="#{row.Strdt}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Strdt.tooltip}"
+                                                   id="ot125"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Edt.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Edt.label}"
+                                           id="c127">
+                                    <af:outputText value="#{row.Edt}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Edt.tooltip}"
+                                                   id="ot126"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Mcontid.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Mcontid.label}"
+                                           id="c128">
+                                    <af:outputText value="#{row.Mcontid}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Mcontid.tooltip}"
+                                                   id="ot127"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Rtcrd.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Rtcrd.label}"
+                                           id="c129">
+                                    <af:outputText value="#{row.Rtcrd}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Rtcrd.tooltip}"
+                                                   id="ot128"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Idtarget.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Idtarget.label}"
+                                           id="c130">
+                                    <af:outputText value="#{row.Idtarget}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Idtarget.tooltip}"
+                                                   id="ot129"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Stnid.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Stnid.label}"
+                                           id="c131">
+                                    <af:outputText value="#{row.Stnid}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Stnid.tooltip}"
+                                                   id="ot130"/>
+                                </af:column>
+                                
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Bcstdt.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Bcstdt.label}"
+                                           id="c133">
+                                    <af:outputText value="#{row.Bcstdt}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Bcstdt.tooltip}"
+                                                   id="ot132"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Buyuntid.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Buyuntid.label}"
+                                           id="c134">
+                                    <af:outputText value="#{row.Buyuntid}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Buyuntid.tooltip}"
+                                                   id="ot133"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Brkdtid.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Brkdtid.label}"
+                                           id="c135">
+                                    <af:outputText value="#{row.Brkdtid}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Brkdtid.tooltip}"
+                                                   id="ot134"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Acttim.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Acttim.label}"
+                                           id="c136">
+                                    <af:outputText value="#{row.Acttim}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Acttim.tooltip}"
+                                                   id="ot135"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Sptlen.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Sptlen.label}"
+                                           id="c137">
+                                    <af:outputText value="#{row.Sptlen}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Sptlen.tooltip}"
+                                                   id="ot136"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.StnidSpot.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.StnidSpot.label}"
+                                           id="c138">
+                                    <af:outputText value="#{row.StnidSpot}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.StnidSpot.tooltip}"
+                                                   id="ot137"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Titleid.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Titleid.label}"
+                                           id="c139">
+                                    <af:outputText value="#{row.Titleid}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Titleid.tooltip}"
+                                                   id="ot138"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Episodenameid.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Episodenameid.label}"
+                                           id="c140">
+                                    <af:outputText value="#{row.Episodenameid}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Episodenameid.tooltip}"
+                                                   id="ot139"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Tipopublicidadid.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Tipopublicidadid.label}"
+                                           id="c141">
+                                    <af:outputText value="#{row.Tipopublicidadid}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Tipopublicidadid.tooltip}"
+                                                   id="ot140"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Spotformatid.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Spotformatid.label}"
+                                           id="c142">
+                                    <af:outputText value="#{row.Spotformatid}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Spotformatid.tooltip}"
+                                                   id="ot141"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Spotcomments.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Spotcomments.label}"
+                                           id="c143">
+                                    <af:outputText value="#{row.Spotcomments}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Spotcomments.tooltip}"
+                                                   id="ot142"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Autoid.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Autoid.label}"
+                                           id="c144">
+                                    <af:outputText value="#{row.Autoid}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Autoid.tooltip}"
+                                                   id="ot143"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Extcpynum.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Extcpynum.label}"
+                                           id="c145">
+                                    <af:outputText value="#{row.Extcpynum}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Extcpynum.tooltip}"
+                                                   id="ot144"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Brnd.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Brnd.label}"
+                                           id="c146">
+                                    <af:outputText value="#{row.Brnd}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Brnd.tooltip}"
+                                                   id="ot145"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Sptrt.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Sptrt.label}"
+                                           id="c147">
+                                    <af:outputText value="#{row.Sptrt}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Sptrt.tooltip}"
+                                                   id="ot146"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Spotprice20.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Spotprice20.label}"
+                                           id="c148">
+                                    <af:outputText value="#{row.Spotprice20}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Spotprice20.tooltip}"
+                                                   id="ot147"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Spotpriceproduction.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Spotpriceproduction.label}"
+                                           id="c149">
+                                    <af:outputText value="#{row.Spotpriceproduction}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Spotpriceproduction.tooltip}"
+                                                   id="ot148"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Revsts.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Revsts.label}"
+                                           id="c150">
+                                    <af:outputText value="#{row.Revsts}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Revsts.tooltip}"
+                                                   id="ot149"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Status.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Status.label}"
+                                           id="c151">
+                                    <af:outputText value="#{row.Status}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Status.tooltip}"
+                                                   id="ot150"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Ploexcrea.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Ploexcrea.label}"
+                                           id="c152">
+                                    <af:outputText value="#{row.Ploexcrea}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Ploexcrea.tooltip}"
+                                                   id="ot151"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Excfl.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Excfl.label}"
+                                           id="c153">
+                                    <af:outputText value="#{row.Excfl}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Excfl.tooltip}"
+                                                   id="ot152"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.IndEstatus.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="Estatus"
+                                           id="c154">
+                                    <af:outputText value="#{row.IndEstatus}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.IndEstatus.tooltip}"
+                                                   id="ot153"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.IndDescNeptuno.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.IndDescNeptuno.label}"
+                                           id="c155">
+                                    <af:outputText value="#{row.IndDescNeptuno}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.IndDescNeptuno.tooltip}"
+                                                   id="ot154"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.IdProcessNeptuno.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.IdProcessNeptuno.label}"
+                                           id="c156">
+                                    <af:outputText value="#{row.IdProcessNeptuno}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.IdProcessNeptuno.tooltip}"
+                                                   id="ot155">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.EvetvIntRstVtradicionalTabView1.hints.IdProcessNeptuno.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.AttributeCategory.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.AttributeCategory.label}"
+                                           id="c157">
+                                    <af:outputText value="#{row.AttributeCategory}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.AttributeCategory.tooltip}"
+                                                   id="ot156"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute1.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="Action"
+                                           id="c158">
+                                    <af:outputText value="#{row.Attribute1}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute1.tooltip}"
+                                                   id="ot157"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute2.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute2.label}"
+                                           id="c159">
+                                    <af:outputText value="#{row.Attribute2}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute2.tooltip}"
+                                                   id="ot158"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute3.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute3.label}"
+                                           id="c160">
+                                    <af:outputText value="#{row.Attribute3}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute3.tooltip}"
+                                                   id="ot159"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute4.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute4.label}"
+                                           id="c161">
+                                    <af:outputText value="#{row.Attribute4}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute4.tooltip}"
+                                                   id="ot160"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute5.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute5.label}"
+                                           id="c162">
+                                    <af:outputText value="#{row.Attribute5}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute5.tooltip}"
+                                                   id="ot161"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute6.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute6.label}"
+                                           id="c163">
+                                    <af:outputText value="#{row.Attribute6}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute6.tooltip}"
+                                                   id="ot162"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute7.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute7.label}"
+                                           id="c164">
+                                    <af:outputText value="#{row.Attribute7}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute7.tooltip}"
+                                                   id="ot163"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute8.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute8.label}"
+                                           id="c165">
+                                    <af:outputText value="#{row.Attribute8}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute8.tooltip}"
+                                                   id="ot164"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute9.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute9.label}"
+                                           id="c166">
+                                    <af:outputText value="#{row.Attribute9}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute9.tooltip}"
+                                                   id="ot165"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute10.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute10.label}"
+                                           id="c167">
+                                    <af:outputText value="#{row.Attribute10}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute10.tooltip}"
+                                                   id="ot166"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute11.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute11.label}"
+                                           id="c168">
+                                    <af:outputText value="#{row.Attribute11}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute11.tooltip}"
+                                                   id="ot167"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute12.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute12.label}"
+                                           id="c169">
+                                    <af:outputText value="#{row.Attribute12}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute12.tooltip}"
+                                                   id="ot168"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute13.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute13.label}"
+                                           id="c170">
+                                    <af:outputText value="#{row.Attribute13}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute13.tooltip}"
+                                                   id="ot169"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute14.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute14.label}"
+                                           id="c171">
+                                    <af:outputText value="#{row.Attribute14}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute14.tooltip}"
+                                                   id="ot170"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute15.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="Creado Por"
+                                           id="c172">
+                                    <af:outputText value="#{row.Attribute15}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.Attribute15.tooltip}"
+                                                   id="ot171"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.FecCreationDate.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.FecCreationDate.label}"
+                                           id="c173">
+                                    
+                                    <af:outputText value="#{row.FecCreationDate}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.FecCreationDate.tooltip}"
+                                                   id="ot172">
+                                        <af:convertDateTime pattern="yyyy-MM-dd" secondaryPattern="yyyy/MM/dd"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.NumCreatedBy.name}"
+                                           filterable="false" sortable="true"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.NumCreatedBy.label}"
+                                           id="c174">
+                                    <af:outputText value="#{row.NumCreatedBy}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.NumCreatedBy.tooltip}"
+                                                   id="ot173">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.EvetvIntRstVtradicionalTabView1.hints.NumCreatedBy.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.FecLastUpdateDate.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.FecLastUpdateDate.label}"
+                                           id="c175">
+                                    
+                                    <af:outputText value="#{row.FecLastUpdateDate}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.FecLastUpdateDate.tooltip}"
+                                                   id="ot174">
+                                        <af:convertDateTime pattern="yyyy-MM-dd" secondaryPattern="yyyy/MM/dd"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.NumLastUpdatedBy.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.NumLastUpdatedBy.label}"
+                                           id="c176">
+                                    <af:outputText value="#{row.NumLastUpdatedBy}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.NumLastUpdatedBy.tooltip}"
+                                                   id="ot175">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.EvetvIntRstVtradicionalTabView1.hints.NumLastUpdatedBy.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.EvetvIntRstVtradicionalTabView1.hints.NumLastUpdateLogin.name}"
+                                           filterable="false" sortable="true" visible="false"
+                                           headerText="#{bindings.EvetvIntRstVtradicionalTabView1.hints.NumLastUpdateLogin.label}"
+                                           id="c177">
+                                    <af:outputText value="#{row.NumLastUpdateLogin}"
+                                                   shortDesc="#{bindings.EvetvIntRstVtradicionalTabView1.hints.NumLastUpdateLogin.tooltip}"
+                                                   id="ot176">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.EvetvIntRstVtradicionalTabView1.hints.NumLastUpdateLogin.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                            </af:table>
+                        </af:panelGroupLayout>
+                            </f:facet>
+                            <f:facet name="start"/>
+                            <f:facet name="end"/>
+                            <f:facet name="top"/>
+                        </af:panelStretchLayout>
+                    </af:panelWindow>
+                </af:popup>
+                
+                <af:popup id="PopNoDis" contentDelivery="lazyUncached" binding="#{MonitorBean.poPopupNoDisponible}">
+                    <af:panelWindow id="PnlNoDis" 
+                                    inlineStyle="border-style:none;"
+                                    modal="true" 
+                                    closeIconVisible="false"
+                                    title="Monitoreo de Servicios" 
+                                    titleIconSource="/images/icon_info.gif">
+                        <af:panelGroupLayout layout="vertical" 
+                                             id="PnlNoDisMe" 
+                                             inlineStyle="border-style:none;" 
+                                             valign="middle" 
+                                             halign="center">
+                            <af:panelLabelAndMessage label="Flujo Neptuno-Paradigm No Disponible" 
+                                                     id="PnlLblMsgMir"                                                    
+                                                     inlineStyle="border-style:none; color:Olive;"/>
+                            <af:spacer width="50" height="25" id="SpcNoDisppo"/>                            
+                        </af:panelGroupLayout>
+                    </af:panelWindow>
+                </af:popup>
+                
+                
+                <!-- ################################### POPUP LOADING .... ##################################### !-->
+                <af:popup id="p1oadLogin" contentDelivery="immediate">
+                  <af:dialog id="dLogin" type="none" title="Procesando Información" closeIconVisible="false">
+                    <af:panelGroupLayout id="Pnlpgl1Login" layout="vertical" halign="center">
+                      <af:image source="/images/loading_blue.gif" id="ImgIdxLoad" shortDesc="Cargando..."/>
+                      <af:outputText value="... por favor espere." id="LblIdxLoad1Login"/>
+                    </af:panelGroupLayout>
+                  </af:dialog>
+                </af:popup>
+            </af:form>
+        </af:document>
+    </f:view>
+</jsp:root>

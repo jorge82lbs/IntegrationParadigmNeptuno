@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="RAIZ">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="OrdenesServicioVtaTra">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Mode" type="xs:string" />
+              <xs:element name="CommercialList">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Campaign">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Action" type="xs:string" />
+                          <xs:element name="OrderID" type="xs:unsignedShort" />
+                          <xs:element name="AgencyID" type="xs:string" />
+                          <xs:element name="AdvertirserID" type="xs:string" />
+                          <xs:element name="InitialDate" type="xs:string" />
+                          <xs:element name="EndDate" type="xs:string" />
+                          <xs:element name="MasterContract" type="xs:string" />
+                          <xs:element name="RateCard" type="xs:string" />
+                          <xs:element name="TargetID" type="xs:unsignedByte" />
+                          <xs:element name="Channel">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element maxOccurs="unbounded" name="ChannelID" type="xs:string" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Spot">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Action" type="xs:string" />
+                                <xs:element name="SpotID" type="xs:unsignedShort" />
+                                <xs:element name="Date" type="xs:string" />
+                                <xs:element name="BuyUnitID" type="xs:unsignedInt" />
+                                <xs:element name="BreakID" type="xs:string" />
+                                <xs:element name="Hour" type="xs:time" />
+                                <xs:element name="Duration" type="xs:time" />
+                                <xs:element name="ChannelID" type="xs:string" />
+                                <xs:element name="TitleID" type="xs:string" />
+                                <xs:element name="EpisodeNameID" type="xs:string" />
+                                <xs:element name="TipoPublicidadID" type="xs:string" />
+                                <xs:element name="SpotFormatID" type="xs:unsignedByte" />
+                                <xs:element name="SpotComments" type="xs:string" />
+                                <xs:element name="MediaID" type="xs:string" />
+                                <xs:element name="ProductID" type="xs:string" />
+                                <xs:element name="SpotPrice" type="xs:decimal" />
+                                <xs:element name="SpotPrice20" type="xs:decimal" />
+                                <xs:element name="SpotPriceProduction" type="xs:decimal" />
+                                <xs:element name="Revenue" type="xs:string" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

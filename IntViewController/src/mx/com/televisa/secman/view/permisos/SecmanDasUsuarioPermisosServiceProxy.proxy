@@ -1,0 +1,171 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<jdevws:WebServiceProxy xmlns:jdevws="http://xmlns.oracle.com/jdeveloper/10130/webserviceproxy">
+   <list n="CHILD_NODES">
+      <url path="SecmanDasUsuarioPermisosService.xml"/>
+      <url path="SecmanDasUsuarioPermisosService.wsdl"/>
+      <url path="SecmanDasPermisosUsuarioProxy_SCHEMA_2FSecman_2FWSDL_2FXMLSchema_10860048.xsd"/>
+      <url path="SecmanDasPermisosUsuarioProxy_SCHEMA_2FSecman_2FWSDL_2FXMLSchema_1786091311.xsd"/>
+      <url path="SecmanDasUsuarioPermisos.java"/>
+      <url path="types/Rol.java"/>
+      <url path="types/Interno.java"/>
+      <url path="types/OperacionId.java"/>
+      <url path="types/IdOrganizacion.java"/>
+      <url path="types/package-info.java"/>
+      <url path="types/UsuarioId.java"/>
+      <url path="types/PermisoOutputCollection.java"/>
+      <url path="types/NomMostrar.java"/>
+      <url path="types/NomUsuario.java"/>
+      <url path="types/OperacionDesc.java"/>
+      <url path="types/ItemProperty.java"/>
+      <url path="types/Tarea.java"/>
+      <url path="types/RolId.java"/>
+      <url path="SecmanDasUsuarioPermisosPortClient.java"/>
+      <url path="types/Usuario.java"/>
+      <url path="types/DescAplicacion.java"/>
+      <url path="types/UrlAplicacion.java"/>
+      <url path="types/ObtenerRolTareaPermisos.java"/>
+      <url path="types/RolesCollection.java"/>
+      <url path="types/ObtenerRolTareaPermisosResponse.java"/>
+      <url path="types/OperacionName.java"/>
+      <url path="types/TareasCollection.java"/>
+      <url path="types/Permiso.java"/>
+      <url path="SecmanDasUsuarioPermisosService.java"/>
+      <url path="types/Operacion.java"/>
+      <url path="types/EstatusAplicacion.java"/>
+      <url path="types/DescUsuario.java"/>
+      <url path="types/MailUsuario.java"/>
+      <url path="types/RolName.java"/>
+      <url path="types/NomAplicacion.java"/>
+      <url path="types/OperacionNum.java"/>
+      <url path="types/NomOrganizacion.java"/>
+      <url path="types/Aplicacion.java"/>
+      <url path="types/IdAplicacion.java"/>
+      <url path="types/TareaId.java"/>
+      <url path="types/PermisosUsuarioInputParameters.java"/>
+      <url path="types/TareaName.java"/>
+      <url path="types/NumEmpleadoCrm.java"/>
+      <url path="types/OperacionesCollection.java"/>
+      <url path="types/UserName.java"/>
+      <url path="types/ObjectFactory.java"/>
+   </list>
+   <hash n="DATA_MODEL">
+      <value n="ATTACHMENT_ENCODING" v="MTOM"/>
+      <list n="LOCAL_FILES"/>
+      <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.WebServiceProxy"/>
+      <url n="ORACLE_WEBSERVICES_XML" path="SecmanDasUsuarioPermisosService.xml"/>
+      <hash n="PROPERTY_GROUPS">
+         <hash n="WSDL_TO_JAVA_PROPERTIES">
+            <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.java.WSDLToJavaProperties"/>
+            <value n="WSDL2JAVA_DEFAULT_PACKAGE" v="mx.com.televisa.ventas.orduni.secman.permisososb"/>
+            <value n="WSDL2JAVA_ROOT_VALUE_PACKAGE" v="mx.com.televisa.ventas.orduni.secman.permisososb.types"/>
+         </hash>
+      </hash>
+      <value n="PROXY_ASYNC_METHODS" v="FOR_ENABLED"/>
+      <list n="PROXY_CLIENTS">
+         <url path="SecmanDasUsuarioPermisosPortClient.java"/>
+      </list>
+      <value n="PROXY_MAPPING_URL"/>
+      <url n="PROXY_ORIGINAL_WSDL_URL" protocol="http" host="tvmiddev1.televisa.net" port="8011" path="/Secman/Proxy/SecmanDasPermisosUsuarioProxy" query="wsdl"/>
+      <hash n="PROXY_PORTS">
+         <hash n="SecmanDasUsuarioPermisosPort">
+            <value n="ACCESSES_DOC_WRAPPPED" v="true"/>
+            <value n="ACCESSES_RPC_ENCODED" v="false"/>
+            <value n="CLASS_NAME" v="mx.com.televisa.ventas.orduni.secman.permisososb.SecmanDasUsuarioPermisos"/>
+            <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyPort"/>
+            <value n="NAME" v="SecmanDasUsuarioPermisosPort"/>
+            <hash n="OPERATIONS">
+               <hash n="obtenerRolTareaPermisos">
+                  <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyOperation"/>
+                  <hash n="PROPERTY_GROUPS"/>
+               </hash>
+            </hash>
+            <hash n="PROPERTY_GROUPS">
+               <hash n="WS_CLIENT_POLICY">
+                  <value n="addressing"/>
+                  <list n="management"/>
+                  <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.policy.PolicyClientModel"/>
+                  <value n="mtom"/>
+                  <hash n="POLICY_OVERRIDE_PROPERTIES"/>
+                  <list n="security"/>
+                  <value n="wsrm"/>
+               </hash>
+            </hash>
+            <url n="PROXY_ORIGINAL_PORT_ENDPOINT" protocol="http" host="tvmiddev1.televisa.net" port="8011" path="/Secman/Proxy/SecmanDasPermisosUsuarioProxy"/>
+         </hash>
+      </hash>
+      <value n="PROXY_SERVICE_NAME" v="SecmanDasUsuarioPermisosService"/>
+      <value n="PROXY_SERVICE_NAMESPACE" v="http://webServices.view.secman.televisa.com.mx/"/>
+      <url n="PROXY_TARGET_PROJECT" path="../../../../../../../../MORPrOrduniApp.jpr"/>
+      <list n="PROXY_WSDL_IMPORT_LIST">
+         <url path="SecmanDasPermisosUsuarioProxy_SCHEMA_2FSecman_2FWSDL_2FXMLSchema_10860048.xsd"/>
+         <url path="SecmanDasPermisosUsuarioProxy_SCHEMA_2FSecman_2FWSDL_2FXMLSchema_1786091311.xsd"/>
+      </list>
+      <url n="PROXY_WSDL_URL" path="SecmanDasUsuarioPermisosService.wsdl"/>
+      <hash n="REFERENCED_WEBSERVICE">
+         <list n="BD_">
+            <hash>
+               <value n="BOUND_PORT_TYPE" v="{http://webServices.view.secman.televisa.com.mx/}SecmanDasUsuarioPermisos"/>
+               <value n="DEFAULT_NAME" v="false"/>
+               <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.SOAPBinding"/>
+               <value n="NAME" v="{http://webServices.view.secman.televisa.com.mx/}SecmanDasUsuarioPermisosPortBinding"/>
+               <list n="OP_BINDINGS">
+                  <hash>
+                     <value n="BD_SOAP_INPUT_USE" v="1"/>
+                     <value n="BD_SOAP_OUTPUT_USE" v="1"/>
+                     <value n="BD_SOAP_STYLE" v="1"/>
+                     <value n="BOUND_OPERATION" v="mx.com.televisa.ventas.orduni.secman.permisososb.types.PermisoOutputCollection.obtenerRolTareaPermisos.mx.com.televisa.ventas.orduni.secman.permisososb.types.PermisosUsuarioInputParameters"/>
+                     <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.SOAPOperationBinding"/>
+                     <hash n="PROPERTY_GROUPS"/>
+                  </hash>
+               </list>
+               <hash n="PROPERTY_GROUPS"/>
+            </hash>
+         </list>
+         <list n="BINDING_FILES"/>
+         <value n="GUID" v="fd7e5380-0142-1000-8017-c0a8880105b1"/>
+         <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.WebServiceProxy$ProxyJavaWebService"/>
+         <list n="PO_">
+            <hash>
+               <value n="DEFAULT_NAME" v="false"/>
+               <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.SOAPPort"/>
+               <value n="NAME" v="SecmanDasUsuarioPermisosPort"/>
+               <value n="PORT_BINDING_NAME" v="{http://webServices.view.secman.televisa.com.mx/}SecmanDasUsuarioPermisosPortBinding"/>
+               <list n="PORT_OPS">
+                  <hash>
+                     <value n="EXPOSED_BD_OPERATION" v="mx.com.televisa.ventas.orduni.secman.permisososb.types.PermisoOutputCollection.obtenerRolTareaPermisos.mx.com.televisa.ventas.orduni.secman.permisososb.types.PermisosUsuarioInputParameters"/>
+                     <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.PortOperation"/>
+                     <hash n="PROPERTY_GROUPS"/>
+                  </hash>
+               </list>
+               <hash n="PROPERTY_GROUPS"/>
+               <url n="URL" protocol="http" host="tvmiddev1.televisa.net" port="8011" path="/Secman/Proxy/SecmanDasPermisosUsuarioProxy"/>
+            </hash>
+         </list>
+         <hash n="PROPERTY_GROUPS">
+            <hash n="WSDL_TO_JAVA_PROPERTIES">
+               <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.java.WSDLToJavaProperties"/>
+               <value n="WSDL2JAVA_DEFAULT_PACKAGE" v="mx.com.televisa.ventas.orduni.secman.permisososb"/>
+               <value n="WSDL2JAVA_ROOT_VALUE_PACKAGE" v="mx.com.televisa.ventas.orduni.secman.permisososb.types"/>
+            </hash>
+         </hash>
+         <list n="PT_">
+            <hash>
+               <value n="AUTO_SERVICE_INTERFACE"/>
+               <value n="DEFAULT_NAME" v="false"/>
+               <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.java.JavaPortType"/>
+               <value n="NAME" v="{http://webServices.view.secman.televisa.com.mx/}SecmanDasUsuarioPermisos"/>
+               <hash n="PROPERTY_GROUPS"/>
+               <value n="PT_CLASS" v="mx.com.televisa.ventas.orduni.secman.permisososb.SecmanDasUsuarioPermisosImpl"/>
+               <value n="PT_SERVICE_INTERFACE" v="mx.com.televisa.ventas.orduni.secman.permisososb.SecmanDasUsuarioPermisos"/>
+            </hash>
+         </list>
+         <url n="TARGET_PROJECT" path="../../../../../../../../MORPrOrduniApp.jpr"/>
+         <value n="WS_ORIG_GEN_DIRECTION" v="TOP_DOWN"/>
+         <value n="WS_TARGET_NAMESPACE" v="http://webServices.view.secman.televisa.com.mx/"/>
+         <value n="WS_URI" v="SecmanDasUsuarioPermisosService"/>
+         <url n="WS_WSDL_FILE" protocol="http" host="tvmiddev1.televisa.net" port="8011" path="/Secman/Proxy/SecmanDasPermisosUsuarioProxy" query="wsdl"/>
+      </hash>
+      <value n="SERVICE_ASYNC" v="false"/>
+      <value n="USE_WSDL_LOCATION" v="true"/>
+   </hash>
+</jdevws:WebServiceProxy>

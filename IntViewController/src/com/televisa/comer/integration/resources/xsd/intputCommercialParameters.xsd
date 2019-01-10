@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:ns0="http://com/televisa/comer/integration/service/beans/pgm/commerciallog" 
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+            targetNamespace="http://com/televisa/comer/integration/service/beans/pgm/commerciallog"
+            attributeFormDefault="qualified"
+            elementFormDefault="qualified"
+            >
+   <xsd:complexType name="CommercialList">
+      <xsd:sequence>
+         <xsd:element name="ChannelID" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="Date" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="Breaks" type="ns0:Breaks" minOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="Breaks">
+      <xsd:sequence>
+         <xsd:element name="Break" type="ns0:Break" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="Break">
+      <xsd:sequence>
+         <xsd:element name="BreakID" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="BreakDescription" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="BreakHour" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="BreakOverlay" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="SpotList" type="ns0:SpotList" minOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="SpotList">
+      <xsd:sequence>
+         <xsd:element name="Spot" type="ns0:Spot" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="Spot">
+      <xsd:sequence>
+         <xsd:element name="Action" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="ParadigmOrderID" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="ParadigmSpotID" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="Duration" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="SpotFormatID" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="SpotComments" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="MediaID" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="ProductID" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="BookingPos" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="Warning" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="NumOrden" type="xsd:string" minOccurs="1"/>
+         <xsd:element name="SpotPrice" type="xsd:string" minOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="RecibirDatosExternosResponse">
+      <xsd:sequence>
+         <xsd:element name="RecibirDatosExternosResult" type="ns0:RecibirDatosExternosResult" minOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="RecibirDatosExternosResult">
+      <xsd:sequence>
+         <xsd:element name="CodRespuesta" type="ns0:CodRespuesta" minOccurs="1"/>         
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="CodRespuesta">
+      <xsd:sequence>
+         <xsd:element name="ItemCabecera" type="ns0:ItemCabecera" maxOccurs="unbounded"/>         
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="ItemCabecera">
+      <xsd:sequence>
+         <xsd:element name="ProcessID" type="xsd:string" minOccurs="1"/>         
+         <xsd:element name="Resultado" type="xsd:string" minOccurs="1"/>         
+         <xsd:element name="TipoProceso" type="xsd:string" minOccurs="1"/>         
+         <xsd:element name="ItemRespuesta" type="ns0:ItemRespuesta" maxOccurs="unbounded"/>         
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="ItemRespuesta">
+      <xsd:sequence>
+         <xsd:element name="Elemento" type="xsd:string" minOccurs="1"/>         
+         <xsd:element name="IdElemento" type="xsd:string" minOccurs="1"/>         
+         <xsd:element name="Resultado" type="xsd:string" minOccurs="1"/>         
+         <xsd:element name="ListaMensaje" type="ns0:ListaMensaje" minOccurs="0"/>         
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="ListaMensaje">
+      <xsd:sequence>
+         <xsd:element name="IdError" type="xsd:string" minOccurs="1"/>         
+         <xsd:element name="Descripcion" type="xsd:string" minOccurs="1"/>           
+      </xsd:sequence>
+   </xsd:complexType>
+   
+</xsd:schema>

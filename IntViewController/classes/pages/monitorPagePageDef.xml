@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.10.8" id="monitorPagePageDef"
+                Package="pages">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="EvetvIntServicesLogVwView1" RangeSize="25" DataControl="AppModuleIntergrationDataControl"
+              id="EvetvIntServicesLogVwView1Iterator"/>
+    <searchRegion Binds="EvetvIntServicesLogVwView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer" id="EvetvIntServicesLogVwView1Query"/>
+    <iterator Binds="EvetvIntRstParrillasTabView1" RangeSize="25" DataControl="AppModuleIntergrationDataControl"
+              id="EvetvIntRstParrillasTabView1Iterator"/>
+    <searchRegion Binds="EvetvIntRstParrillasTabView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="EvetvIntRstParrillasTabView1Query"/>
+    <iterator Binds="EvetvIntRstProgramasTabView1" RangeSize="25" DataControl="AppModuleIntergrationDataControl"
+              id="EvetvIntRstProgramasTabView1Iterator"/>
+    <searchRegion Binds="EvetvIntRstProgramasTabView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="EvetvIntRstProgramasTabView1Query"/>
+    <iterator Binds="EvetvIntRstVtradicionalTabView1" RangeSize="25" DataControl="AppModuleIntergrationDataControl"
+              id="EvetvIntRstVtradicionalTabView1Iterator"/>
+    <searchRegion Binds="EvetvIntRstVtradicionalTabView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="EvetvIntRstVtradicionalTabView1Query"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="EvetvIntServicesLogVwView1Iterator" id="EvetvIntServicesLogVwView1">
+      <nodeDefinition DefName="com.televisa.integration.model.EvetvIntServicesLogVwView"
+                      Name="EvetvIntServicesLogVwView10">
+        <AttrNames>
+          <Item Value="IdLogServices"/>
+          <Item Value="IdService"/>
+          <Item Value="NomService"/>
+          <Item Value="IndProcess"/>
+          <Item Value="IndProcessNom"/>
+          <Item Value="IndResponse"/>
+          <Item Value="NumUser"/>
+          <Item Value="FecResponse"/>
+          <Item Value="FecRequest"/>
+          <Item Value="NumEvtbProcessId"/>
+          <Item Value="NumPgmProcessId"/>
+          <Item Value="IndCalculateStatus"/>
+          <Item Value="IndEstatus"/>
+          <Item Value="AttributeCategory"/>
+          <Item Value="Attribute1"/>
+          <Item Value="Attribute2"/>
+          <Item Value="Attribute3"/>
+          <Item Value="Attribute4"/>
+          <Item Value="Attribute5"/>
+          <Item Value="Attribute6"/>
+          <Item Value="Attribute7"/>
+          <Item Value="Attribute8"/>
+          <Item Value="Attribute9"/>
+          <Item Value="Attribute10"/>
+          <Item Value="Attribute11"/>
+          <Item Value="Attribute12"/>
+          <Item Value="Attribute13"/>
+          <Item Value="Attribute14"/>
+          <Item Value="Attribute15"/>
+          <Item Value="FecCreationDate"/>
+          <Item Value="NumCreatedBy"/>
+          <Item Value="FecLastUpdateDate"/>
+          <Item Value="NumLastUpdatedBy"/>
+          <Item Value="NumLastUpdateLogin"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="EvetvIntRstParrillasTabView1Iterator" id="EvetvIntRstParrillasTabView1">
+      <nodeDefinition DefName="com.televisa.integration.model.EvetvIntRstParrillasTabView"
+                      Name="EvetvIntRstParrillasTabView10">
+        <AttrNames>
+          <Item Value="IdRequest"/>
+          <Item Value="IdService"/>
+          <Item Value="Bcsttim"/>
+          <Item Value="Seqnum"/>
+          <Item Value="Fmttyp"/>
+          <Item Value="Untnum"/>
+          <Item Value="Channelid"/>
+          <Item Value="Datevalue"/>
+          <Item Value="Hourstart"/>
+          <Item Value="Hourend"/>
+          <Item Value="Hour"/>
+          <Item Value="Title"/>
+          <Item Value="Episodename"/>
+          <Item Value="Epno"/>
+          <Item Value="Slotduration"/>
+          <Item Value="Titleid"/>
+          <Item Value="Episodenameid"/>
+          <Item Value="Buyunitid"/>
+          <Item Value="Buyunit"/>
+          <Item Value="Exceptcofepris"/>
+          <Item Value="Eventspecial"/>
+          <Item Value="BuyuntidCorte"/>
+          <Item Value="DateCorte"/>
+          <Item Value="HourCorte"/>
+          <Item Value="Corteid"/>
+          <Item Value="Descorte"/>
+          <Item Value="Overlay"/>
+          <Item Value="Breakid"/>
+          <Item Value="Description"/>
+          <Item Value="DateBreak"/>
+          <Item Value="HourBreak"/>
+          <Item Value="Totalduration"/>
+          <Item Value="Comercialduration"/>
+          <Item Value="IndEstatus"/>
+          <Item Value="IndDescNeptuno"/>
+          <Item Value="IdProcessNeptuno"/>
+          <Item Value="AttributeCategory"/>
+          <Item Value="Attribute1"/>
+          <Item Value="Attribute2"/>
+          <Item Value="Attribute3"/>
+          <Item Value="Attribute4"/>
+          <Item Value="Attribute5"/>
+          <Item Value="Attribute6"/>
+          <Item Value="Attribute7"/>
+          <Item Value="Attribute8"/>
+          <Item Value="Attribute9"/>
+          <Item Value="Attribute10"/>
+          <Item Value="Attribute11"/>
+          <Item Value="Attribute12"/>
+          <Item Value="Attribute13"/>
+          <Item Value="Attribute14"/>
+          <Item Value="Attribute15"/>
+          <Item Value="FecCreationDate"/>
+          <Item Value="NumCreatedBy"/>
+          <Item Value="FecLastUpdateDate"/>
+          <Item Value="NumLastUpdatedBy"/>
+          <Item Value="NumLastUpdateLogin"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="EvetvIntRstProgramasTabView1Iterator" id="EvetvIntRstProgramasTabView1">
+      <nodeDefinition DefName="com.televisa.integration.model.EvetvIntRstProgramasTabView"
+                      Name="EvetvIntRstProgramasTabView10">
+        <AttrNames>
+          <Item Value="IdRequest"/>
+          <Item Value="IdService"/>
+          <Item Value="Buyuntid"/>
+          <Item Value="Buylnam"/>
+          <Item Value="Indactivo"/>
+          <Item Value="Indtarifaprograma"/>
+          <Item Value="IndEstatus"/>
+          <Item Value="IndDescNeptuno"/>
+          <Item Value="AttributeCategory"/>
+          <Item Value="Attribute1"/>
+          <Item Value="Attribute2"/>
+          <Item Value="Attribute3"/>
+          <Item Value="Attribute4"/>
+          <Item Value="Attribute5"/>
+          <Item Value="Attribute6"/>
+          <Item Value="Attribute7"/>
+          <Item Value="Attribute8"/>
+          <Item Value="Attribute9"/>
+          <Item Value="Attribute10"/>
+          <Item Value="Attribute11"/>
+          <Item Value="Attribute12"/>
+          <Item Value="Attribute13"/>
+          <Item Value="Attribute14"/>
+          <Item Value="Attribute15"/>
+          <Item Value="FecCreationDate"/>
+          <Item Value="NumCreatedBy"/>
+          <Item Value="FecLastUpdateDate"/>
+          <Item Value="NumLastUpdatedBy"/>
+          <Item Value="NumLastUpdateLogin"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="EvetvIntRstVtradicionalTabView1Iterator" id="EvetvIntRstVtradicionalTabView1">
+      <nodeDefinition DefName="com.televisa.integration.model.EvetvIntRstVtradicionalTabView"
+                      Name="EvetvIntRstVtradicionalTabView10">
+        <AttrNames>
+          <Item Value="IdRequest"/>
+          <Item Value="IdService"/>
+          <Item Value="Ordid"/>
+          <Item Value="Agyid"/>
+          <Item Value="Advid"/>
+          <Item Value="Strdt"/>
+          <Item Value="Edt"/>
+          <Item Value="Mcontid"/>
+          <Item Value="Rtcrd"/>
+          <Item Value="Idtarget"/>
+          <Item Value="Stnid"/>
+          <Item Value="Sptmstid"/>
+          <Item Value="Bcstdt"/>
+          <Item Value="Buyuntid"/>
+          <Item Value="Brkdtid"/>
+          <Item Value="Acttim"/>
+          <Item Value="Sptlen"/>
+          <Item Value="StnidSpot"/>
+          <Item Value="Titleid"/>
+          <Item Value="Episodenameid"/>
+          <Item Value="Tipopublicidadid"/>
+          <Item Value="Spotformatid"/>
+          <Item Value="Spotcomments"/>
+          <Item Value="Autoid"/>
+          <Item Value="Extcpynum"/>
+          <Item Value="Brnd"/>
+          <Item Value="Sptrt"/>
+          <Item Value="Spotprice20"/>
+          <Item Value="Spotpriceproduction"/>
+          <Item Value="Revsts"/>
+          <Item Value="Status"/>
+          <Item Value="Ploexcrea"/>
+          <Item Value="Excfl"/>
+          <Item Value="IndEstatus"/>
+          <Item Value="IndDescNeptuno"/>
+          <Item Value="IdProcessNeptuno"/>
+          <Item Value="AttributeCategory"/>
+          <Item Value="Attribute1"/>
+          <Item Value="Attribute2"/>
+          <Item Value="Attribute3"/>
+          <Item Value="Attribute4"/>
+          <Item Value="Attribute5"/>
+          <Item Value="Attribute6"/>
+          <Item Value="Attribute7"/>
+          <Item Value="Attribute8"/>
+          <Item Value="Attribute9"/>
+          <Item Value="Attribute10"/>
+          <Item Value="Attribute11"/>
+          <Item Value="Attribute12"/>
+          <Item Value="Attribute13"/>
+          <Item Value="Attribute14"/>
+          <Item Value="Attribute15"/>
+          <Item Value="FecCreationDate"/>
+          <Item Value="NumCreatedBy"/>
+          <Item Value="FecLastUpdateDate"/>
+          <Item Value="NumLastUpdatedBy"/>
+          <Item Value="NumLastUpdateLogin"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

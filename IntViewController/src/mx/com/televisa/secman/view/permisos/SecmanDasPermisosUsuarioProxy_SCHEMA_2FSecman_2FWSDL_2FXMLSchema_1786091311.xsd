@@ -1,0 +1,16 @@
+<xs:schema version="1.0" targetNamespace="http://webServices.view.secman.televisa.com.mx/" xmlns:tns="http://webServices.view.secman.televisa.com.mx/"
+     xmlns:ns1="http://xmlns.soin.tvsa.com/Secman/Servicios/UsuarioPermisos" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:import namespace="http://xmlns.soin.tvsa.com/Secman/Servicios/UsuarioPermisos" schemaLocation="SecmanDasPermisosUsuarioProxy_SCHEMA_2FSecman_2FWSDL_2FXMLSchema_10860048.xsd"/>
+    <xs:element name="obtenerRolTareaPermisos" type="tns:obtenerRolTareaPermisos"/>
+    <xs:element name="obtenerRolTareaPermisosResponse" type="tns:obtenerRolTareaPermisosResponse"/>
+    <xs:complexType name="obtenerRolTareaPermisos">
+        <xs:sequence>
+            <xs:element name="arg0" type="ns1:PermisosUsuarioInputParameters" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="obtenerRolTareaPermisosResponse">
+        <xs:sequence>
+            <xs:element name="return" type="ns1:PermisoOutputCollection" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

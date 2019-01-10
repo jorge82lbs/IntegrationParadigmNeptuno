@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE AppModule SYSTEM "jbo_03_01.dtd">
+<!---->
+<AppModule
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="AppModuleIntergration"
+  Version="12.1.3.10.8"
+  InheritPersonalization="merge"
+  ClearCacheOnRollback="true"
+  ComponentClass="com.televisa.integration.model.AppModuleIntergrationImpl"
+  DefClass="com.televisa.integration.model.AppModuleIntergrationDefImpl">
+  <DesignTime>
+    <Attr Name="_isDefCodegen" Value="true"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>  
+
+  <ViewUsage
+    Name="EvetvIntConfigParamTabView1"
+    ViewObjectName="com.televisa.integration.model.EvetvIntConfigParamTabView"/>
+  <ViewUsage
+    Name="EvetvIntNotificationsTabView1"
+    ViewObjectName="com.televisa.integration.model.EvetvIntNotificationsTabView"/>
+  <ViewUsage
+    Name="EvetvIntNotificationsTblVwView1"
+    ViewObjectName="com.televisa.integration.model.EvetvIntNotificationsTblVwView"/>
+  
+  <ViewUsage
+    Name="EvetvIntServicesLogVwView1"
+    ViewObjectName="com.televisa.integration.model.EvetvIntServicesLogVwView"/>
+  <ViewUsage
+    Name="EvetvIntServicesLogTabView1"
+    ViewObjectName="com.televisa.integration.model.EvetvIntServicesLogTabView"/>
+  <ViewUsage
+    Name="EvetvIntServicesParamsTabView1"
+    ViewObjectName="com.televisa.integration.model.EvetvIntServicesParamsTabView"/>
+  <ViewUsage
+    Name="EvetvIntServicesParamsTblVwView1"
+    ViewObjectName="com.televisa.integration.model.EvetvIntServicesParamsTblVwView"/>
+  <ViewUsage
+    Name="EvetvIntCronConfigTabView1"
+    ViewObjectName="com.televisa.integration.model.EvetvIntCronConfigTabView"/>
+  <ViewUsage
+    Name="EvetvIntServicesCatTabView1"
+    ViewObjectName="com.televisa.integration.model.EvetvIntServicesCatTabView"/>
+  <ViewUsage
+    Name="EvetvIntServiceBitacoraTabView1"
+    ViewObjectName="com.televisa.integration.model.EvetvIntServiceBitacoraTabView"/>
+  <ViewUsage
+    Name="EvetvIntServicesBitacoraVwView1"
+    ViewObjectName="com.televisa.integration.model.EvetvIntServicesBitacoraVwView"/>
+  <ViewUsage
+    Name="EvetvIntRstLogCertTabView1"
+    ViewObjectName="com.televisa.integration.model.EvetvIntRstLogCertTabView"/>
+  <ViewUsage
+    Name="EvetvIntRstParrillasTabView1"
+    ViewObjectName="com.televisa.integration.model.EvetvIntRstParrillasTabView"/>
+  <ViewUsage
+    Name="EvetvIntRstProgramasTabView1"
+    ViewObjectName="com.televisa.integration.model.EvetvIntRstProgramasTabView"/>
+  <ViewUsage
+    Name="EvetvIntRstVtradicionalTabView1"
+    ViewObjectName="com.televisa.integration.model.EvetvIntRstVtradicionalTabView"/>
+  <ViewUsage
+    Name="EvetvIntRequestsTabView1"
+    ViewObjectName="com.televisa.integration.model.EvetvIntRequestsTabView"/>
+  <ViewUsage
+    Name="EvetvIntXmlFilesTabView1"
+    ViewObjectName="com.televisa.integration.model.EvetvIntXmlFilesTabView"/>
+</AppModule>

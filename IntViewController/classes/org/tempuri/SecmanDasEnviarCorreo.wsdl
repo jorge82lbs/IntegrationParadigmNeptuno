@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<definitions xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://tempuri.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/" name="SecmanDasEnviarCorreo">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://xmlns.soin.tvsa.com/Secman/Servicios/SecmanInfSendMail" schemaLocation="SecmanDasEnviarCorreoSoap12HttpPort1.xsd"/>
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import namespace="http://xmlns.soin.tvsa.com/Secman/Servicios/SecmanDasComerAutenticar" schemaLocation="SecmanDasEnviarCorreoSoap12HttpPort2.xsd"/>
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import namespace="http://tempuri.org/" schemaLocation="SecmanDasEnviarCorreoSoap12HttpPort3.xsd"/>
+    </xsd:schema>
+  </types>
+  <message name="EnviarCorreo">
+    <part name="parameters" element="tns:EnviarCorreo"/>
+  </message>
+  <message name="EnviarCorreoResponse">
+    <part name="parameters" element="tns:EnviarCorreoResponse"/>
+  </message>
+  <portType name="SecmanDasEnviarCorreo">
+    <operation name="EnviarCorreo">
+      <input message="tns:EnviarCorreo"/>
+      <output message="tns:EnviarCorreoResponse"/>
+    </operation>
+  </portType>
+  <binding name="SecmanDasEnviarCorreoSoap12HttpPortBinding" type="tns:SecmanDasEnviarCorreo">
+    <soap12:binding transport="http://www.w3.org/2003/05/soap/bindings/HTTP/" style="document"/>
+    <operation name="EnviarCorreo">
+      <soap12:operation soapAction=""/>
+      <input>
+        <soap12:body use="literal"/>
+      </input>
+      <output>
+        <soap12:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="SecmanDasEnviarCorreo">
+    <port name="SecmanDasEnviarCorreoSoap12HttpPort" binding="tns:SecmanDasEnviarCorreoSoap12HttpPortBinding">
+      <soap12:address location="http://tvmiddev1.televisa.net:10106/SecmanWebServices/SecmanDasEnviarCorreoSoap12HttpPort"/>
+    </port>
+  </service>
+</definitions>
