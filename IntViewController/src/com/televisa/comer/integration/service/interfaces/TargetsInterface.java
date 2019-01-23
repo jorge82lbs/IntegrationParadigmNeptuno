@@ -17,6 +17,9 @@ package com.televisa.comer.integration.service.interfaces;
  *
  * @date Enero 09, 2019, 12:00 pm
  */
+import com.televisa.comer.integration.service.beans.targets.TargetsInputParameters;
+import com.televisa.comer.integration.service.beans.targets.TargetsResponse;
+
 public interface TargetsInterface {
-    public void auxiliar();
+    public TargetsResponse invokeTargets(TargetsInputParameters toTargetsInputParameters);
 }

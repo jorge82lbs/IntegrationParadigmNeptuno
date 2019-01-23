@@ -22,6 +22,7 @@ import com.televisa.integration.view.jobs.ExecuteLogCertificadoCron;
 import com.televisa.integration.view.jobs.ExecuteParrillasCron;
 import com.televisa.integration.view.jobs.ExecuteParrillasOnDemandCron;
 import com.televisa.integration.view.jobs.ExecuteProgramasCron;
+import com.televisa.integration.view.jobs.ExecuteTargetsCron;
 import com.televisa.integration.view.jobs.ExecuteVtaTradicionalCron;
 import com.televisa.integration.view.jobs.ExecuteVtaTradicionalUsrCron;
 
@@ -914,6 +915,24 @@ public class ServicesConfigBean {
                         lsFinalMessage = loRes.getLsMessage();
                     }
                 } 
+                
+                /*################ TARGETS ############################*/
+                if(lsServiceToInvoke.equalsIgnoreCase("WsTargets")){
+                    System.out.println("Se ha invocado Targets");
+                    ExecuteServiceResponseBean loRes =
+                        processServiceTargetsExecution(liIdUser,
+                                                lsUserName,
+                                                lsIdService,
+                                                lsServiceToInvoke,
+                                                lsServiceAction,
+                                                lsIdTrigger,
+                                                loService
+                                               );
+                    lsColorMessage = loRes.getLsColor();
+                    lsFinalMessage = loRes.getLsMessage();
+                    
+                }
+                
             }                        
         } catch (Exception loEx) {
             lsFinalMessage = loEx.getMessage();
@@ -1011,7 +1030,7 @@ public class ServicesConfigBean {
                     new UtilFaces().insertBitacoraServiceService(0,
                                                       Integer.parseInt(psIdService), 
                                                       liIndProcess, 
-                                                      "Ejecuciï¿½n Manual de Servicio de Programas",
+                                                      "Ejecucion Manual de Servicio de Programas",
                                                       liNumEvtbProcessId, 
                                                       liNumPgmProcessID, 
                                                       piIdUser,
@@ -1214,6 +1233,7 @@ public class ServicesConfigBean {
         loRes.setLsMessage(lsFinalMessage);
         return loRes;
     }
+    
     /**
      * Ejecuta la logica de ejecucion de servicio para Parrillas
      * @autor Jorge Luis Bautista Santiago
@@ -2666,6 +2686,284 @@ public class ServicesConfigBean {
         return loRes;
     }
 
+    
+    /**
+     * Ejecuta la logica de ejecucion de servicio para Targets
+     * @autor Jorge Luis Bautista Santiago
+     * @param piIdUser
+     * @param psUserName
+     * @param psIdService
+     * @param psServiceToInvoke
+     * @param psServiceAction
+     * @param psIdTrigger
+     * @param poService
+     * @return ExecuteServiceResponseBean
+     */
+    public ExecuteServiceResponseBean processServiceTargetsExecution(Integer piIdUser,
+                                                              String psUserName,
+                                                              String psIdService,
+                                                              String psServiceToInvoke,
+                                                              String psServiceAction,
+                                                              String psIdTrigger,
+                                                              AppModuleIntergrationImpl poService
+                                                              ){
+        ExecuteServiceResponseBean         loRes = new ExecuteServiceResponseBean();
+        String                             lsFinalMessage = "";
+        String                             lsColorMessage = "red";
+        Integer                            liIdParameter = 
+            new ViewObjectDao().getMaxIdParadigm("RstTargets") + 1;
+        String                             lsIdRequestTargets = String.valueOf(liIdParameter);
+        
+        //Obtener parámetros para este servicio, desde la base de datos -------
+        List<EvetvIntServicesParamTabBean> laList = 
+            poService.getParametersServices(Integer.parseInt(psIdService)); 
+        // FECHA//
+        String                             lsDateQuery = null;
+        for(EvetvIntServicesParamTabBean loParm : laList){
+            if(loParm.getIndParameter().equalsIgnoreCase("FECHA")){
+                lsDateQuery = loParm.getIndValParameter();
+            }                       
+        }
+        //CANALES//
+        List<String>                       laChannels = new ArrayList<String>();
+        for(EvetvIntServicesParamTabBean loParm : laList){
+            if(loParm.getIndParameter().equalsIgnoreCase("CANAL")){
+                laChannels.add(loParm.getIndValParameter());
+            }                       
+        }
+        //------------------------------------------------------------------------------
+        if(lsDateQuery != null && laChannels.size() > 0){
+            if(psServiceAction.equalsIgnoreCase("EXECUTE")){ //Ejecucion manual
+                lsFinalMessage = 
+                    "El Servicio de " + psServiceToInvoke + " ha sido ejecutado en segundo plano";
+                lsColorMessage = "black";
+                boolean lbPrExe = true;
+                EvetvIntCronConfigTabRowBean loRowCron = 
+                    poService.getRowCronConfigByServiceModel(Integer.parseInt(psIdService));
+                if(loRowCron != null){
+                    if(loRowCron.getIndEstatus().equalsIgnoreCase("2")){
+                        lbPrExe = false;
+                    }
+                }
+                if(lbPrExe){
+                    new UtilFaces().updateStatusCronService(Integer.parseInt(psIdService),
+                                                            "1",
+                                                            null,
+                                                            null,
+                                                            null
+                                                            );
+                    
+                    Integer liIndProcess = new UtilFaces().getIdConfigParameterByName("Execute");
+                    Integer liNumPgmProcessID = liIdParameter;
+                    Integer liNumEvtbProcessId = 0;
+                    
+                    new UtilFaces().insertBitacoraServiceService(0,
+                                                      Integer.parseInt(psIdService), 
+                                                      liIndProcess, 
+                                                      "Ejecucion Manual de Servicio de Targets",
+                                                      liNumEvtbProcessId, 
+                                                      liNumPgmProcessID, 
+                                                      piIdUser,
+                                                      psUserName);
+            
+                    Scheduler loScheduler;
+                    try {
+                        loScheduler = new StdSchedulerFactory().getScheduler();
+                        JobDetail loJob = 
+                            JobBuilder.newJob(ExecuteTargetsCron.class).build();
+                        Trigger   loTrigger = 
+                            TriggerBuilder.newTrigger().withIdentity(psIdTrigger).build();
+                        JobDataMap loJobDataMap=  loJob.getJobDataMap();
+                        loJobDataMap.put("lsIdService", psIdService); 
+                        loJobDataMap.put("liIdUser", String.valueOf(piIdUser)); 
+                        loJobDataMap.put("lsUserName", psUserName); 
+                        loJobDataMap.put("lsIdRequestTargets", lsIdRequestTargets); 
+                        loJobDataMap.put("lsTypeRequest", "normal");
+                        loScheduler.scheduleJob(loJob, loTrigger);
+                        loScheduler.start();
+                        
+                    } catch (Exception loEx) {
+                        
+                        lsFinalMessage = loEx.getMessage();
+                        lsColorMessage = "red";
+                    } 
+                }else{
+                    lsFinalMessage = "ATENCION: Actualmente Existe en Ejecucion";
+                    lsColorMessage = "red";
+                }
+            }
+            
+            if(psServiceAction.equalsIgnoreCase("BEGIN")){
+                // Verificar si ya se encuentra en ejecucion
+                
+                EvetvIntCronConfigTabRowBean loRowCron = 
+                    poService.getRowCronConfigByServiceModel(Integer.parseInt(psIdService));
+                if(loRowCron != null){           
+                    // Verificar si puede iniciar de acuerdo al estatus
+                    if(!loRowCron.getIndEstatus().equalsIgnoreCase("2")){
+                        Scheduler loScheduler;
+                        try {
+                            boolean lbSimple = false;
+                            Trigger loTrigger = null;
+                            String lsCronExpression = 
+                                poService.getCronExpressionModel(Integer.parseInt(psIdService));
+                            if(lsCronExpression != null){
+                                loScheduler = new StdSchedulerFactory().getScheduler();
+                                JobDetail loJob = 
+                                    JobBuilder.newJob(ExecuteTargetsCron.class).build();
+                                if(loRowCron.getIndPeriodicity().equalsIgnoreCase("MINUTOS")){
+                                    lbSimple = true;
+                                }
+                                if(loRowCron.getIndPeriodicity().equalsIgnoreCase("HORAS")){
+                                    lbSimple = true;
+                                }
+                                if(!lbSimple){
+                                    loTrigger = 
+                                        TriggerBuilder.newTrigger().withIdentity(psIdTrigger).withSchedule(
+                                            CronScheduleBuilder.cronSchedule(lsCronExpression)
+                                    ).startNow().build();
+                                }else{
+                                    Date ltCurrent = new Date();
+                                    String lsCurrDate = "";
+                                    SimpleDateFormat lodfCurrent = new SimpleDateFormat("yyyy-MM-dd");
+                                    lsCurrDate = lodfCurrent.format(ltCurrent);
+                                    Date ltFechaIni = new Date();
+                                    Date ltFechaFin = new Date();
+                                    String lsInicio = 
+                                        loRowCron.getIndBeginSchedule() == null ? "08:00" : 
+                                        loRowCron.getIndBeginSchedule();
+                                    String lsFin = 
+                                        loRowCron.getAttribute1() == null ? "23:50" : 
+                                        loRowCron.getAttribute1();
+                                    String lsEvery =  
+                                        loRowCron.getIndValTypeSchedule() == null ? "23" : 
+                                        loRowCron.getIndValTypeSchedule();
+                                    Integer liEvery = Integer.parseInt(lsEvery);
+                                    SimpleDateFormat lodf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+                                    String lsStartDate = lsCurrDate + " " + lsInicio + ":00.0";
+                                    String lsFinalDate = lsCurrDate + " " + lsFin + ":00.0";
+                                    try {
+                                        ltFechaIni = lodf.parse(lsStartDate);
+                                        ltFechaFin = lodf.parse(lsFinalDate);
+                                    } catch (ParseException e) {
+                                        System.out.println("Error al parsear: "+e.getMessage());
+                                        e.printStackTrace();
+                                    }
+                                    
+                                    if(loRowCron.getIndPeriodicity().equalsIgnoreCase("MINUTOS")){
+                                        loTrigger = 
+                                            TriggerBuilder.newTrigger().withIdentity(psIdTrigger).withSchedule(
+                                        SimpleScheduleBuilder.simpleSchedule().withIntervalInMinutes(liEvery).repeatForever()
+                                        ).startAt(ltFechaIni).endAt(ltFechaFin).build();
+                                    }else{
+                                        loTrigger = 
+                                            TriggerBuilder.newTrigger().withIdentity(psIdTrigger).withSchedule(
+                                        SimpleScheduleBuilder.simpleSchedule().withIntervalInHours(liEvery).repeatForever()
+                                        ).startAt(ltFechaIni).endAt(ltFechaFin).build();
+                                    }
+                                    
+                                }
+                                                                
+                                JobDataMap loJobDataMap=  loJob.getJobDataMap();
+                                loJobDataMap.put("lsIdService", psIdService); 
+                                loJobDataMap.put("liIdUser", String.valueOf(piIdUser)); 
+                                loJobDataMap.put("lsUserName", psUserName); 
+                                loJobDataMap.put("lsIdRequestTargets", lsIdRequestTargets); 
+                                loJobDataMap.put("lsTypeRequest", "normal");
+                                loScheduler.scheduleJob(loJob, loTrigger);
+                                Integer piIndProcess = 
+                                    new UtilFaces().getIdConfigParameterByName("BeginCron");
+                                Integer piNumPgmProcessID = 0;
+                                Integer piNumEvtbProcessId = 0;
+                                new UtilFaces().insertBitacoraServiceService(0,
+                                                                  Integer.parseInt(psIdService), 
+                                                                  piIndProcess, 
+                                                                  "Inicio Programado del Servicio " +
+                                    "de Targets",
+                                                                  piNumEvtbProcessId, 
+                                                                  piNumPgmProcessID, 
+                                                                  piIdUser,
+                                                                  psUserName);
+                                
+                                new UtilFaces().updateStatusCronService(Integer.parseInt(psIdService),
+                                                                        "2",
+                                                                        null,
+                                                                        null,
+                                                                        "exe"
+                                                                        );
+                                
+                                loScheduler.start();
+                                lsFinalMessage = 
+                                    "El Servicio de " + psServiceToInvoke + 
+                                    " ha sido Iniciado en segundo plano";
+                                lsColorMessage = "black";
+                                
+                            }else{
+                                lsFinalMessage = 
+                                    "No Existe Configuracion Cron para " + psServiceToInvoke + " ";
+                                lsColorMessage = "red";
+                            }
+                        } catch (Exception loEx) {
+                            
+                            lsFinalMessage = loEx.getMessage();
+                            lsColorMessage = "red";
+                        } 
+                    }else{
+                        lsFinalMessage = "ATENCION: Actualmente Existe en Ejecucion";
+                        lsColorMessage = "red";
+                    }
+                }else{
+                    lsFinalMessage = "ATENCION: No Existe Configuracion Para Iniciar Cron";
+                    lsColorMessage = "red";
+                }
+            }
+                                    
+        }else{
+            lsFinalMessage = "ATENCION: Insuficientes Parametros de Ejecucion";
+            lsColorMessage = "red";
+        }
+        
+        /*###### Detener Cron del Servicio de Programas #####*/
+        if(psServiceAction.equalsIgnoreCase("STOP")){
+            String    lsNewCronExpression = "0 0 1 1/1 * ? *"; 
+            Scheduler loScheduler;
+            try {                        
+                loScheduler = new StdSchedulerFactory().getScheduler();
+                Trigger loTrigger = 
+                    TriggerBuilder.newTrigger().withIdentity(psIdTrigger).withSchedule(
+                       CronScheduleBuilder.cronSchedule(lsNewCronExpression)).startNow().build();
+                loScheduler.rescheduleJob(new TriggerKey(psIdTrigger), loTrigger);
+                loScheduler.deleteJob(loTrigger.getJobKey());
+                lsFinalMessage = "El Servicio de " + psServiceToInvoke + " ha sido Detenido";
+                lsColorMessage = "black";
+                Integer liIndProcess = new UtilFaces().getIdConfigParameterByName("StopCron");
+                Integer liNumPgmProcessID = 0;
+                Integer liNumEvtbProcessId = 0;
+                new UtilFaces().insertBitacoraServiceService(0,
+                                                  Integer.parseInt(psIdService), 
+                                                  liIndProcess, 
+                                                  "Inicio Programado del Servicio de Programas",
+                                                  liNumEvtbProcessId, 
+                                                  liNumPgmProcessID, 
+                                                  piIdUser,
+                                                  psUserName);
+                new UtilFaces().updateStatusCronService(Integer.parseInt(psIdService),
+                                                        "3",
+                                                        null,
+                                                        null,
+                                                        null
+                                                        );
+            } catch (SchedulerException loEx) {
+                System.out.println("SchedulerException: " + loEx.getMessage());
+                lsColorMessage = "red";
+            } 
+        }
+        loRes.setLsColor(lsColorMessage);
+        loRes.setLsMessage(lsFinalMessage);
+        return loRes;
+    }
+    
+    
     /**
      * Cancela la ejecucion del servicio en cron
      * @autor Jorge Luis Bautista Santiago
@@ -2808,7 +3106,7 @@ public class ServicesConfigBean {
         }else{
             getPoSaveCronMsgLbl().setLabel("El Servicio se Encuentra en Ejecucion, " +
                 "si se Modifica la Periodicidad, Primero Detenga el Cron, " +
-                "de lo Contrario el Cambio Surtiraï¿½ Efecto en el Reinicio de Servicodor," +
+                "de lo Contrario el Cambio Surtirá Efecto en el Reinicio de Servidor," +
                 "Desea Continuar?");
             new UtilFaces().showPopup(getPoPopupSaveCronService());
         }
@@ -4458,6 +4756,90 @@ public class ServicesConfigBean {
                 String lsIndEstatusService = 
                     loEntityMappedDao.getIndEstatusService(String.valueOf(loSerCronBean.getIdService()));
                 if(lsIndEstatusService.equalsIgnoreCase("1")){
+                    /////////////////// TARGETS //////////////////////////////////////////
+                    if(lsNomService.equalsIgnoreCase("WsTargets")){
+                        Scheduler loScheduler;                    
+                        System.out.println("Iniciando Targets con ID["+psIdTrigger+"]");
+                        try {
+                            String lsCronExpression = loSerCronBean.getIndCronExpression();
+                            if(lsCronExpression != null){
+                                boolean lbSimple = false;
+                                Trigger loTrigger = null;
+                                loScheduler = new StdSchedulerFactory().getScheduler();
+                                JobDetail loJob = 
+                                    JobBuilder.newJob(ExecuteTargetsCron.class).build();
+                                if(loSerCronBean.getIndPeriodicity().equalsIgnoreCase("MINUTOS")){
+                                    lbSimple = true;
+                                }
+                                if(loSerCronBean.getIndPeriodicity().equalsIgnoreCase("HORAS")){
+                                    lbSimple = true;
+                                }
+                                if(!lbSimple){
+                                    loTrigger = 
+                                        TriggerBuilder.newTrigger().withIdentity(psIdTrigger).withSchedule(
+                                            CronScheduleBuilder.cronSchedule(lsCronExpression)
+                                    ).startNow().build();
+                                }else{
+                                    Date ltCurrent = new Date();
+                                    String lsCurrDate = "";
+                                    SimpleDateFormat lodfCurrent = new SimpleDateFormat("yyyy-MM-dd");
+                                    lsCurrDate = lodfCurrent.format(ltCurrent);
+                                    Date ltFechaIni = new Date();
+                                    Date ltFechaFin = new Date();
+                                    String lsInicio = 
+                                        loSerCronBean.getIndBeginSchedule() == null ? "08:00" : 
+                                        loSerCronBean.getIndBeginSchedule();
+                                    String lsFin = 
+                                        loSerCronBean.getAttribute1() == null ? "23:50" : 
+                                        loSerCronBean.getAttribute1();
+                                    String lsEvery =  
+                                        loSerCronBean.getIndValTypeSchedule() == null ? "23" : 
+                                        loSerCronBean.getIndValTypeSchedule();
+                                    Integer liEvery = Integer.parseInt(lsEvery);
+                                    SimpleDateFormat lodf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+                                    String lsStartDate = lsCurrDate + " " + lsInicio + ":00.0";
+                                    String lsFinalDate = lsCurrDate + " " + lsFin + ":00.0";
+                                    try {
+                                        ltFechaIni = lodf.parse(lsStartDate);
+                                        ltFechaFin = lodf.parse(lsFinalDate);
+                                    } catch (ParseException e) {
+                                        System.out.println("Error al parsear: "+e.getMessage());
+                                        e.printStackTrace();
+                                    }
+                                    
+                                    if(loSerCronBean.getIndPeriodicity().equalsIgnoreCase("MINUTOS")){
+                                        loTrigger = 
+                                            TriggerBuilder.newTrigger().withIdentity(psIdTrigger).withSchedule(
+                                        SimpleScheduleBuilder.simpleSchedule().withIntervalInMinutes(liEvery).repeatForever()
+                                        ).startAt(ltFechaIni).endAt(ltFechaFin).build();
+                                    }else{
+                                        loTrigger = 
+                                            TriggerBuilder.newTrigger().withIdentity(psIdTrigger).withSchedule(
+                                        SimpleScheduleBuilder.simpleSchedule().withIntervalInHours(liEvery).repeatForever()
+                                        ).startAt(ltFechaIni).endAt(ltFechaFin).build();
+                                    }
+                                }                        
+                                String lsUserName = loSerCronBean.getAttribute14();
+                                System.out.println("lsUserName["+lsUserName+"]");
+                                Integer liIdUser = loSerCronBean.getNumLastUpdateBy();
+                                System.out.println("liIdUser["+liIdUser+"]");
+                                String lsIdService = String.valueOf(loSerCronBean.getIdService());
+                                System.out.println("lsIdService["+lsIdService+"]");
+                                JobDataMap loJobDataMap=  loJob.getJobDataMap();
+                                loJobDataMap.put("lsIdService", lsIdService); 
+                                loJobDataMap.put("liIdUser", String.valueOf(liIdUser)); 
+                                loJobDataMap.put("lsUserName", lsUserName); 
+                                loJobDataMap.put("lsIdRequestTargets", "0");
+                                loJobDataMap.put("lsTypeRequest", "load");
+                                loScheduler.scheduleJob(loJob, loTrigger);  
+                                System.out.println("start");
+                                loScheduler.start();
+                            }
+                        } catch (Exception loEx) {
+                            System.out.println("Error al inicializar tareas - Targets " + loEx.getMessage());                    
+                        } 
+                    }
+                    ///////////////////////////////////////////////////////////////////////
                     if(lsNomService.equalsIgnoreCase("WsProgramas")){
                         Scheduler loScheduler;                    
                         System.out.println("Iniciando Programas con ID["+psIdTrigger+"]");

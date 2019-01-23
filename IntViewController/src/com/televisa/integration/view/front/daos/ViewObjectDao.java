@@ -138,6 +138,12 @@ public class ViewObjectDao implements ViewObjectInterface {
                 System.out.println("err sleep22");
             }
         }
+        if(tsTable.equalsIgnoreCase("RstTargets")){
+            lsTable = "EVENTAS.EVETV_INT_RST_PROGRAMAS_TAB";
+            //lsTable = "EVENTAS.EVETV_INT_RST_TARGETS_TAB";
+            lsField = "ID_REQUEST";
+        }
+        
         
         String lsQueryParadigm = getQueryMaxParadigm(lsTable,lsField);
         try {
