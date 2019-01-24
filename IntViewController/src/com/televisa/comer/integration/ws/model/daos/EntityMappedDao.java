@@ -1,6 +1,7 @@
 package com.televisa.comer.integration.ws.model.daos;
 
 import com.televisa.comer.integration.model.beans.EvetvIntRequestBean;
+import com.televisa.comer.integration.model.beans.ResponseUpdDao;
 import com.televisa.comer.integration.model.beans.RsstLogCertificadoBean;
 import com.televisa.comer.integration.model.beans.pgm.EvetvIntServiceBitacoraTab;
 import com.televisa.comer.integration.model.connection.ConnectionAs400;
@@ -298,10 +299,11 @@ public class EntityMappedDao {
      * @param tsUserName
      * @return Integer
      */
-    public Integer insertLogServicesRequest(Integer tiIdRequest,
+    public ResponseUpdDao insertLogServicesRequest(Integer tiIdRequest,
                                             Integer tiIdService,
                                             String tsServiceType,
                                             String tsUserName){
+        ResponseUpdDao loResponseUpdDao = new ResponseUpdDao();
         Integer    loValue = 0;
         Connection loCnn = new ConnectionAs400().getConnection();
         String     lsQueryParadigm = 
@@ -313,8 +315,14 @@ public class EntityMappedDao {
         try {
             Statement loStmt = loCnn.createStatement();
             loValue = loStmt.executeUpdate(lsQueryParadigm);
+            loResponseUpdDao.setLiAffected(loValue);
+            loResponseUpdDao.setLsMessage("Insert Success");
+            loResponseUpdDao.setLsResponse("OK");
         } catch (SQLException loExSql) {
             System.out.println("ERR_668: "+loExSql.getMessage());
+            loResponseUpdDao.setLiAffected(0);
+            loResponseUpdDao.setLsMessage(loExSql.getMessage());
+            loResponseUpdDao.setLsResponse("ERROR");
         }
         finally{
             try {
@@ -323,7 +331,7 @@ public class EntityMappedDao {
                 loEx.printStackTrace();
             }
         }
-        return loValue;        
+        return loResponseUpdDao;        
     }
     
     /**

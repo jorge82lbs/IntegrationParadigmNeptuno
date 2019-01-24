@@ -1,5 +1,6 @@
 package com.televisa.comer.integration.ws.impl;
 
+import com.televisa.comer.integration.model.beans.ResponseUpdDao;
 import com.televisa.comer.integration.model.beans.pgm.EvetvIntServiceBitacoraTab;
 import com.televisa.comer.integration.model.daos.VentaTradicionalDao;
 import com.televisa.comer.integration.ws.beans.pgm.vtradicional.ItemCabecera;
@@ -72,279 +73,334 @@ public class IntegrationBsVtaTradicional {
         String                     lsIndEstatus = "A";
         String                     lsNomUserName = "neptuno";  
         boolean                    lbDateNull = false;
-        try{
-            ByteArrayOutputStream loBaos = new ByteArrayOutputStream();
-            JAXB.marshal(toScheduleOnDemand, loBaos);
-            InputStream           loFileXml = new ByteArrayInputStream(loBaos.toByteArray()); 
-            loEntityMappedDao.insertEvetvIntXmlFilesTab(liIdRequest, 
-                                                        Integer.parseInt(lsIdService), 
-                                                        lsNomFile, 
-                                                        lsIndFileType, 
-                                                        lsIndServiceType, 
-                                                        lsIndEstatus, 
-                                                        lsNomUserName, 
-                                                        loFileXml
-                                                        );
-        }catch(Exception loEx){
-            System.out.println("Archivo no generado");
+        boolean                    lbRequestIns = false;
+        boolean                   lbFlagInsert = false;
+        int                        liTry = 0;
+        String                     lsMessErrIns = "NA";
+        while(!lbRequestIns && liTry < 10){
+            ResponseUpdDao loResponseUpdDao =
+            loEntityMappedDao.insertLogServicesRequest(liIdRequest, 
+                                                       Integer.parseInt(lsIdService), 
+                                                       "WsVtaTradicionalClient", 
+                                                       "neptuno"
+                                                       );
+            if(loResponseUpdDao.getLsResponse().equalsIgnoreCase("ERROR")){
+                try {
+                    Thread.sleep(250);
+                } catch (InterruptedException e) {
+                    ;
+                }
+                liIdRequest = loEntityMappedDao.getMaxIdParadigm("RstRequest") + 1; 
+                lsMessErrIns = " neptuno - "+loResponseUpdDao.getLsMessage();
+                liTry++;
+            }else{
+                lbRequestIns = true;
+                lbFlagInsert = true;
+            }
         }
-        loEntityMappedDao.insertLogServicesRequest(liIdRequest, 
-                                                   Integer.parseInt(lsIdService), 
-                                                   "WsVtaTradicionalClient", 
-                                                   "neptuno"
-                                                   );
-        EvetvIntServicesLogBean loEvetvIntServicesLogBean = new EvetvIntServicesLogBean();
-        loEvetvIntServicesLogBean.setLiIdLogServices(liIdRequest);
-        loEvetvIntServicesLogBean.setLiIdService(Integer.parseInt(lsIdService));
-        loEvetvIntServicesLogBean.setLiIndProcess(0);
-        loEvetvIntServicesLogBean.setLsIndResponse("N");
-        loEvetvIntServicesLogBean.setLsIndEstatus("A");
-        loEvetvIntServicesLogBean.setLsAttribute9("WsVtaTradicionalClient");
-        loEvetvIntServicesLogBean.setLsAttribute10("Execution");
-        loEvetvIntServicesLogBean.setLsAttribute15("neptuno");
-        loEntityMappedDao.insertServicesLogWs(loEvetvIntServicesLogBean);
         
-        String lsIndProcessR = 
-            loEntityMappedDao.getGeneralParameterID("serviceRequest", "PROCESS_INTEGRATION");
-        EvetvIntServiceBitacoraTab toEvetvIntServiceBitacoraTabR = new EvetvIntServiceBitacoraTab();
-        toEvetvIntServiceBitacoraTabR.setLsIdLogServices(lsIdService);
-        toEvetvIntServiceBitacoraTabR.setLsIdService(lsIdService);
-        toEvetvIntServiceBitacoraTabR.setLsIndProcess(lsIndProcessR); //Tipo de Proceso
-        toEvetvIntServiceBitacoraTabR.setLsNumEvtbProcessId(toScheduleOnDemand.getCodeTrace());
-        toEvetvIntServiceBitacoraTabR.setLsNumPgmProcessId("0");        
-        toEvetvIntServiceBitacoraTabR.setLsIndEvento("["+liIdRequest+"]Solicitud Recibida para Servicio Venta Tradicional" +
-            "onDemand - Cliente");
-        loEntityMappedDao.insertBitacoraWs(toEvetvIntServiceBitacoraTabR);
-        
-        String lsSecurity = 
-            loEntityMappedDao.getSecurityService(lsIdService) == null ? "NO": 
-            loEntityMappedDao.getSecurityService(lsIdService);        
-        
-        if(!lsSecurity.equalsIgnoreCase("NO")){
-            lbSecurityFalg = true;
-        }
-        if(lbSecurityFalg){
-            String lsResponse = null;
-            MessageContext mc = loWsc.getMessageContext();
-            Map requestHeader = (Map)mc.get(MessageContext.HTTP_REQUEST_HEADERS);
+        if(!lbRequestIns){
+            String lsIndProcessR = 
+                loEntityMappedDao.getGeneralParameterID("GeneralError", "PROCESS_INTEGRATION");
+            EvetvIntServiceBitacoraTab toEvetvIntServiceBitacoraTabR = new EvetvIntServiceBitacoraTab();
+            toEvetvIntServiceBitacoraTabR.setLsIdLogServices(lsIdService);
+            toEvetvIntServiceBitacoraTabR.setLsIdService(lsIdService);
+            toEvetvIntServiceBitacoraTabR.setLsIndProcess(lsIndProcessR); //Tipo de Proceso
+            toEvetvIntServiceBitacoraTabR.setLsNumEvtbProcessId(toScheduleOnDemand.getCodeTrace());
+            toEvetvIntServiceBitacoraTabR.setLsNumPgmProcessId("0");        
+            toEvetvIntServiceBitacoraTabR.setLsIndEvento("Venta Tradicional onDemand "+lsMessErrIns);
+            loEntityMappedDao.insertBitacoraWs(toEvetvIntServiceBitacoraTabR);
             
-            if(requestHeader.get("Username") != null && requestHeader.get("Password") != null){
-                List userList = (List) requestHeader.get("Username");
-                List passwordList = (List) requestHeader.get("Password");
-                if(userList != null && passwordList != null){
-                    String lsUserName = userList.get(0) == null ? null : userList.get(0).toString();
-                    String lsPassword = passwordList.get(0) == null ? null : passwordList.get(0).toString();
-                    //Obtener usuario y contrase�a de la bd
-                    String lsUsernameBd = 
-                        loEntityMappedDao.getGeneralParameter("UsrNeptuno", "AUTHENTICATION");
-                    String lsPasswordBd = 
-                        loEntityMappedDao.getGeneralParameter("PswNeptuno", "AUTHENTICATION");
-                    if(lsUsernameBd.equals(lsUserName) && lsPasswordBd.equals(lsPassword) ){
-                        lbInitFalg = true;
+        }
+        if(lbFlagInsert){
+            try{
+                ByteArrayOutputStream loBaos = new ByteArrayOutputStream();
+                JAXB.marshal(toScheduleOnDemand, loBaos);
+                InputStream           loFileXml = new ByteArrayInputStream(loBaos.toByteArray()); 
+                loEntityMappedDao.insertEvetvIntXmlFilesTab(liIdRequest, 
+                                                            Integer.parseInt(lsIdService), 
+                                                            lsNomFile, 
+                                                            lsIndFileType, 
+                                                            lsIndServiceType, 
+                                                            lsIndEstatus, 
+                                                            lsNomUserName, 
+                                                            loFileXml
+                                                            );
+            }catch(Exception loEx){
+                System.out.println("Archivo no generado");
+            }
+            
+            EvetvIntServicesLogBean loEvetvIntServicesLogBean = new EvetvIntServicesLogBean();
+            loEvetvIntServicesLogBean.setLiIdLogServices(liIdRequest);
+            loEvetvIntServicesLogBean.setLiIdService(Integer.parseInt(lsIdService));
+            loEvetvIntServicesLogBean.setLiIndProcess(0);
+            loEvetvIntServicesLogBean.setLsIndResponse("N");
+            loEvetvIntServicesLogBean.setLsIndEstatus("A");
+            loEvetvIntServicesLogBean.setLsAttribute9("WsVtaTradicionalClient");
+            loEvetvIntServicesLogBean.setLsAttribute10("Execution");
+            loEvetvIntServicesLogBean.setLsAttribute15("neptuno");
+            loEntityMappedDao.insertServicesLogWs(loEvetvIntServicesLogBean);
+            
+            String lsIndProcessR = 
+                loEntityMappedDao.getGeneralParameterID("serviceRequest", "PROCESS_INTEGRATION");
+            EvetvIntServiceBitacoraTab toEvetvIntServiceBitacoraTabR = new EvetvIntServiceBitacoraTab();
+            toEvetvIntServiceBitacoraTabR.setLsIdLogServices(lsIdService);
+            toEvetvIntServiceBitacoraTabR.setLsIdService(lsIdService);
+            toEvetvIntServiceBitacoraTabR.setLsIndProcess(lsIndProcessR); //Tipo de Proceso
+            toEvetvIntServiceBitacoraTabR.setLsNumEvtbProcessId(toScheduleOnDemand.getCodeTrace());
+            toEvetvIntServiceBitacoraTabR.setLsNumPgmProcessId("0");        
+            toEvetvIntServiceBitacoraTabR.setLsIndEvento("["+liIdRequest+"]Solicitud Recibida para Servicio Venta Tradicional" +
+                "onDemand - Cliente");
+            loEntityMappedDao.insertBitacoraWs(toEvetvIntServiceBitacoraTabR);
+            
+            String lsSecurity = 
+                loEntityMappedDao.getSecurityService(lsIdService) == null ? "NO": 
+                loEntityMappedDao.getSecurityService(lsIdService);        
+            
+            if(!lsSecurity.equalsIgnoreCase("NO")){
+                lbSecurityFalg = true;
+            }
+            if(lbSecurityFalg){
+                String lsResponse = null;
+                MessageContext mc = loWsc.getMessageContext();
+                Map requestHeader = (Map)mc.get(MessageContext.HTTP_REQUEST_HEADERS);
+                
+                if(requestHeader.get("Username") != null && requestHeader.get("Password") != null){
+                    List userList = (List) requestHeader.get("Username");
+                    List passwordList = (List) requestHeader.get("Password");
+                    if(userList != null && passwordList != null){
+                        String lsUserName = userList.get(0) == null ? null : userList.get(0).toString();
+                        String lsPassword = passwordList.get(0) == null ? null : passwordList.get(0).toString();
+                        //Obtener usuario y contrase�a de la bd
+                        String lsUsernameBd = 
+                            loEntityMappedDao.getGeneralParameter("UsrNeptuno", "AUTHENTICATION");
+                        String lsPasswordBd = 
+                            loEntityMappedDao.getGeneralParameter("PswNeptuno", "AUTHENTICATION");
+                        if(lsUsernameBd.equals(lsUserName) && lsPasswordBd.equals(lsPassword) ){
+                            lbInitFalg = true;
+                        }else{
+                            lbInitFalg = false;
+                        }
+                        
                     }else{
+                        lsResponse = "Campos Obligatorios";
                         lbInitFalg = false;
                     }
-                    
                 }else{
-                    lsResponse = "Campos Obligatorios";
                     lbInitFalg = false;
                 }
-            }else{
-                lbInitFalg = false;
             }
-        }
-        
-        
-        if(lbInitFalg){   
-            /*
-            String lsChannelID = 
-                toScheduleOnDemand.getChannelID() == null ? "" : 
-                toScheduleOnDemand.getChannelID();*/
-            
-            String lsInitialDate = 
-                toScheduleOnDemand.getInitialDate() == null ? "" : 
-                toScheduleOnDemand.getInitialDate();
-            
-            String lsEndDate = 
-                toScheduleOnDemand.getEndDate() == null ? "" : 
-                toScheduleOnDemand.getEndDate();
-         
-            String lsCodeTrace = 
-                toScheduleOnDemand.getCodeTrace() == null ? "" : 
-                toScheduleOnDemand.getCodeTrace();
-            
-            //Validar Requeridos
-            /*
-            if(lsChannelID.trim().length() < 1){
-                lsFieldErrorRq += "ChannelID,";
-                lbProcess = false;   
-            }
-            */
-            
-            if(lsCodeTrace.trim().length() < 1){
-                lsFieldErrorRq += "CodeTrace,";
-                lbProcess = false;   
-            }
-            
-            //Si viene fecha inicio debe venir fecha fin
-            if(lsInitialDate.trim().length() < 1 && lsEndDate.trim().length() > 0){
-                lsFieldErrorRq += "InitialDate,";
-                lbProcess = false;   
-            }
-            if(lsEndDate.trim().length() < 1 && lsInitialDate.trim().length() > 0){
-                lsFieldErrorRq += "EndDate,";
-                lbProcess = false;   
-            }
-            if(lsEndDate.trim().length() < 1 && lsInitialDate.trim().length() < 1){
-                lsFieldErrorRq += "InitialDate,EndDate,";
-                lbProcess = false;   
-            }
-            /*
-            if(lsEndDate.trim().length() < 1 && lsInitialDate.trim().length() < 1){
-                lbDateNull = true;   
-            }*/     
-            
-            if(!lbProcess){
-                ItemCabecera loItemCabecera = new ItemCabecera();
-                loItemCabecera.setProcessID(toScheduleOnDemand.getCodeTrace());
-                loItemCabecera.setResultado("KO");
-                loItemCabecera.setTipoProceso("OnLine");
-                 
-                ItemRespuesta loItemRespuesta = new ItemRespuesta();
-                 
-                loItemRespuesta.setElemento("0");
-                loItemRespuesta.setIdElemento("0");
-                loItemRespuesta.setResultado("KO");   
-                    
-                String lsMess = "Los Siguientes Campos son Requeridos " + 
-                    lsFieldErrorRq.substring(0, lsFieldErrorRq.length()-1);
-                ListaMensaje laLmes = new ListaMensaje();
-                laLmes.setIdError("0");
-                laLmes.setDescripcion(lsMess);
-                loItemRespuesta.getListaMensaje().add(laLmes);
-                loItemCabecera.getItemRespuesta().add(loItemRespuesta);
-                loCodRespuesta.getItemCabecera().add(loItemCabecera);
-            }else{
-                UtilsOnDemand loUtilsOnDemand = new UtilsOnDemand();
-                //Validar formato de fecha establecido
-                boolean lbInitialDateSize = true;
-                boolean lbInitialDateFormat = true;
-                boolean lbEndDateSize = true;
-                boolean lbEndDateFormat = true;
-                if(!lbDateNull){
-                    //- Ellos mandan un formato establecido por ejemplo: 15/04/2018
-                    lbInitialDateSize = loUtilsOnDemand.validateLength(lsInitialDate,10);
-                    lbInitialDateFormat = loUtilsOnDemand.isFormatDateNeptuno(lsInitialDate);
-                    lbEndDateSize = loUtilsOnDemand.validateLength(lsEndDate,10);
-                    lbEndDateFormat = loUtilsOnDemand.isFormatDateNeptuno(lsEndDate);
+            if(lbInitFalg){   
+                /*
+                String lsChannelID = 
+                    toScheduleOnDemand.getChannelID() == null ? "" : 
+                    toScheduleOnDemand.getChannelID();*/
+                
+                String lsInitialDate = 
+                    toScheduleOnDemand.getInitialDate() == null ? "" : 
+                    toScheduleOnDemand.getInitialDate();
+                
+                String lsEndDate = 
+                    toScheduleOnDemand.getEndDate() == null ? "" : 
+                    toScheduleOnDemand.getEndDate();
+             
+                String lsCodeTrace = 
+                    toScheduleOnDemand.getCodeTrace() == null ? "" : 
+                    toScheduleOnDemand.getCodeTrace();
+                
+                //Validar Requeridos
+                /*
+                if(lsChannelID.trim().length() < 1){
+                    lsFieldErrorRq += "ChannelID,";
+                    lbProcess = false;   
                 }
-                if(lbInitialDateSize && lbInitialDateFormat &&
-                   lbEndDateSize && lbEndDateFormat
-                ){
-                    //- Transformar a YYYY-MM-DD
-                    String lsInitDatePgm = null;
-                    String lsEndDatePgm = null;
-                    if(!lbDateNull){
-                        lsInitDatePgm = loUtilsOnDemand.getDatePrgmFormat(lsInitialDate);
-                        lsEndDatePgm = loUtilsOnDemand.getDatePrgmFormat(lsEndDate);
-                    }
-                    ScheduleOnDemand loPrmScheduleOnDemand = new ScheduleOnDemand();
-                    loPrmScheduleOnDemand.setChannelID(toScheduleOnDemand.getChannelID());
-                    loPrmScheduleOnDemand.setInitialDate(lsInitDatePgm);
-                    loPrmScheduleOnDemand.setEndDate(lsEndDatePgm);
-                    loPrmScheduleOnDemand.setCodeTrace(toScheduleOnDemand.getCodeTrace());
-                    Integer tiIdUser = 1;
-                    String tsUserName = "neptuno";
-                    String tsServiceToInvoke = "WsVtaTradicionalClient";
-                    try{
-                        System.out.println("Inicio cron v tradicional onDemand - Cliente "+new Date());
-                        executeVtaTradicionalClient(liIdRequest,
-                                               lsIdService,
-                                               tiIdUser,
-                                               tsUserName,
-                                               tsServiceToInvoke,
-                                               loPrmScheduleOnDemand
-                                               );
-                    }catch(Exception loEx){
-                        lsIndProcessR = 
-                            loEntityMappedDao.getGeneralParameterID("GeneralError", "PROCESS_INTEGRATION");
-                        EvetvIntServiceBitacoraTab toEvetvIntServiceBitacoraTab = new EvetvIntServiceBitacoraTab();
-                        toEvetvIntServiceBitacoraTab.setLsIdLogServices(lsIdService);
-                        toEvetvIntServiceBitacoraTab.setLsIdService(lsIdService);
-                        toEvetvIntServiceBitacoraTab.setLsIndProcess(lsIndProcessR); //Tipo de Proceso
-                        toEvetvIntServiceBitacoraTab.setLsNumEvtbProcessId(toScheduleOnDemand.getCodeTrace());
-                        toEvetvIntServiceBitacoraTab.setLsNumPgmProcessId("0");        
-                        toEvetvIntServiceBitacoraTab.setLsIndEvento("ERROR: Vta Tradicional onDemand - Cliente (invoke) " +loEx.getMessage());
-                        loEntityMappedDao.insertBitacoraWs(toEvetvIntServiceBitacoraTab);
-                    }
-                        
-                    //Acuse de recibido al cliente
-                    ItemCabecera loItemCabecera = new ItemCabecera();
-                    loItemCabecera.setProcessID(toScheduleOnDemand.getCodeTrace());
-                    loItemCabecera.setResultado("OK");
-                    loItemCabecera.setTipoProceso("OnLine");
-                    ItemRespuesta loItemRespuesta = new ItemRespuesta();
-                    loItemRespuesta.setElemento("ScheduleOnDemand");
-                    loItemRespuesta.setIdElemento("0");
-                    loItemRespuesta.setResultado("solicitud recibida satisfactoriamente");                       
-                    loItemCabecera.getItemRespuesta().add(loItemRespuesta);
-                    loCodRespuesta.getItemCabecera().add(loItemCabecera);
-                }else{
-                    
-                    String lsOrderID = "0";
-                    String lsFieldValidate = "";
-                    String lsFieldParent = "ScheduleOnDemand";
+                */
+                
+                if(lsCodeTrace.trim().length() < 1){
+                    lsFieldErrorRq += "CodeTrace,";
+                    lbProcess = false;   
+                }
+                
+                //Si viene fecha inicio debe venir fecha fin
+                if(lsInitialDate.trim().length() < 1 && lsEndDate.trim().length() > 0){
+                    lsFieldErrorRq += "InitialDate,";
+                    lbProcess = false;   
+                }
+                if(lsEndDate.trim().length() < 1 && lsInitialDate.trim().length() > 0){
+                    lsFieldErrorRq += "EndDate,";
+                    lbProcess = false;   
+                }
+                if(lsEndDate.trim().length() < 1 && lsInitialDate.trim().length() < 1){
+                    lsFieldErrorRq += "InitialDate,EndDate,";
+                    lbProcess = false;   
+                }
+                /*
+                if(lsEndDate.trim().length() < 1 && lsInitialDate.trim().length() < 1){
+                    lbDateNull = true;   
+                }*/     
+                
+                if(!lbProcess){
                     ItemCabecera loItemCabecera = new ItemCabecera();
                     loItemCabecera.setProcessID(toScheduleOnDemand.getCodeTrace());
                     loItemCabecera.setResultado("KO");
                     loItemCabecera.setTipoProceso("OnLine");
+                     
                     ItemRespuesta loItemRespuesta = new ItemRespuesta();
-                    loItemRespuesta.setElemento("OrderID: " + lsOrderID);
-                    loItemRespuesta.setIdElemento(lsOrderID);
-                    loItemRespuesta.setResultado("KO");      
-                    lsFieldValidate = "InitialDate";
-                    if(!lbInitialDateSize){
-                        EvetvIntConfigParamTabBean   loError = new EvetvIntConfigParamTabBean();
-                        ListaMensaje laLmes = new ListaMensaje();
-                        loError = getMessageErrDb("SizeValidate");
-                        laLmes.setIdError(loError.getLsIndValueParameter());
-                        laLmes.setDescripcion("[" + lsFieldParent + "] " + 
-                                              loError.getLsIndDescParameter() + " [" + lsFieldValidate + "]");
-                        loItemRespuesta.getListaMensaje().add(laLmes);
-                    }
-                    if(!lbInitialDateFormat){
-                        EvetvIntConfigParamTabBean   loError = new EvetvIntConfigParamTabBean();
-                        ListaMensaje laLmes = new ListaMensaje();
-                        loError = getMessageErrDb("FormatValidate");
-                        laLmes.setIdError(loError.getLsIndValueParameter());
-                        laLmes.setDescripcion("[" + lsFieldParent + "] " + 
-                                              loError.getLsIndDescParameter() + " [" + lsFieldValidate + "]");
-                        loItemRespuesta.getListaMensaje().add(laLmes);
-                    }
-                    lsFieldValidate = "EndDate";
-                    if(!lbEndDateSize){
-                        EvetvIntConfigParamTabBean   loError = new EvetvIntConfigParamTabBean();
-                        ListaMensaje laLmes = new ListaMensaje();
-                        loError = getMessageErrDb("SizeValidate");
-                        laLmes.setIdError(loError.getLsIndValueParameter());
-                        laLmes.setDescripcion("[" + lsFieldParent + "] " + 
-                                              loError.getLsIndDescParameter() + " [" + lsFieldValidate + "]");
-                        loItemRespuesta.getListaMensaje().add(laLmes);
-                    }
-                    if(!lbEndDateFormat){
-                        EvetvIntConfigParamTabBean   loError = new EvetvIntConfigParamTabBean();
-                        ListaMensaje laLmes = new ListaMensaje();
-                        loError = getMessageErrDb("FormatValidate");
-                        laLmes.setIdError(loError.getLsIndValueParameter());
-                        laLmes.setDescripcion("[" + lsFieldParent + "] " + 
-                                              loError.getLsIndDescParameter() + " [" + lsFieldValidate + "]");
-                        loItemRespuesta.getListaMensaje().add(laLmes);
-                    }
+                     
+                    loItemRespuesta.setElemento("0");
+                    loItemRespuesta.setIdElemento("0");
+                    loItemRespuesta.setResultado("KO");   
+                        
+                    String lsMess = "Los Siguientes Campos son Requeridos " + 
+                        lsFieldErrorRq.substring(0, lsFieldErrorRq.length()-1);
+                    ListaMensaje laLmes = new ListaMensaje();
+                    laLmes.setIdError("0");
+                    laLmes.setDescripcion(lsMess);
+                    loItemRespuesta.getListaMensaje().add(laLmes);
                     loItemCabecera.getItemRespuesta().add(loItemRespuesta);
                     loCodRespuesta.getItemCabecera().add(loItemCabecera);
+                }else{
+                    UtilsOnDemand loUtilsOnDemand = new UtilsOnDemand();
+                    //Validar formato de fecha establecido
+                    boolean lbInitialDateSize = true;
+                    boolean lbInitialDateFormat = true;
+                    boolean lbEndDateSize = true;
+                    boolean lbEndDateFormat = true;
+                    if(!lbDateNull){
+                        //- Ellos mandan un formato establecido por ejemplo: 15/04/2018
+                        lbInitialDateSize = loUtilsOnDemand.validateLength(lsInitialDate,10);
+                        lbInitialDateFormat = loUtilsOnDemand.isFormatDateNeptuno(lsInitialDate);
+                        lbEndDateSize = loUtilsOnDemand.validateLength(lsEndDate,10);
+                        lbEndDateFormat = loUtilsOnDemand.isFormatDateNeptuno(lsEndDate);
+                    }
+                    if(lbInitialDateSize && lbInitialDateFormat &&
+                       lbEndDateSize && lbEndDateFormat
+                    ){
+                        //- Transformar a YYYY-MM-DD
+                        String lsInitDatePgm = null;
+                        String lsEndDatePgm = null;
+                        if(!lbDateNull){
+                            lsInitDatePgm = loUtilsOnDemand.getDatePrgmFormat(lsInitialDate);
+                            lsEndDatePgm = loUtilsOnDemand.getDatePrgmFormat(lsEndDate);
+                        }
+                        ScheduleOnDemand loPrmScheduleOnDemand = new ScheduleOnDemand();
+                        loPrmScheduleOnDemand.setChannelID(toScheduleOnDemand.getChannelID());
+                        loPrmScheduleOnDemand.setInitialDate(lsInitDatePgm);
+                        loPrmScheduleOnDemand.setEndDate(lsEndDatePgm);
+                        loPrmScheduleOnDemand.setCodeTrace(toScheduleOnDemand.getCodeTrace());
+                        Integer tiIdUser = 1;
+                        String tsUserName = "neptuno";
+                        String tsServiceToInvoke = "WsVtaTradicionalClient";
+                        try{
+                            System.out.println("Inicio cron v tradicional onDemand - Cliente "+new Date());
+                            executeVtaTradicionalClient(liIdRequest,
+                                                   lsIdService,
+                                                   tiIdUser,
+                                                   tsUserName,
+                                                   tsServiceToInvoke,
+                                                   loPrmScheduleOnDemand
+                                                   );
+                        }catch(Exception loEx){
+                            lsIndProcessR = 
+                                loEntityMappedDao.getGeneralParameterID("GeneralError", "PROCESS_INTEGRATION");
+                            EvetvIntServiceBitacoraTab toEvetvIntServiceBitacoraTab = new EvetvIntServiceBitacoraTab();
+                            toEvetvIntServiceBitacoraTab.setLsIdLogServices(lsIdService);
+                            toEvetvIntServiceBitacoraTab.setLsIdService(lsIdService);
+                            toEvetvIntServiceBitacoraTab.setLsIndProcess(lsIndProcessR); //Tipo de Proceso
+                            toEvetvIntServiceBitacoraTab.setLsNumEvtbProcessId(toScheduleOnDemand.getCodeTrace());
+                            toEvetvIntServiceBitacoraTab.setLsNumPgmProcessId("0");        
+                            toEvetvIntServiceBitacoraTab.setLsIndEvento("ERROR: Vta Tradicional onDemand - Cliente (invoke) " +loEx.getMessage());
+                            loEntityMappedDao.insertBitacoraWs(toEvetvIntServiceBitacoraTab);
+                        }
+                            
+                        //Acuse de recibido al cliente
+                        ItemCabecera loItemCabecera = new ItemCabecera();
+                        loItemCabecera.setProcessID(toScheduleOnDemand.getCodeTrace());
+                        loItemCabecera.setResultado("OK");
+                        loItemCabecera.setTipoProceso("OnLine");
+                        ItemRespuesta loItemRespuesta = new ItemRespuesta();
+                        loItemRespuesta.setElemento("ScheduleOnDemand");
+                        loItemRespuesta.setIdElemento("0");
+                        loItemRespuesta.setResultado("solicitud recibida satisfactoriamente");                       
+                        loItemCabecera.getItemRespuesta().add(loItemRespuesta);
+                        loCodRespuesta.getItemCabecera().add(loItemCabecera);
+                    }else{
+                        
+                        String lsOrderID = "0";
+                        String lsFieldValidate = "";
+                        String lsFieldParent = "ScheduleOnDemand";
+                        ItemCabecera loItemCabecera = new ItemCabecera();
+                        loItemCabecera.setProcessID(toScheduleOnDemand.getCodeTrace());
+                        loItemCabecera.setResultado("KO");
+                        loItemCabecera.setTipoProceso("OnLine");
+                        ItemRespuesta loItemRespuesta = new ItemRespuesta();
+                        loItemRespuesta.setElemento("OrderID: " + lsOrderID);
+                        loItemRespuesta.setIdElemento(lsOrderID);
+                        loItemRespuesta.setResultado("KO");      
+                        lsFieldValidate = "InitialDate";
+                        if(!lbInitialDateSize){
+                            EvetvIntConfigParamTabBean   loError = new EvetvIntConfigParamTabBean();
+                            ListaMensaje laLmes = new ListaMensaje();
+                            loError = getMessageErrDb("SizeValidate");
+                            laLmes.setIdError(loError.getLsIndValueParameter());
+                            laLmes.setDescripcion("[" + lsFieldParent + "] " + 
+                                                  loError.getLsIndDescParameter() + " [" + lsFieldValidate + "]");
+                            loItemRespuesta.getListaMensaje().add(laLmes);
+                        }
+                        if(!lbInitialDateFormat){
+                            EvetvIntConfigParamTabBean   loError = new EvetvIntConfigParamTabBean();
+                            ListaMensaje laLmes = new ListaMensaje();
+                            loError = getMessageErrDb("FormatValidate");
+                            laLmes.setIdError(loError.getLsIndValueParameter());
+                            laLmes.setDescripcion("[" + lsFieldParent + "] " + 
+                                                  loError.getLsIndDescParameter() + " [" + lsFieldValidate + "]");
+                            loItemRespuesta.getListaMensaje().add(laLmes);
+                        }
+                        lsFieldValidate = "EndDate";
+                        if(!lbEndDateSize){
+                            EvetvIntConfigParamTabBean   loError = new EvetvIntConfigParamTabBean();
+                            ListaMensaje laLmes = new ListaMensaje();
+                            loError = getMessageErrDb("SizeValidate");
+                            laLmes.setIdError(loError.getLsIndValueParameter());
+                            laLmes.setDescripcion("[" + lsFieldParent + "] " + 
+                                                  loError.getLsIndDescParameter() + " [" + lsFieldValidate + "]");
+                            loItemRespuesta.getListaMensaje().add(laLmes);
+                        }
+                        if(!lbEndDateFormat){
+                            EvetvIntConfigParamTabBean   loError = new EvetvIntConfigParamTabBean();
+                            ListaMensaje laLmes = new ListaMensaje();
+                            loError = getMessageErrDb("FormatValidate");
+                            laLmes.setIdError(loError.getLsIndValueParameter());
+                            laLmes.setDescripcion("[" + lsFieldParent + "] " + 
+                                                  loError.getLsIndDescParameter() + " [" + lsFieldValidate + "]");
+                            loItemRespuesta.getListaMensaje().add(laLmes);
+                        }
+                        loItemCabecera.getItemRespuesta().add(loItemRespuesta);
+                        loCodRespuesta.getItemCabecera().add(loItemCabecera);
+                    }
                 }
             }
-        }else{//Autenticacion fallida
+            else{//Autenticacion fallida
+                ItemCabecera loItemCabecera = new ItemCabecera();
+                loItemCabecera.setProcessID(toScheduleOnDemand.getCodeTrace());
+                loItemCabecera.setResultado("KO");
+                loItemCabecera.setTipoProceso("OnLine");
+                ItemRespuesta loItemRespuesta = new ItemRespuesta();
+                loItemRespuesta.setElemento("0");
+                loItemRespuesta.setIdElemento("0");
+                loItemRespuesta.setResultado("KO");   
+                String lsFieldParent = "ScheduleOnDemand";
+                String lsFieldValidate = "Authentication";            
+                String       lsMess = "Credenciales no permitidas, verifique Username y Password";  
+                ListaMensaje laLmes = new ListaMensaje();
+                laLmes.setIdError("0");
+                laLmes.setDescripcion("[" + lsFieldParent + "] " + lsMess + " [" + lsFieldValidate + "]");
+                loItemRespuesta.getListaMensaje().add(laLmes);
+                loItemCabecera.getItemRespuesta().add(loItemRespuesta);
+                loCodRespuesta.getItemCabecera().add(loItemCabecera);
+            }//FIN de Autenticacion fallida 
+        }
+        else{//Autenticacion fallida
             ItemCabecera loItemCabecera = new ItemCabecera();
             loItemCabecera.setProcessID(toScheduleOnDemand.getCodeTrace());
             loItemCabecera.setResultado("KO");
@@ -354,15 +410,15 @@ public class IntegrationBsVtaTradicional {
             loItemRespuesta.setIdElemento("0");
             loItemRespuesta.setResultado("KO");   
             String lsFieldParent = "ScheduleOnDemand";
-            String lsFieldValidate = "Authentication";            
-            String       lsMess = "Credenciales no permitidas, verifique Username y Password";  
+            String lsFieldValidate = "General_Error";            
+            String       lsMess = "Solicitud Rechazada por Integridad en Paradigm, Enviar Nuevamente";  
             ListaMensaje laLmes = new ListaMensaje();
             laLmes.setIdError("0");
             laLmes.setDescripcion("[" + lsFieldParent + "] " + lsMess + " [" + lsFieldValidate + "]");
             loItemRespuesta.getListaMensaje().add(laLmes);
             loItemCabecera.getItemRespuesta().add(loItemRespuesta);
             loCodRespuesta.getItemCabecera().add(loItemCabecera);
-        }//FIN de Autenticacion fallida 
+        }//FIN de Insert en tabla de request fallida 
         RecibirDatosExternosResult loRecibirDatosExternosResult = new RecibirDatosExternosResult();
         loRecibirDatosExternosResult.setCodRespuesta(loCodRespuesta);
         loResponse.setRecibirDatosExternosResult(loRecibirDatosExternosResult);
