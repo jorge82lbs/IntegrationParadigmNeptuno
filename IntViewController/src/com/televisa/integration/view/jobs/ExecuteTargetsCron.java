@@ -11,12 +11,13 @@ package com.televisa.integration.view.jobs;
 
 import com.televisa.comer.integration.model.beans.pgm.EvetvIntServiceBitacoraTab;
 import com.televisa.comer.integration.model.daos.EntityMappedDao;
+import com.televisa.comer.integration.service.beans.targets.ParameterMap;
+import com.televisa.comer.integration.service.beans.targets.ParametersCollection;
 import com.televisa.comer.integration.service.beans.targets.TargetsInputParameters;
 import com.televisa.comer.integration.service.beans.targets.TargetsResponse;
 
 import com.televisa.comer.integration.service.implementation.IntegrationDasTargets;
 import com.televisa.integration.model.types.EvetvIntCronConfigTabRowBean;
-import com.televisa.integration.model.types.EvetvIntServicesParamTabBean;
 import com.televisa.integration.view.front.daos.ViewObjectDao;
 import com.televisa.integration.view.front.util.UtilFaces;
 
@@ -137,13 +138,21 @@ public class ExecuteTargetsCron implements Job {
         String                    lsParamUserName = loDataMap.getString("lsUserName");
         String                    lsParamIdUser = loDataMap.getString("liIdUser");
         Integer                   liParamIdUser = Integer.parseInt(lsParamIdUser);
-        String                    lsTypeRequest = loDataMap.getString("lsTypeRequest");
-        //String                    lsIdRequestPgr = loDataMap.getString("lsIdRequestPgr");        
-        Integer                   liIdParameter = new ViewObjectDao().getMaxIdParadigm("RstTargets") + 1;
-        String                    lsIdRequestPgr = String.valueOf(liIdParameter);
+        Integer                   liIdRequest = new ViewObjectDao().getMaxIdParadigm("Request") + 1;
+        System.out.println("(CRON)lsIdRequest: "+liIdRequest);
+        System.out.println("(CRON)lsIdService: "+lsIdService);
+        System.out.println("(CRON)lsParamUserName: "+lsParamUserName);
+        System.out.println("(CRON)lsParamIdUser: "+lsParamIdUser);
+        System.out.println("(CRON)liIdParameter: "+liIdRequest);
         
         EntityMappedDao           loEntityMappedDao = new EntityMappedDao();
         ViewObjectDao             loService = new ViewObjectDao();
+        
+        loEntityMappedDao.insertLogServicesRequest(liIdRequest, 
+                                                   Integer.parseInt(lsIdService), 
+                                                   "WsTargets", 
+                                                   "neptuno"
+                                                   );
         
         try{
             EvetvIntCronConfigTabRowBean loCronConfig = 
@@ -152,79 +161,54 @@ public class ExecuteTargetsCron implements Job {
             if(loCronConfig != null){
                 lbFlagProcess = validateProcessCron(loCronConfig);
             }
+            System.out.println("Es posible continuar con el procesamiento "+lbFlagProcess);
             if(lbFlagProcess){
                 
                 System.out.println("**********************************************************************");
                 System.out.println("***** Ejecutando Targets("+lsIdService+") at ["+new Date()+"] ******");
+                TargetsInputParameters loInputTargets = new TargetsInputParameters();
+                loInputTargets.setIdRequestTargetsReq(String.valueOf(liIdRequest));
                 
-                List<EvetvIntServicesParamTabBean> laList = 
-                    loService.getParametersServices(Integer.parseInt(lsIdService)); 
-                // FECHA//
-                String lsDateQuery = null;
-                for(EvetvIntServicesParamTabBean loParm : laList){
-                    if(loParm.getIndParameter().equalsIgnoreCase("FECHA")){
-                        lsDateQuery = loParm.getIndValParameter();
-                    }                       
-                }
-                //CANALES//
-                List<String> laChannels = new ArrayList<String>();
-                for(EvetvIntServicesParamTabBean loParm : laList){
-                    if(loParm.getIndParameter().equalsIgnoreCase("CANAL")){
-                        laChannels.add(loParm.getIndValParameter());
-                    }                       
-                }
-                if(lsDateQuery != null && laChannels.size() > 0){                  
-                    TargetsInputParameters loInputTargets = new TargetsInputParameters();
-                    loInputTargets.setIdRequestTargetsReq(lsIdRequestPgr);
-                    
-                    /*loInputPrograms.setDateQuery(lsDateQuery);
-                    loInputPrograms.setIdService(lsIdService);
-                    loInputPrograms.setUserName(lsParamUserName);
-                    loInputPrograms.setIdUser(lsParamIdUser);
-                                   
-                    ChannelsCollection laChColl = new ChannelsCollection();
-                    for(String lsCanal:laChannels){
-                        Channel loChannel = new Channel();
-                        loChannel.setChannel(lsCanal);
-                        laChColl.getChannels().add(loChannel);
-                    }                
-                    loInputPrograms.setChannelList(laChColl);
-                    */
-                    IntegrationDasTargets  loInt =  new IntegrationDasTargets();
-                    
-                    TargetsResponse         loTargetRes = loInt.invokeTargets(loInputTargets);
-                    
-                    Integer                  liIndProcess = 
-                        new UtilFaces().getIdConfigParameterByName("ProcessFinish");
-                    EvetvIntServiceBitacoraTab toEvetvIntServiceBitacoraTabR = new EvetvIntServiceBitacoraTab();
-                    toEvetvIntServiceBitacoraTabR.setLsIdLogServices(lsIdService);
-                    toEvetvIntServiceBitacoraTabR.setLsIdService(lsIdService);
-                    toEvetvIntServiceBitacoraTabR.setLsIndProcess(String.valueOf(liIndProcess)); //Tipo de Proceso
-                    toEvetvIntServiceBitacoraTabR.setLsNumEvtbProcessId("0");
-                    toEvetvIntServiceBitacoraTabR.setLsNumPgmProcessId("0");
-                    toEvetvIntServiceBitacoraTabR.setLsIndEvento("Invocacion Finalizada para Servicio de Targets");
-                    loEntityMappedDao.insertBitacoraWs(toEvetvIntServiceBitacoraTabR,
-                                                       liParamIdUser, 
-                                                       lsParamUserName);
-                    loTargetRes.getXmlMessageResponse();
-                    System.out.println("Fin de invocacion de targets....");
-                    
+                ParameterMap loMapIdService = new ParameterMap();
+                ParameterMap loMapIdUser = new ParameterMap();
+                ParameterMap loMapUserName = new ParameterMap();
+                                
+                loMapIdService.setParameterName("lsIdService");
+                loMapIdService.setParameterValue(lsIdService);
+                
+                loMapIdUser.setParameterName("lsIdUser");
+                loMapIdUser.setParameterValue(lsParamIdUser);
+                
+                loMapUserName.setParameterName("lsUserName");
+                loMapUserName.setParameterValue(lsParamUserName);
+                
+                List<ParameterMap> laParameterMap = new ArrayList<ParameterMap>();
+                
+                laParameterMap.add(loMapIdService);
+                laParameterMap.add(loMapIdUser);
+                laParameterMap.add(loMapUserName);
+                ParametersCollection loColl = new ParametersCollection();
+                loColl.setParameterMap(laParameterMap);
+                loInputTargets.setParametersList(loColl);
                    
-                }else{
-                    Integer liIndProcess = new UtilFaces().getIdConfigParameterByName("ErrParameters");                   
-                    EvetvIntServiceBitacoraTab toEvetvIntServiceBitacoraTabR = new EvetvIntServiceBitacoraTab();
-                    toEvetvIntServiceBitacoraTabR.setLsIdLogServices(lsIdService);
-                    toEvetvIntServiceBitacoraTabR.setLsIdService(lsIdService);
-                    toEvetvIntServiceBitacoraTabR.setLsIndProcess(String.valueOf(liIndProcess)); //Tipo de Proceso
-                    toEvetvIntServiceBitacoraTabR.setLsNumEvtbProcessId("0");
-                    toEvetvIntServiceBitacoraTabR.setLsNumPgmProcessId("0");
-                    toEvetvIntServiceBitacoraTabR.setLsIndEvento("Error de Parametros en Invocacion del Servicio de Targets");
-                    loEntityMappedDao.insertBitacoraWs(toEvetvIntServiceBitacoraTabR,
-                                                       liParamIdUser, 
-                                                       lsParamUserName);
-                         
-                }    
-                
+                IntegrationDasTargets  loInt =  new IntegrationDasTargets();
+                System.out.println("Invocando Targets desde CRON: ");
+                TargetsResponse         loTargetRes = loInt.invokeTargets(loInputTargets);
+                System.out.println("Invocando Targets desde CRON: .........FIN OK");
+                Integer                  liIndProcess = 
+                    new UtilFaces().getIdConfigParameterByName("ProcessFinish");
+                EvetvIntServiceBitacoraTab toEvetvIntServiceBitacoraTabR = new EvetvIntServiceBitacoraTab();
+                toEvetvIntServiceBitacoraTabR.setLsIdLogServices(lsIdService);
+                toEvetvIntServiceBitacoraTabR.setLsIdService(lsIdService);
+                toEvetvIntServiceBitacoraTabR.setLsIndProcess(String.valueOf(liIndProcess)); //Tipo de Proceso
+                toEvetvIntServiceBitacoraTabR.setLsNumEvtbProcessId("0");
+                toEvetvIntServiceBitacoraTabR.setLsNumPgmProcessId("0");
+                toEvetvIntServiceBitacoraTabR.setLsIndEvento("Invocacion Finalizada para Servicio de Targets");
+                loEntityMappedDao.insertBitacoraWs(toEvetvIntServiceBitacoraTabR,
+                                                   liParamIdUser, 
+                                                   lsParamUserName);
+                loTargetRes.getXmlMessageResponse();
+                System.out.println("Fin de invocacion de targets....");
                 
             }else{//El cron se ejecuta sin relizar acciones
                 Integer liIndProcess = new UtilFaces().getIdConfigParameterByName("ErrParameters");
@@ -238,7 +222,6 @@ public class ExecuteTargetsCron implements Job {
                 loEntityMappedDao.insertBitacoraWs(toEvetvIntServiceBitacoraTabR,
                                                    liParamIdUser, 
                                                    lsParamUserName);
-
             }
             
         } catch (Exception loEx) {

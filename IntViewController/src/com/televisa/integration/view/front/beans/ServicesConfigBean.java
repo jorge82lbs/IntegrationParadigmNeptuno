@@ -2710,10 +2710,12 @@ public class ServicesConfigBean {
         ExecuteServiceResponseBean         loRes = new ExecuteServiceResponseBean();
         String                             lsFinalMessage = "";
         String                             lsColorMessage = "red";
+        /*
         Integer                            liIdParameter = 
-            new ViewObjectDao().getMaxIdParadigm("RstTargets") + 1;
+            new ViewObjectDao().getMaxIdParadigm("Request") + 1;
         String                             lsIdRequestTargets = String.valueOf(liIdParameter);
-        
+        */
+        /*
         //Obtener parámetros para este servicio, desde la base de datos -------
         List<EvetvIntServicesParamTabBean> laList = 
             poService.getParametersServices(Integer.parseInt(psIdService)); 
@@ -2732,7 +2734,7 @@ public class ServicesConfigBean {
             }                       
         }
         //------------------------------------------------------------------------------
-        if(lsDateQuery != null && laChannels.size() > 0){
+        if(lsDateQuery != null && laChannels.size() > 0){*/
             if(psServiceAction.equalsIgnoreCase("EXECUTE")){ //Ejecucion manual
                 lsFinalMessage = 
                     "El Servicio de " + psServiceToInvoke + " ha sido ejecutado en segundo plano";
@@ -2754,7 +2756,7 @@ public class ServicesConfigBean {
                                                             );
                     
                     Integer liIndProcess = new UtilFaces().getIdConfigParameterByName("Execute");
-                    Integer liNumPgmProcessID = liIdParameter;
+                    Integer liNumPgmProcessID = 0;
                     Integer liNumEvtbProcessId = 0;
                     
                     new UtilFaces().insertBitacoraServiceService(0,
@@ -2777,7 +2779,7 @@ public class ServicesConfigBean {
                         loJobDataMap.put("lsIdService", psIdService); 
                         loJobDataMap.put("liIdUser", String.valueOf(piIdUser)); 
                         loJobDataMap.put("lsUserName", psUserName); 
-                        loJobDataMap.put("lsIdRequestTargets", lsIdRequestTargets); 
+                        //loJobDataMap.put("lsIdRequestTargets", lsIdRequestTargets); 
                         loJobDataMap.put("lsTypeRequest", "normal");
                         loScheduler.scheduleJob(loJob, loTrigger);
                         loScheduler.start();
@@ -2868,7 +2870,7 @@ public class ServicesConfigBean {
                                 loJobDataMap.put("lsIdService", psIdService); 
                                 loJobDataMap.put("liIdUser", String.valueOf(piIdUser)); 
                                 loJobDataMap.put("lsUserName", psUserName); 
-                                loJobDataMap.put("lsIdRequestTargets", lsIdRequestTargets); 
+                                //loJobDataMap.put("lsIdRequestTargets", lsIdRequestTargets); 
                                 loJobDataMap.put("lsTypeRequest", "normal");
                                 loScheduler.scheduleJob(loJob, loTrigger);
                                 Integer piIndProcess = 
@@ -2918,10 +2920,10 @@ public class ServicesConfigBean {
                 }
             }
                                     
-        }else{
+        /*}else{
             lsFinalMessage = "ATENCION: Insuficientes Parametros de Ejecucion";
             lsColorMessage = "red";
-        }
+        }*/
         
         /*###### Detener Cron del Servicio de Programas #####*/
         if(psServiceAction.equalsIgnoreCase("STOP")){

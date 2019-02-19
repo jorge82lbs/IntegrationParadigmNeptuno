@@ -407,6 +407,7 @@ public class IntegrationDasLogCertificado implements LogCertificadoInterface{
                             String lsTypeMail = "MAIL_OK";
                             if(lsEmailMsgErr.length() > 0){
                                 lsTypeMail = "MAIL_KO";
+                                lsSubject = "ERROR - "+lsSubject;
                             }
                             System.out.println("lsTypeMail["+lsTypeMail+"]");
                             List<EmailDestinationAddress> toEmailDestinationAddress = 

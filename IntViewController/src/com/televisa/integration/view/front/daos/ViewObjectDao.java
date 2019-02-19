@@ -138,8 +138,8 @@ public class ViewObjectDao implements ViewObjectInterface {
                 System.out.println("err sleep22");
             }
         }
-        if(tsTable.equalsIgnoreCase("RstTargets")){
-            lsTable = "EVENTAS.EVETV_INT_RST_PROGRAMAS_TAB";
+        if(tsTable.equalsIgnoreCase("Request")){
+            lsTable = "EVENTAS.EVETV_INT_REQUESTS_TAB";
             //lsTable = "EVENTAS.EVETV_INT_RST_TARGETS_TAB";
             lsField = "ID_REQUEST";
         }
@@ -573,6 +573,7 @@ public class ViewObjectDao implements ViewObjectInterface {
                 loEx.printStackTrace();
             }
         }
+        System.out.println("Existe configuracion cron? ["+lbFlag+"]");
         return lbFlag;
     }
     

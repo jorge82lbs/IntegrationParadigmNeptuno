@@ -36,6 +36,10 @@ public class ParametersCollection {
     @XmlElement(name = "ParameterMap", required = true)
     protected List<ParameterMap> parameterMap;
 
+    public void setParameterMap(List<ParameterMap> parameterMap) {
+        this.parameterMap = parameterMap;
+    }
+
     /**
      * Gets the value of the parameterMap property.
      *

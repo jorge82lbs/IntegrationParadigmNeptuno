@@ -754,4 +754,73 @@ public class EntityMappedDao {
         return loValue;
     }
     
+    /**
+     * Insertar en la tabla de log de servicios
+     * @autor Jorge Luis Bautista Santiago
+     * @param tiIdRequest
+     * @param tiIdService
+     * @param tsServiceType
+     * @param tsUserName
+     * @return Integer
+     */
+    public Integer insertLogServicesRequest(Integer tiIdRequest,
+                                            Integer tiIdService,
+                                            String tsServiceType,
+                                            String tsUserName){
+        Integer    loValue = 0;
+        Connection loCnn = new ConnectionAs400().getConnection();
+        String     lsQueryParadigm = 
+            getQueryInsertLogService(tiIdRequest,
+                                     tiIdService,
+                                     tsServiceType,
+                                     tsUserName
+                                    );
+        try {
+            Statement loStmt = loCnn.createStatement();
+            loValue = loStmt.executeUpdate(lsQueryParadigm);
+        } catch (SQLException loExSql) {
+            System.out.println("ERR_668: "+loExSql.getMessage());
+        }
+        finally{
+            try {
+                loCnn.close();
+            } catch (SQLException loEx) {
+                loEx.printStackTrace();
+            }
+        }
+        return loValue;        
+    }
+    
+    /**
+     * Genera instrucion para insertar en la tabla de log de servicios
+     * @autor Jorge Luis Bautista Santiago
+     * @param tiIdRequest
+     * @param tiIdService
+     * @param tsServiceType
+     * @param tsUserName
+     * @return Integer
+     */
+    public String getQueryInsertLogService(Integer tiIdRequest,
+                                           Integer tiIdService,
+                                           String tsServiceType,
+                                           String tsUserName
+                                           ){
+        String lsQuery = 
+            " INSERT INTO EVENTAS.EVETV_INT_REQUESTS_TAB(ID_REQUEST," +
+        "                                                ID_SERVICE," +
+        "                                                IND_SERVICE_TYPE," +
+        "                                                IND_ESTATUS," +
+        "                                                FEC_CREATION_DATE," +
+        "                                                NOM_USER_NAME" +
+        "                                               ) " + 
+        "                                        VALUES (" + tiIdRequest + "," +
+        "                                                " + tiIdService + "," +
+        "                                                '" + tsServiceType + "'," +
+        "                                                'A'," +
+        "                                                CURRENT_TIMESTAMP," +
+        "                                                '" + tsUserName + "'" +
+        "                                                )";
+        return lsQuery;
+    }
+    
 }
